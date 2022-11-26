@@ -1,0 +1,24 @@
+/* menu-icon {
+  position: fixed;
+  right: 50px;
+} */
+
+.plant-logo {
+  height: 45px;
+  border-radius: 50%;
+  zoom: 150%;
+  /* position: relative; */
+  object-fit: cover;
+  object-position: center;
+  background-size: cover;
+  position: fixed;
+  top: -3px;
+  left: 5px;
+
+}
+
+.plant-logo-box {
+  position: fixed;
+  height: 20px;
+  color: blueviolet;
+}
