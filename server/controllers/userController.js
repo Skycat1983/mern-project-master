@@ -19,7 +19,24 @@ const getAllUsers = async (req, res) => {
 };
 
 // GET A SINGLE USER
-const getUser = async (req, res) => {};
+const getUser = async (req, res) => {
+  try {
+    const user = await usersModel.findById("6380a9d578ce2d3f30806f28").exec();
+    // const user = await usersModel.findById(id).exec();
+
+    console.log("get user", user);
+    res.status(200).json({
+      msg: "user retrieved",
+      user,
+    });
+  } catch (error) {
+    console.log("error :>> ", error);
+    res.status(500).json({
+      error,
+      msg: "there was a problem in the server",
+    });
+  }
+};
 
 // CREATE USER
 const createUser = async (req, res) => {
@@ -48,9 +65,9 @@ const createUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     // maybe should be //? findOneAndDelete
-    const deleteUser = await usersModel.deleteOne({});
+    const user = await usersModel.deleteOne({});
 
-    console.log("delete user", deleteUser);
+    console.log("delete user", user);
     res.status(200).json({
       msg: "user succesfully deleted",
       // user, //! don't show because doesn't exist?
@@ -68,9 +85,9 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     // maybe should be //? findOneAndDelete
-    const updateUser = await usersModel.updateOne({});
+    const user = await usersModel.updateOne({});
 
-    console.log("update user", updateUser);
+    console.log("update user", user);
     res.status(200).json({
       msg: "profile succesfully updated",
       user,

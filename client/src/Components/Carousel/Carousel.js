@@ -13,6 +13,8 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { tabPanelUnstyledClasses } from "@mui/base";
 import temp1 from "../../assets/temp/temp1.png";
+import user1 from "../../assets/backgrounds/woman1.png";
+import { Link } from "react-router-dom";
 
 export default function Carousel(data, isLoading) {
   console.warn("data.data in carousel", data.data);
@@ -46,7 +48,7 @@ export default function Carousel(data, isLoading) {
                       component="img"
                       height="140"
                       image={temp1}
-                      alt="green iguana"
+                      alt="plant pic"
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h7" component="div">
@@ -71,29 +73,36 @@ export default function Carousel(data, isLoading) {
           data.data?.allUsers?.map((item) => {
             return (
               <SwiperSlide key={item.email}>
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={temp1}
-                      alt="green iguana"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h7" component="div">
-                        {item.email}
-                      </Typography>
-                      {/* <Typography variant="body2" color="text.secondary">
+                <Link
+                  to={`/profile/${item.username}`}
+                  key={item.username}
+                  // state={{ data: props.myFunction }}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Card sx={{ maxWidth: 345 }}>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={user1}
+                        alt="user pic"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h7" component="div">
+                          {item.username}
+                        </Typography>
+                        {/* <Typography variant="body2" color="text.secondary">
                         <b>user:</b>
                         {item.user.email}
                       </Typography> */}
-                      <Typography variant="body2" color="text.secondary">
-                        <b> plants:</b>
-                        {item.plants.length}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
+                        <Typography variant="body2" color="text.secondary">
+                          <b> plants:</b>
+                          {item.plants.length}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Link>
               </SwiperSlide>
             );
           })}

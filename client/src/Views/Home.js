@@ -81,10 +81,6 @@ function Home() {
   //   }
   // }, [value]);
 
-  // useEffect(() => {
-
-  // }, [value]);
-
   return (
     <>
       <NavBar />
@@ -95,6 +91,7 @@ function Home() {
         className="search-bar"
         sx={{
           boxShadow: 2,
+          // maxWidth: "250px",
         }}
       >
         <SearchIconWrapper>
@@ -138,6 +135,8 @@ function Home() {
 export default Home;
 
 // QUESTIONS:
+// - see backend, usercontroller, getUser line 22. how do i get a dynamic variable into my find by id? can i use useparams or uselocation?
+
 // - see carousel.js. i currently have it mapping over allPlants for my SwiperSlides. within each slide i am mapping over particular items, like item.genus and item.price. What is i want to map over unnamed variables? so that i can reuse this code for any fetch that gets completed? how would i do this?
 
 // - see carousel.js. on page load i get a warning about unique key prop. why is "<SwiperSlide key={item.user.id}>" not recognised?
