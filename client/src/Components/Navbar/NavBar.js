@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
+
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -13,10 +15,12 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import houseplant3 from "../../assets/appIcons/houseplant3.png";
+import { Avatar } from "@mui/material";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import "./NavBar.css";
 
 export default function PrimarySearchAppBar() {
+  const [user, setUser] = useState(false); //! <<< DONT FORGET
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -132,10 +136,17 @@ export default function PrimarySearchAppBar() {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon
-              className="menu-icon"
-              sx={{ position: "fixed", right: "20px;" }}
-            />
+            {!user ? (
+              <MenuIcon
+                className="menu-icon"
+                sx={{ position: "fixed", right: "20px;" }}
+              />
+            ) : (
+              <Avatar
+                className="menu-icon"
+                sx={{ position: "fixed", right: "20px;" }}
+              />
+            )}
           </IconButton>
           <Typography
             variant="h6"
