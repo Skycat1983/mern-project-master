@@ -10,7 +10,7 @@ const usersSchema = new Schema(
     password: { type: String, required: true },
     latitude: { type: Number, required: true },
     longtitude: { type: Number, required: true },
-    _id: { type: mongoose.ObjectId },
+    // _id: { type: mongoose.ObjectId },
     plants: [{ type: Schema.Types.ObjectId, ref: "Plant" }], //! ref: "plant" = the collection name in mongodb. must be singular
     // wishlist: { type: Object, required: false },
   },

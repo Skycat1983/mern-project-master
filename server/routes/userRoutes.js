@@ -16,6 +16,7 @@ const router = express.Router();
 router.get("/all", getAllUsers);
 
 // GET A SINGLE USER
+// router.get("/id/:username", getUser);
 router.get("/id/:id", getUser);
 
 // SIGN UP
