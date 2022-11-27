@@ -22,3 +22,13 @@
   height: 20px;
   color: blueviolet;
 }
+
+.hamburger-menu {
+  position: relative;
+  right: 1000px !important;
+  color: blue;
+}
+
+/* .nav-box {
+  position: sticky;
+} */

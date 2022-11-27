@@ -5,11 +5,14 @@ import { useLocation, useParams } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { useRadioGroup } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import CardMedia from "@mui/material/CardMedia";
+
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import "./views.css";
+import temp from "../assets/temp/temp3.png";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Box from "@mui/material/Box";
 
@@ -37,6 +40,7 @@ export default function Profile() {
         sx={{
           p: 2,
           margin: 2,
+          marginTop: 10,
         }}
       >
         <Avatar>H</Avatar>
@@ -70,11 +74,17 @@ export default function Profile() {
               >
                 <Grid container spacing={2}>
                   <Grid item>
-                    <ButtonBase sx={{ width: 128, height: 128 }}>
-                      <Img
-                        alt="complex"
-                        src="/static/images/grid/complex.jpg"
+                    {/* <ButtonBase sx={{ width: 128, height: 128 }}> */}
+                    <ButtonBase sx={{ width: 100, height: 100 }}>
+                      <CardMedia
+                        component="img"
+                        // height="140"
+
+                        width="10"
+                        image={temp}
+                        alt="user pic"
                       />
+                      {/* <Img alt="complex" image={temp} /> */}
                     </ButtonBase>
                   </Grid>
                   <Grid item xs={12} sm container>
@@ -88,10 +98,10 @@ export default function Profile() {
                           {item.genus}
                         </Typography>
                         <Typography variant="body2" gutterBottom>
-                          Insert plant family here • AROID
+                          Family • AROID
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          date posted: {item.createdAt}
+                          listed: {item.createdAt}
                         </Typography>
                       </Grid>
                       <Grid item>

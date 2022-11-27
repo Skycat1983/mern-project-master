@@ -1,6 +1,5 @@
 import "./Carousel.css";
 import * as React from "react";
-import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation, EffectFade, crossFade } from "swiper";
@@ -11,7 +10,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import { tabPanelUnstyledClasses } from "@mui/base";
 import temp1 from "../../assets/temp/temp1.png";
 import user1 from "../../assets/backgrounds/woman1.png";
 import { Link } from "react-router-dom";
@@ -19,8 +17,6 @@ import { Link } from "react-router-dom";
 export default function Carousel(data, isLoading) {
   console.warn("data.data in carousel", data.data);
   console.warn("data in carousel", data);
-
-  // console.warn("isLoading in carousel", isLoading);
 
   return (
     <>
@@ -91,10 +87,6 @@ export default function Carousel(data, isLoading) {
                         <Typography gutterBottom variant="h7" component="div">
                           {item.username}
                         </Typography>
-                        {/* <Typography variant="body2" color="text.secondary">
-                        <b>user:</b>
-                        {item.user.email}
-                      </Typography> */}
                         <Typography variant="body2" color="text.secondary">
                           <b> plants:</b>
                           {item.plants.length}
