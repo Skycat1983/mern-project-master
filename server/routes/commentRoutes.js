@@ -13,18 +13,18 @@ const router = express.Router();
 //! code below triggers after we go to "/api/plants/...", as defined in server.js
 
 // GET ALL USERS
-router.get("/all", getAllUsers);
+// router.get("/all", getAllUsers);
 
-// GET A SINGLE USER
+// GET A COMMENT
 router.get("/:username", getUser);
 // router.get("/:id", getUser);
 
-// SIGN UP
+// POST COMMENT
 router.post("/create", createUser);
 
-// DELETE ACCOUNT
+// DELETE COMMENT
 router.delete("/delete/:id", deleteUser);
 
-// UPDATE PROFILE
-router.patch("/update/:username", updateUser);
+// EDIT COMMENT
+router.patch("/update/:id", updateUser);
 export default router;

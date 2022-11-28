@@ -140,6 +140,8 @@ export default Home;
 
 // QUESTIONS:
 
+// what is best path for comments collection? I am having a lot of trouble planning how i create this when comments are not their own collection. should i UPDATE the user, or CREATE new objects within the user?
+
 // - see Profile.js view. Why do my "{!isLoading && <h3>welcome to {data?.user?.username}'s profile </h3>}" conditionals not work without the question marks? Why is the !isLoading part not enough to stop me gettiing error of "bundle.js:1325 Uncaught TypeError: Cannot read properties of null (reading 'user')""
 
 // - see carousel.js. i currently have it mapping over allPlants for my SwiperSlides. within each slide i am mapping over particular items, like item.genus and item.price. What is i want to map over unnamed variables? so that i can reuse this code for any fetch that gets completed? how would i do this?
