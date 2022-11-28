@@ -20,10 +20,12 @@ const getAllUsers = async (req, res) => {
 
 // GET A SINGLE USER
 const getUser = async (req, res) => {
+  // console.log("req", req.params.id);
+  const { username } = req.params;
   try {
     //! V1 findOne (works but parameter is fixed)
     const user = await usersModel
-      .findOne({ username: "testing2" })
+      .findOne({ username: username })
       .populate({ path: "plants" });
 
     //! V2 ById (works but parameter is fixed)
@@ -32,7 +34,7 @@ const getUser = async (req, res) => {
     //! V3 (does not work)
     // const user = await usersModel.findById(id).exec();
 
-    console.log("get user", user);
+    // console.log("get user", user);
     res.status(200).json({
       msg: "user retrieved",
       user,

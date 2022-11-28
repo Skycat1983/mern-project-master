@@ -6,6 +6,8 @@ import Avatar from "@mui/material/Avatar";
 import { useRadioGroup } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
+import TextField from "@mui/material/TextField";
+import Comments from "../Components/Comments/Comments";
 
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -24,9 +26,11 @@ const Img = styled("img")({
 });
 
 export default function Profile() {
+  const [user, setUser] = useState(true);
   const location = useLocation();
+  console.log("location :>> ", location.state.user);
   const [url, setUrl] = useState(
-    "http://localhost:5001/api/users/id/dynamicstring"
+    `http://localhost:5001/api/users/${location.state.user}`
   );
   const { data, isLoading, error } = useFetch(url);
 
@@ -128,6 +132,27 @@ export default function Profile() {
           margin: 2,
         }}
       >
+        <h5>USER REVIEWS</h5>
+        <Comments></Comments>
+        {user ? (
+          <TextField
+            id="outlined-multiline-static"
+            sx={{ m: 1, width: "75vw" }}
+            label="Write a review"
+            multiline
+            rows={4}
+          />
+        ) : (
+          <TextField
+            id="outlined-multiline-static"
+            disabled
+            sx={{ m: 1, width: "75vw" }}
+            label="Write a review of this seller"
+            multiline
+            rows={4}
+            defaultValue="You need to be signed in to use this feature"
+          />
+        )}
         {!isLoading && (
           <h4>
             Questions? contact us via our email address: {data?.user?.email}

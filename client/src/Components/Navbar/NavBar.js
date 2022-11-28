@@ -19,6 +19,7 @@ import Divider from "@mui/material/Divider";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
 
 export default function PrimarySearchAppBar() {
   const [user, setUser] = useState(false); //! <<< DONT FORGET
@@ -73,6 +74,10 @@ export default function PrimarySearchAppBar() {
               }}
             ></Box>
             <Menu
+              sx={{
+                top: "33px",
+                left: "35vw",
+              }}
               // sx={{ mt: 100 }}
               anchorEl={anchorEl}
               open={open}
@@ -110,31 +115,43 @@ export default function PrimarySearchAppBar() {
               anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
               className="hamburger-menu"
             >
-              <MenuItem>
-                <Avatar /> Profile
-              </MenuItem>
-              <MenuItem>
-                <Avatar /> My account
-              </MenuItem>
+              {user ? (
+                <MenuItem>
+                  <Avatar /> My account
+                </MenuItem>
+              ) : (
+                <MenuItem>
+                  <Avatar /> Not signed in
+                </MenuItem>
+              )}
               <Divider />
-              <MenuItem>
+              {/* <MenuItem>
                 <ListItemIcon>
                   <PersonAdd fontSize="small" />
                 </ListItemIcon>
                 Add another account
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem>
                 <ListItemIcon>
                   <Settings fontSize="small" />
                 </ListItemIcon>
                 Settings
               </MenuItem>
-              <MenuItem>
-                <ListItemIcon>
-                  <Logout fontSize="small" />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
+              {user ? (
+                <MenuItem>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              ) : (
+                <MenuItem>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Sign in
+                </MenuItem>
+              )}
             </Menu>
           </React.Fragment>
         </Toolbar>

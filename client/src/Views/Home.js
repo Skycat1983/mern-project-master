@@ -139,17 +139,12 @@ function Home() {
 export default Home;
 
 // QUESTIONS:
-// - see backend, usercontroller, getUser line 22. how do i get a dynamic variable into my find by id parameter? can i use useparams or uselocation?
 
 // - see Profile.js view. Why do my "{!isLoading && <h3>welcome to {data?.user?.username}'s profile </h3>}" conditionals not work without the question marks? Why is the !isLoading part not enough to stop me gettiing error of "bundle.js:1325 Uncaught TypeError: Cannot read properties of null (reading 'user')""
-
-// - is there a limit to how many populate links we should or can have between collections? is it problematic is A links to B, B links to C, and C links to A, for example?
 
 // - see carousel.js. i currently have it mapping over allPlants for my SwiperSlides. within each slide i am mapping over particular items, like item.genus and item.price. What is i want to map over unnamed variables? so that i can reuse this code for any fetch that gets completed? how would i do this?
 
 // - see carousel.js. on page load i get a warning about unique key prop. why is "<SwiperSlide key={item.user.id}>" not recognised?
-
-// - see useFetch.js and separation of FetchesFunction and useEffect: how would i do this with the fechesfunction inside useeffect
 
 // - setError not working
 

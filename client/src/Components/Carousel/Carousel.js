@@ -72,6 +72,7 @@ export default function Carousel(data, isLoading) {
                 <Link
                   to={`/profile/${item.username}`}
                   key={item.username}
+                  state={{ user: item.username }}
                   // state={{ data: props.myFunction }}
                   style={{ textDecoration: "none" }}
                 >
