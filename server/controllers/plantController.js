@@ -49,17 +49,39 @@ const createPlant = async (req, res) => {
 
 // UPLOAD IMAGE
 const uploadImage = async (req, res) => {
+  // console.log("ln 54 req.files :>> >>>>>>>", req.files);
   try {
-    console.log("req :>> ", req.file);
+    // console.log("req :>> ", req.file);
     // Upload the image
-    const uploadResult = await cloudinary.uploader.upload(req.file.path, {
-      folder: "plant-images",
+    const imagesArray = [];
+    req.files.forEach(async (file) => {
+      const uploadResult = await cloudinary.uploader.upload(file.path, {
+        folder: "plant-images",
+        //to format the picture during the  upload
+        // transformation: [
+        //   { width: 150, height: 150, gravity: "face", crop: "thumb" },
+        //   { radius: 20 },
+        //   { effect: "sepia" },
+        //   {
+        //     overlay: "cloudinary_icon_blue",
+        //     gravity: "south_east",
+        //     x: 5,
+        //     y: 5,
+        //     width: 50,
+        //     opacity: 60,
+        //     effect: "brightness:200",
+        //   },
+        //   { angle: 10 },
+        // ],
+      });
+      // console.log("uploadResult >>>>", uploadResult);
+      imagesArray.push(uploadResult.url);
+      res.status(200).json({
+        msg: "image upload Ok",
+        image: imagesArray,
+      });
     });
-    console.log("result >>>>", uploadResult);
-    res.status(200).json({
-      msg: "image upload Ok",
-      image: uploadResult.url,
-    });
+    // console.log('imagesArray :>> ', imagesArray);
   } catch (error) {
     console.error(error);
     res.status(500).json({

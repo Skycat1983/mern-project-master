@@ -7,8 +7,13 @@ import path from "path";
 const multerUpload = multer({
   storage: multer.diskStorage({}),
   fileFilter: (req, file, cb) => {
+    // console.log("req Multer :>> ", req);
+
     //* ext from nodejs
+
     let extension = path.extname(file.originalname);
+
+    console.log("extension>>>", extension);
     if (extension !== ".jpg" && extension !== ".jpeg" && extension !== ".png") {
       cb(new Error("file type not permitted"), false);
       return;
