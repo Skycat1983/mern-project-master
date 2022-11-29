@@ -5,6 +5,7 @@ dotenv.config();
 import mongoose from "mongoose";
 import plantRoutes from "./routes/plantRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import cloudinaryConfig from "./config/cloudinary.js";
 
 // EXPRESS APP
 const app = express();
@@ -24,6 +25,7 @@ const addMiddleWares = () => {
     credentials: true,
   };
   app.use(cors(corsOptions));
+  cloudinaryConfig();
 };
 
 const startServer = () => {
@@ -54,6 +56,8 @@ const mongoDBConnection = async () => {
   loadRoutes();
   startServer();
 })();
+
+//?  what is significane in url differences between fronnt annd backend routing?
 
 //? not getting errors when i register with postman, despite requirement of unique identifier on email
 //? see controllers: mentions of allUsers.length but in every const. needs to be addressed. not sure of meaning

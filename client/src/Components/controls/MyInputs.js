@@ -1,8 +1,8 @@
 import React from "react";
-import TextField from "@mui/material/TextField";
+import { TextField } from "@mui/material";
 
 export default function MyInputs(props) {
-  const [name, label, value, onChange] = props;
+  const { name, label, value, onChange } = props;
   return (
     <TextField
       variant="outlined"

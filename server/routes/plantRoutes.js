@@ -1,8 +1,10 @@
 import express from "express";
 import plantModel from "../models/plantsModel.js";
+import multerUpload from "../middlewares/multerUpload.js";
 import {
   getAllPlants,
   createPlant,
+  uploadImage,
   deletePlant,
   getPlant,
   updatePlant,
@@ -20,6 +22,11 @@ router.get("/id/:id", getPlant);
 
 // POST A NEW PLANT
 router.post("/create", createPlant);
+
+// UPLOAD IMAGE.ANTHIRIUM
+router.post("/uploadimage", multerUpload.single("image"), uploadImage);
+//* .array(fieldname[, maxCount]) for multiple files. stored in req.files
+//* .single(fieldname) stored in req.file.
 
 // DELETE A PLANT
 router.delete("/delete/:id", deletePlant);

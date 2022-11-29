@@ -1,4 +1,5 @@
 import plantModel from "../models/plantsModel.js";
+import { v2 as cloudinary } from "cloudinary";
 
 // GET ALL PLANTS
 const getAllPlants = async (req, res) => {
@@ -46,6 +47,28 @@ const createPlant = async (req, res) => {
   }
 };
 
+// UPLOAD IMAGE
+const uploadImage = async (req, res) => {
+  try {
+    console.log("req :>> ", req.file);
+    // Upload the image
+    const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+      folder: "plant-images",
+    });
+    console.log("result >>>>", uploadResult);
+    res.status(200).json({
+      msg: "image upload Ok",
+      image: uploadResult.url,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      msg: "error uploading picture",
+      error: error,
+    });
+  }
+};
+
 // DELETE A PLANT
 const deletePlant = async (req, res) => {
   try {
@@ -86,4 +109,11 @@ const updatePlant = async (req, res) => {
   }
 };
 
-export { getAllPlants, createPlant, deletePlant, getPlant, updatePlant };
+export {
+  getAllPlants,
+  createPlant,
+  uploadImage,
+  deletePlant,
+  getPlant,
+  updatePlant,
+};

@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useForm, Form } from "../Hooks/useForm";
+import { useForm, Form } from "../Components/useForm";
 import MyControls from "../Components/controls/MyControls";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl, FormLabel, RadioGroup } from "@mui/material";
@@ -28,7 +27,7 @@ const initialValues = {
 };
 
 const Signup = () => {
-  const [values, setValues, handleInputChange] = useState(initialValues);
+  const { values, setValues, handleInputChange } = useState(initialValues);
   return (
     <>
       <Form>
@@ -48,6 +47,12 @@ const Signup = () => {
             onChange={handleInputChange}
           />
         </Grid>
+        <MyControls.MyInputs
+          label="password"
+          name="password"
+          value={values.password}
+          onChange={handleInputChange}
+        />
         <FormControl>
           <FormLabel>Membership</FormLabel>
           <RadioGroup

@@ -8,8 +8,10 @@ const usersSchema = new Schema(
     email: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    latitude: { type: Number, required: true },
-    longtitude: { type: Number, required: true },
+    premium: { type: Boolean, required: false },
+
+    // latitude: { type: Number, required: false },
+    // longtitude: { type: Number, required: false },
     // comments: { type: Object, required: false },
     comments: [
       {

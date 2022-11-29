@@ -51,23 +51,36 @@ const getUser = async (req, res) => {
 // CREATE USER
 const createUser = async (req, res) => {
   console.log("create user", req.body);
-  const { email, username, password, latitude, longtitude } = req.body;
+  const { email, username, password } = req.body;
   // add doc to db
+
   try {
-    const user = await usersModel.create({
-      email,
-      username,
-      password,
-      latitude,
-      longtitude,
-    });
-    console.log("user :>> ", user);
-    res.status(200).json({
-      msg: "user succesfully added",
-      user,
-    });
+    const existingUser = usersModel.findOne({ email: email });
+    if (existingUser) {
+      res.status(403).json({ msg: "task failed successfully" });
+    } else {
+      try {
+        const user = await usersModel.create({
+          email,
+          username,
+          password,
+          premium,
+        });
+        console.log("user :>> ", user);
+        res.status(200).json({
+          msg: "user succesfully added",
+          user,
+        });
+      } catch (error) {
+        res
+          .status(400)
+          .json({ msg: "something went wrong during verification" });
+      }
+    }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({
+      msg: "something went wrong during verification",
+    });
   }
 };
 

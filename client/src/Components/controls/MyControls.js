@@ -1,9 +1,9 @@
 import MyInputs from "./MyInputs";
-import MyRadioGroup from "./MyRadioGroup";
+// import MyRadioGroup from "./MyRadioGroup";
 
 const MyControls = {
   MyInputs,
-  MyRadioGroup,
+  // MyRadioGroup,
 };
 
 export default MyControls;
