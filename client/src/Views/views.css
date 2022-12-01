@@ -58,3 +58,17 @@
   padding-top: 100px;
   border-top: 100px;
 } */
+
+/* .frosted-div {
+  background-image: ;
+} */
+.background-image2 {
+  max-height: 640px;
+  top: 0px;
+  z-index: -1000;
+  position: absolute;
+  /* width: 100px; */
+  /* object-position: left; */
+
+  /* object-fit: cover; */
+}

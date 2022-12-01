@@ -20,10 +20,10 @@ const useFetch = (url) => {
       FetchesFunction();
     } catch {
       setError(error);
-      console.log("set error");
+      console.log("set error", error);
     } finally {
-      console.log("data", data);
-      console.log("isLoading", isLoading);
+      // console.log("data", data);
+      // console.log("isLoading", isLoading);
       setIsLoading(false);
     }
   }, [url]);

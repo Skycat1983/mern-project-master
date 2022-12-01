@@ -132,7 +132,9 @@ function Home() {
   );
 }
 
-// TODO: useErrors / useModal hook
+// TODO:
+// - useErrors / useModal hook
+// - useFetch for Login & Signup
 
 export default Home;
 

@@ -30,9 +30,21 @@ export function Form(props) {
         marginTop: "85px",
         marginLeft: "85px",
         alignItems: "center",
+        borderRadius: "12px 12px 12px 12px",
+
         marginBottom: "10px",
-        width: "200px",
+        width: "190px",
+        backgroundColor: "white",
+        opacity: "80%",
       }}
+      // sx={{
+      //   bgcolor: "background.paper",
+      //   width: "53%",
+      //   // width: "10vm",
+      //   // borderRadius: "12px 12px 0px 0px",
+      //   borderBottom: 1,
+      //   borderColor: "divider",
+      // }}
     >
       {props.children}
     </form>

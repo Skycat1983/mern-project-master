@@ -3,6 +3,9 @@ import MyControls from "../Components/controls/MyControls";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl, FormLabel, RadioGroup } from "@mui/material";
 import Radio from "@mui/material/Radio";
+import background from "../assets/backgrounds/photos/darkleaves.jpg";
+import "./views.css";
+
 import MyInputs from "../Components/controls/MyInputs";
 import MyRadioGroup from "../Components/controls/MyRadioGroup";
 // import Box from "@mui/material/Box";
@@ -55,6 +58,7 @@ const Signup = () => {
   console.log(values);
   return (
     <>
+      <img src={background} className="background-image2" alt="" />
       <Form>
         <Grid>
           <MyControls.MyInputs
