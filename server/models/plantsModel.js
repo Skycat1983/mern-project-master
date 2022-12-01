@@ -23,6 +23,7 @@ const plantSchema = new Schema(
     varigation: { type: Boolean, required: true },
     rooted: { type: Boolean, required: true },
     topcutting: { type: Boolean, required: true },
+    imageUrls: { type: Array, required: true },
     // nodes: { type: Number },
     // height: { type: Number, required: true },
     // width: { type: Number, required: true },

@@ -35,6 +35,7 @@ const createPlant = async (req, res) => {
       varigation,
       rooted,
       topcutting,
+      // imageUrls,
       price,
     });
     console.log("plant :>> ", plant);
@@ -48,40 +49,35 @@ const createPlant = async (req, res) => {
 };
 
 // UPLOAD IMAGE
+//! i think the error "Cannot set headers after they are sent to the client" comes from https://stackoverflow.com/questions/7042340/error-cant-set-headers-after-they-are-sent-to-the-client
 const uploadImage = async (req, res) => {
-  // console.log("ln 54 req.files :>> >>>>>>>", req.files);
+  const imagesArray = [];
   try {
-    // console.log("req :>> ", req.file);
-    // Upload the image
-    const imagesArray = [];
-    req.files.forEach(async (file) => {
+    req.files.forEach(async (file, index, arr) => {
       const uploadResult = await cloudinary.uploader.upload(file.path, {
         folder: "plant-images",
-        //to format the picture during the  upload
-        // transformation: [
-        //   { width: 150, height: 150, gravity: "face", crop: "thumb" },
-        //   { radius: 20 },
-        //   { effect: "sepia" },
-        //   {
-        //     overlay: "cloudinary_icon_blue",
-        //     gravity: "south_east",
-        //     x: 5,
-        //     y: 5,
-        //     width: 50,
-        //     opacity: 60,
-        //     effect: "brightness:200",
-        //   },
-        //   { angle: 10 },
-        // ],
       });
-      // console.log("uploadResult >>>>", uploadResult);
+      // console.log("uploadResult >>>>", uploadResult.url);
       imagesArray.push(uploadResult.url);
-      res.status(200).json({
-        msg: "image upload Ok",
-        image: imagesArray,
-      });
+
+      console.log("imagesArray :>> ", imagesArray);
+      console.log("index...", index, imagesArray.length);
+      if (index < imagesArray.length - 1) {
+        console.warn("should only be visible once");
+      }
     });
-    // console.log('imagesArray :>> ', imagesArray);
+    res.status(200).json({
+      msg: "image upload Ok",
+      image: imagesArray,
+    });
+
+    // const imgArrayOfPromises = req.files.map(async (file) => {
+    //   const uploadResult = await cloudinary.uploader.upload(file.path, {
+    //     folder: "plant-images",
+    //   });
+    //   return uploadResult.url;
+    // });
+    // console.log("imgArrayOfPromises :>> ", imgArrayOfPromises);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -90,6 +86,46 @@ const uploadImage = async (req, res) => {
     });
   }
 };
+
+//! UPLOAD IMAGE V1
+// const uploadImage = async (req, res) => {
+//   // console.log("ln 54 req.files :>> >>>>>>>", req.files);
+//   try {
+//     // console.log("req :>> ", req.file);
+//     // Upload the image
+//     const imagesArray = [];
+//     req.files.forEach(async (file, index) => {
+//       const uploadResult = await cloudinary.uploader.upload(file.path, {
+//         folder: "plant-images",
+//       });
+//       // console.log("uploadResult >>>>", uploadResult.url);
+//       imagesArray.push(uploadResult.url);
+
+//       console.log("imagesArray :>> ", imagesArray);
+//       console.log("index...", index, imagesArray.length);
+//       if (index < imagesArray.length - 1) {
+//         res.status(200).json({
+//           msg: "image upload Ok",
+//           image: imagesArray,
+//         });
+//       }
+//     });
+
+//     // const imgArrayOfPromises = req.files.map(async (file) => {
+//     //   const uploadResult = await cloudinary.uploader.upload(file.path, {
+//     //     folder: "plant-images",
+//     //   });
+//     //   return uploadResult.url;
+//     // });
+//     // console.log("imgArrayOfPromises :>> ", imgArrayOfPromises);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({
+//       msg: "error uploading picture",
+//       error: error,
+//     });
+//   }
+// };
 
 // DELETE A PLANT
 const deletePlant = async (req, res) => {
@@ -139,3 +175,47 @@ export {
   getPlant,
   updatePlant,
 };
+
+//! image format deets below
+// const uploadImage = async (req, res) => {
+//   // console.log("ln 54 req.files :>> >>>>>>>", req.files);
+//   try {
+//     // console.log("req :>> ", req.file);
+//     // Upload the image
+//     const imagesArray = [];
+//     req.files.forEach(async (file) => {
+//       const uploadResult = await cloudinary.uploader.upload(file.path, {
+//         folder: "plant-images",
+//         //to format the picture during the  upload
+//         // transformation: [
+//         //   { width: 150, height: 150, gravity: "face", crop: "thumb" },
+//         //   { radius: 20 },
+//         //   { effect: "sepia" },
+//         //   {
+//         //     overlay: "cloudinary_icon_blue",
+//         //     gravity: "south_east",
+//         //     x: 5,
+//         //     y: 5,
+//         //     width: 50,
+//         //     opacity: 60,
+//         //     effect: "brightness:200",
+//         //   },
+//         //   { angle: 10 },
+//         // ],
+//       });
+//       // console.log("uploadResult >>>>", uploadResult);
+//       imagesArray.push(uploadResult.url);
+//       res.status(200).json({
+//         msg: "image upload Ok",
+//         image: imagesArray,
+//       });
+//     });
+//     // console.log('imagesArray :>> ', imagesArray);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({
+//       msg: "error uploading picture",
+//       error: error,
+//     });
+//   }
+// };

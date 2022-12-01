@@ -51,13 +51,22 @@ const getUser = async (req, res) => {
 // CREATE USER
 const createUser = async (req, res) => {
   console.log("create user", req.body);
-  const { email, username, password } = req.body;
+  const { email, username, password, premium } = req.body;
   // add doc to db
 
   try {
-    const existingUser = usersModel.findOne({ email: email });
-    if (existingUser) {
-      res.status(403).json({ msg: "task failed successfully" });
+    const existingEmail = usersModel.findOne({ email: email });
+    const existingUsername = usersModel.findOne({ username: username });
+    if (existingEmail) {
+      res
+        .status(403)
+        .json({
+          msg: "task failed successfully: this email address already has an account",
+        }); // todo: RESET PASSWORD
+    } else if (existingUsername) {
+      res
+        .status(403)
+        .json({ msg: "task failed successfully: username already in use" });
     } else {
       try {
         const user = await usersModel.create({
@@ -107,8 +116,7 @@ const deleteUser = async (req, res) => {
 // UPDATE A USER
 const updateUser = async (req, res) => {
   try {
-    // maybe should be //? findOneAndDelete
-    const user = await usersModel.updateOne({});
+    const user = await usersModel.findOneAndUpdate({ comments });
 
     console.log("update user", user);
     res.status(200).json({

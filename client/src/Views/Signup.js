@@ -15,19 +15,22 @@ import MyRadioGroup from "../Components/controls/MyRadioGroup";
 // import TextField from "@mui/material/TextField";
 import { useContext, useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 
 const initialValues = {
   emailAddress: "",
   displayName: "",
-  mobile: "",
-  dateOfBirth: "",
+  // mobile: "",
+  // dateOfBirth: "",
   membership: "premium",
   password: "",
-  repeatPassord: "",
+  // repeatPassord: "",
 };
 
 const Signup = () => {
-  const { values, setValues, handleInputChange } = useState(initialValues);
+  const { values, setValues, handleInputChange } = useForm(initialValues);
+
+  console.log(values);
   return (
     <>
       <Form>
@@ -70,6 +73,10 @@ const Signup = () => {
           </RadioGroup>
         </FormControl>
       </Form>
+      <Button variant="contained" component="label">
+        SUBMIT
+        {/* <input hidden accept="image/*" multiple type="file" /> */}
+      </Button>
     </>
   );
 };

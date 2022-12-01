@@ -23,8 +23,8 @@ router.get("/id/:id", getPlant);
 // POST A NEW PLANT
 router.post("/create", createPlant);
 
-// UPLOAD IMAGE.ANTHIRIUM
-router.post("/uploadimage", multerUpload.array("image", 1), uploadImage);
+// UPLOAD IMAGE
+router.post("/uploadimage", multerUpload.array("image", 3), uploadImage);
 //* .array(fieldname[, maxCount]) for multiple files. stored in req.files
 //* .single(fieldname) stored in req.file.
 

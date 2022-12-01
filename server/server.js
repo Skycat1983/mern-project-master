@@ -57,7 +57,9 @@ const mongoDBConnection = async () => {
   startServer();
 })();
 
-//?  what is significane in url differences between fronnt annd backend routing?
+//! see usercontroller. .findOne({ username: username }) CONFUSING!
+
+//?  what is significane in url differences between front annd backend routing?
 
 //? not getting errors when i register with postman, despite requirement of unique identifier on email
 //? see controllers: mentions of allUsers.length but in every const. needs to be addressed. not sure of meaning

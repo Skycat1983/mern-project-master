@@ -9,6 +9,7 @@ export function useForm(initialValues) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log(e.target.values);
     setValues({
       ...values,
       [name]: value, // updating respective value property that triggers onChange event. //! for example: fullName, or emailAddress.

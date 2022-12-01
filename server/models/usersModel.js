@@ -17,9 +17,11 @@ const usersSchema = new Schema(
       {
         author: {
           type: String,
+          required: false,
         },
         text: {
           type: String,
+          required: false,
         },
       },
     ],
