@@ -22,13 +22,35 @@ const initialValues = {
   displayName: "",
   // mobile: "",
   // dateOfBirth: "",
-  membership: "premium",
+  membership: "",
   password: "",
   // repeatPassord: "",
 };
 
 const Signup = () => {
   const { values, setValues, handleInputChange } = useForm(initialValues);
+
+  const register = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("email", values.emailAddress);
+    urlencoded.append("username", values.displayName);
+    urlencoded.append("password", values.password);
+    urlencoded.append("premium", values.membership);
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5001/api/users/create", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  };
 
   console.log(values);
   return (
@@ -64,18 +86,17 @@ const Signup = () => {
             value={values.membership}
             onChange={handleInputChange}
           >
-            <FormControlLabel value="basic" control={<Radio />} label="Basic" />
+            <FormControlLabel value="false" control={<Radio />} label="Basic" />
             <FormControlLabel
-              value="premium"
+              value="true"
               control={<Radio />}
               label="Premium"
             />
           </RadioGroup>
         </FormControl>
       </Form>
-      <Button variant="contained" component="label">
+      <Button variant="contained" component="label" onClick={register}>
         SUBMIT
-        {/* <input hidden accept="image/*" multiple type="file" /> */}
       </Button>
     </>
   );

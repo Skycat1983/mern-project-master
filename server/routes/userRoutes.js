@@ -5,6 +5,7 @@ import {
   createUser,
   deleteUser,
   getUser,
+  loginUser,
   updateUser,
 } from "../controllers/userController.js";
 
@@ -21,6 +22,9 @@ router.get("/:username", getUser);
 
 // SIGN UP
 router.post("/create", createUser);
+
+// LOGIN
+router.post("/login", loginUser);
 
 // DELETE ACCOUNT
 router.delete("/delete/:id", deleteUser);

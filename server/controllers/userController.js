@@ -1,4 +1,7 @@
 import usersModel from "../models/usersModel.js";
+import encryptPassword from "../utils/encryptPassword.js";
+import isPasswordCorrect from "../utils/isPasswordCorrect.js";
+import issueToken from "../utils/issueToken.js";
 
 // GET ALL USERS
 const getAllUsers = async (req, res) => {
@@ -52,44 +55,84 @@ const getUser = async (req, res) => {
 const createUser = async (req, res) => {
   console.log("create user", req.body);
   const { email, username, password, premium } = req.body;
-  // add doc to db
+  // TODO: express email vaidation HERE
 
   try {
-    const existingEmail = usersModel.findOne({ email: email });
-    const existingUsername = usersModel.findOne({ username: username });
+    const existingEmail = await usersModel.findOne({ email: req.body.email });
+    const existingUsername = await usersModel.findOne({
+      username: req.body.username,
+    });
     if (existingEmail) {
-      res
-        .status(403)
-        .json({
-          msg: "task failed successfully: this email address already has an account",
-        }); // todo: RESET PASSWORD
+      res.status(403).json({
+        msg: "task failed successfully: this email address already has an account",
+      }); // TODO: RESET PASSWORD
     } else if (existingUsername) {
       res
         .status(403)
         .json({ msg: "task failed successfully: username already in use" });
     } else {
+      const hashedPassword = await encryptPassword(password);
+      console.log("hashedPassword =", hashedPassword);
+      const newUser = new usersModel({
+        email: email,
+        username: username,
+        password: hashedPassword,
+        premium: premium,
+      });
       try {
-        const user = await usersModel.create({
-          email,
-          username,
-          password,
-          premium,
-        });
-        console.log("user :>> ", user);
-        res.status(200).json({
-          msg: "user succesfully added",
-          user,
+        console.log("trying to save newUser");
+        console.log("newUser", newUser);
+        const savedUser = await newUser.save();
+        res.status(201).json({
+          msg: "user succesfully registered",
+          user: savedUser,
         });
       } catch (error) {
-        res
-          .status(400)
-          .json({ msg: "something went wrong during verification" });
+        res.status(500).json({ msg: "something went wrong during signup" });
       }
     }
   } catch (error) {
     res.status(500).json({
       msg: "something went wrong during verification",
     });
+  }
+};
+
+// LOGIN USER
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const existingUser = await usersModel.findOne({ email: email });
+    console.log("existingUser :>> ", existingUser);
+
+    if (!existingUser) {
+      res.status(200).json({ msg: "we have no record of that email address" });
+    } else {
+      const verified = await isPasswordCorrect(password, existingUser.password);
+      // console.log("verified", verified);
+      if (!verified) {
+        res.status(401).json({ msg: "incorrect password" });
+      }
+      if (verified) {
+        console.log("verified >>>>>", verified);
+        const token = issueToken(existingUser._id);
+        console.log("token :>> ", token);
+
+        res.status(200).json({
+          msg: "Sucessfully logged in",
+          user: {
+            username: existingUser.username,
+            id: existingUser._id,
+            email: existingUser.email,
+            premium: existingUser.premium,
+          },
+          token,
+        });
+      }
+    }
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ msg: "login went wrong" });
   }
 };
 
@@ -132,7 +175,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { getAllUsers, createUser, deleteUser, getUser, updateUser };
+export { getAllUsers, createUser, deleteUser, getUser, updateUser, loginUser };
 
 //! https://mongoosejs.com/docs/queries.html check documentation for each query type
 
