@@ -19,7 +19,7 @@ const useFetch = (url) => {
     try {
       FetchesFunction();
     } catch {
-      // setError(err.message);
+      setError(error);
       console.log("set error");
     } finally {
       console.log("data", data);
