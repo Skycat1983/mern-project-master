@@ -2,23 +2,11 @@ import React from "react";
 import NavBar from "../Components/Navbar/NavBar";
 import useFetch from "../Hooks/useFetch";
 import CircularProgress from "@mui/material/CircularProgress";
-
-//! V1 shop
-// import cover from "../assets/backgrounds/photos/leaf.png";
-
-//! V2 requires new logo placemenet in center
-// import cover from "../assets/backgrounds/photos/cuttinginbottle.jpg";
-
-//! V3
-import cover from "../assets/backgrounds/photos/junglephoto.jpg";
-
-//! V4 need to redo object fit
-// import cover from "../assets/backgrounds/photos/darkleaves.jpg";
-
-//! illustrations
-// import cover from "../assets/backgrounds/jungle4.png";
-// import cover from "../assets/backgrounds/illustrations/jungle4.png";
-// import cover from "../assets/backgrounds/jungle9.png";
+// import jungle1 from "../assets/backgrounds/photos/jungle.png";
+import jungle1 from "../assets/backgrounds/jungle4.png";
+//! if fails use below version?
+// import jungle1 from "../assets/backgrounds/illustrations/jungle4.png";
+// import jungle1 from "../assets/backgrounds/jungle9.png";
 import "./views.css";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -98,7 +86,7 @@ function Home() {
     <>
       <NavBar />
       <div className="background-image-div">
-        <img src={cover} className="background-image" alt="" />
+        <img src={jungle1} className="background-image" alt="" />
       </div>
       <Search
         className="search-bar"
@@ -143,40 +131,4 @@ function Home() {
       {isLoading == false && <Carousel data={data} isLoading={isLoading} />}
     </>
   );
-}
-
-// TODO:
-// - useErrors / useModal hook
-// - useFetch for Login & Signup
-// - redirect after form submitted successfully
-
-export default Home;
-
-// QUESTIONS:
-
-// why does my object destructure of useForm show different colour coding in Signup and MyAccount?
-
-// - see Profile.js view. Why do my "{!isLoading && <h3>welcome to {data?.user?.username}'s profile </h3>}" conditionals not work without the question marks? Why is the !isLoading part not enough to stop me gettiing error of "bundle.js:1325 Uncaught TypeError: Cannot read properties of null (reading 'user')""
-
-// - see carousel.js. i currently have it mapping over allPlants for my SwiperSlides. within each slide i am mapping over particular items, like item.genus and item.price. What is i want to map over unnamed variables? so that i can reuse this code for any fetch that gets completed? how would i do this?
-
-// - see carousel.js. on page load i get a warning about unique key prop. why is "<SwiperSlide key={item.user.id}>" not recognised?
-
-// - setError not working
-
-// CONFUSIONS:
-// - setTimeout(() => {});
-
-// todo: navbar formating issues. hidden icons ony appear when not in mobile view
-//? how to do try/catch with this type of fetch?
-
-// card ideas https://codepen.io/joshuaward/pen/dKmZVZ https://codepen.io/dickyal6/pen/rNeRepd
-
-// caoursel ideas https://github.com/nolimits4web/swiper https://github.com/maxmarinich/react-alice-carousel https://github.com/kidjp85/react-id-swiper
-
-{
-  /* <h3 className="welcome-user">HELLO USER</h3> */
-}
-{
-  /* <h1>message for the user</h1> */
 }

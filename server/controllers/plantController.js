@@ -90,25 +90,6 @@ const createPlant = async (req, res) => {
 //! UPLOAD IMAGE V1
 const uploadImage = async (req, res) => {
   try {
-    // console.log("req :>> ", req.file);
-    // Upload the image
-    // const imagesArray = [];
-    // req.files.forEach(async (file, index) => {
-    //   const uploadResult = await cloudinary.uploader.upload(file.path, {
-    //     folder: "plant-images",
-    //   });
-    //   // console.log("uploadResult >>>>", uploadResult.url);
-    //   imagesArray.push(uploadResult.url);
-    //   console.log("imagesArray :>> ", imagesArray);
-    //   console.log("index...>>>>", index);
-    //   console.log("imagesArray.lenght :>> ", imagesArray.length);
-    //   if (index < imagesArray.length - 1) {
-    //     res.status(200).json({
-    //       msg: "image upload Ok",
-    //       image: imagesArray,
-    //     });
-    //   }
-    // });
     const imgArrayOfPromises = req.files.map(async (file) => {
       const uploadResult = await cloudinary.uploader.upload(file.path, {
         folder: "plant-images",

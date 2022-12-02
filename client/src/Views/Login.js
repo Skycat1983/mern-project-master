@@ -1,6 +1,10 @@
 import { useForm, Form } from "../Components/useForm";
 import MyControls from "../Components/controls/MyControls";
 import useFetch from "../Hooks/useFetch";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
 
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl, FormLabel, RadioGroup } from "@mui/material";
@@ -29,11 +33,20 @@ const initialValues = {
   password: "",
 };
 
+// TODO: can this be imported once, instead of both at LOGIN and SIGNUP?
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
+
 const Login = () => {
   const { values, setValues, handleInputChange } = useForm(initialValues);
   const [userLogin, setUserLogin] = useState({});
 
-  const signIn = () => {
+  const signIn = async () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     const urlencoded = new URLSearchParams();
@@ -47,11 +60,27 @@ const Login = () => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:5001/api/users/login", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    try {
+      const response = await fetch(
+        "http://localhost:5001/api/users/login",
+        requestOptions
+      );
+      const result = await response.json();
+      console.log("result :>> ", result);
+      const { token } = result;
+      if (token) {
+        localStorage.setItem("token", token);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
+
+  //   fetch("http://localhost:5001/api/users/login", requestOptions)
+  //     .then((response) => response.text())
+  //     .then((result) => console.log(result))
+  //     .catch((error) => console.log("error", error));
+  // };
 
   console.log(values);
   return (
@@ -59,26 +88,56 @@ const Login = () => {
       <div className="frosted-div">
         <img src={background} className="background-image2" alt="" />
         <Form>
-          <Grid>
-            <MyControls.MyInputs
-              label="email address"
-              name="emailAddress"
-              value={values.emailAddress}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <MyControls.MyInputs
-            label="password"
-            name="password"
-            value={values.password}
-            onChange={handleInputChange}
-          />
+          <Stack>
+            <Item>
+              <MyControls.MyInputs
+                label="email address"
+                name="emailAddress"
+                value={values.emailAddress}
+                onChange={handleInputChange}
+                sx={{
+                  rowGap: "20px",
+                  padding: "100px",
+                }}
+              />
+            </Item>
+            <Item>
+              <MyControls.MyInputs
+                label="password"
+                name="password"
+                value={values.password}
+                onChange={handleInputChange}
+              />
+            </Item>
+            <Item>
+              <Button
+                fullWidth={true}
+                variant="contained"
+                component="label"
+                onClick={signIn}
+              >
+                LOGIN
+              </Button>
+            </Item>
+          </Stack>
         </Form>
-        <Button variant="contained" component="label" onClick={signIn}>
-          LOGIN
-        </Button>
       </div>
     </>
   );
 };
 export default Login;
+
+// try {
+//   const response = await fetch(
+//     "http://localhost:5001/api/users/login",
+//     requestOptions
+//   );
+//   const result = await response.json();
+//   console.log("result :>> ", result);
+//   const { token } = result;
+//   if (token) {
+//     localStorage.setItem("token", token);
+//   }
+// } catch (error) {
+//   console.log("error", error);
+// }

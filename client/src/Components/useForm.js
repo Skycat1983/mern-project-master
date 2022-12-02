@@ -27,8 +27,8 @@ export function Form(props) {
   return (
     <form
       style={{
-        marginTop: "85px",
-        marginLeft: "85px",
+        marginTop: "150px",
+        marginLeft: "60px",
         alignItems: "center",
         borderRadius: "12px 12px 12px 12px",
 
@@ -36,6 +36,11 @@ export function Form(props) {
         width: "190px",
         backgroundColor: "white",
         opacity: "80%",
+        color: "green", //! only applies to basic/premium options
+        padding: "30px",
+        // rowGap: "20px",
+        // margin: "dense",
+        // color: "success",
       }}
       // sx={{
       //   bgcolor: "background.paper",

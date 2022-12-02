@@ -4,7 +4,12 @@ import Signup from "./Views/Signup";
 import MyAccount from "./Views/MyAccount";
 import Login from "./Views/Login";
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 // import { AuthContextProvider } from "./context/AuthContext";
 
@@ -21,6 +26,7 @@ function App() {
           <Route exact path="myaccount" element={<MyAccount />} />
           <Route exact path="login" element={<Login />} />
           <Route exact path="profile/:id" element={<Profile />} />
+          <Route path="/redirect" element={<Navigate to="/" />} />
           {/* <ProtectedRoute></ProtectedRoute> */}
           {/* <Route path="*" element={<GoHome />} /> */}
         </Routes>

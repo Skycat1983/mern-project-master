@@ -11,7 +11,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 
+// import houseplant3 from "../../assets/appIcons/complexgold.png";
+// import houseplant3 from "../../assets/appIcons/chrome.png";
 import houseplant3 from "../../assets/appIcons/houseplant3.png";
+
 import { Avatar } from "@mui/material";
 import "./NavBar.css";
 import ListItemIcon from "@mui/material/ListItemIcon";

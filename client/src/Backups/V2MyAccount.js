@@ -108,12 +108,9 @@ const MyAccount = () => {
 
   return (
     <>
-      <h1>heading1</h1>
-      <h1>heading2</h1>
+      <div>MyAccount</div>
       <h1>new plant listing</h1>
-      <h1>heading1</h1>
-
-      {/* <img src={selectedFiles} alt="new" /> */}
+      <img src={selectedFiles} alt="new" />
 
       <form>
         <input

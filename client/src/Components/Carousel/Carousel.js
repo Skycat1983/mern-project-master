@@ -81,7 +81,9 @@ export default function Carousel(data, isLoading) {
                       <CardMedia
                         component="img"
                         height="140"
-                        image={user1}
+                        image={item.avatar}
+                        // image="https://res.cloudinary.com/dzncmfirr/image/upload/v1669997773/app-images/DALL_E_2022-12-02_09.23.21_-_hyperrealistic_3D_render_of_a_monstera_leaf_encased_in_a_glass_marble_chn1wg.png"
+                        // image={user1}
                         alt="user pic"
                       />
                       <CardContent>

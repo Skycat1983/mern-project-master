@@ -9,6 +9,7 @@ const usersSchema = new Schema(
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     premium: { type: Boolean, required: true },
+    avatar: { type: String, required: true },
 
     // latitude: { type: Number, required: false },
     // longtitude: { type: Number, required: false },
