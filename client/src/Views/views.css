@@ -1,3 +1,51 @@
+/* MULTI */
+.below-nav {
+  /* background-color: aqua; */
+  position: fixed;
+  top: 57px;
+}
+
+/* .file-picker {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 1px 3px;
+  text-decoration: none;
+  margin: 2px 2px;
+  cursor: pointer;
+} */
+
+/* MyAccount */
+.gradient-div {
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0e0e0e+0,ffffff+100&1+0,0+100 */
+  background: -moz-linear-gradient(top, rgba(14, 14, 14, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(14, 14, 14, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(14, 14, 14, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0e0e0e', endColorstr='#00ffffff', GradientType=0);
+  /* IE6-9 */
+
+  height: 50px;
+  position: fixed;
+  top: 45px;
+  z-index: 100;
+  width: 100%;
+}
+
+.welcome-back-header {
+  color: white;
+  padding: 17px;
+  position: fixed;
+  top: 27px;
+  z-index: 100;
+  width: 100%;
+
+
+}
+
+/* HOME */
 .background-image {
   display: block;
   width: auto;
@@ -73,4 +121,23 @@
   /* object-position: left; */
 
   /* object-fit: cover; */
+}
+
+/* body {
+  background: url(https://images.unsplash.com/photo-1544306094-e2dcf9479da3) no-repeat;
+  background-size: cover;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+} */
+
+.container {
+  width: 30rem;
+  height: 20rem;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, .15);
+
+  backdrop-filter: blur(5px);
 }

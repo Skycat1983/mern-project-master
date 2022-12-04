@@ -1,11 +1,10 @@
-import { useForm, Form } from "../Components/useForm";
+import { useForm, Form } from "../Hooks/useForm";
 import MyControls from "../Components/controls/MyControls";
 import useFetch from "../Hooks/useFetch";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-
+import { alpha, styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl, FormLabel, RadioGroup } from "@mui/material";
 import Radio from "@mui/material/Radio";
@@ -85,8 +84,8 @@ const Login = () => {
   console.log(values);
   return (
     <>
-      <div className="frosted-div">
-        <img src={background} className="background-image2" alt="" />
+      <img src={background} className="background-image2" alt="" />
+      <div className="container">
         <Form>
           <Stack>
             <Item>
@@ -95,10 +94,6 @@ const Login = () => {
                 name="emailAddress"
                 value={values.emailAddress}
                 onChange={handleInputChange}
-                sx={{
-                  rowGap: "20px",
-                  padding: "100px",
-                }}
               />
             </Item>
             <Item>

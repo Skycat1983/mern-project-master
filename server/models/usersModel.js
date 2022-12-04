@@ -10,11 +10,12 @@ const usersSchema = new Schema(
     password: { type: String, required: true },
     premium: { type: Boolean, required: true },
     avatar: { type: String, required: true },
+    aboutus: { type: String, required: false },
+    // commentsForUser [] (the comments others left for us)
+    // commentsByUser [] (the comments we left for others)
 
-    // latitude: { type: Number, required: false },
-    // longtitude: { type: Number, required: false },
-    // comments: { type: Object, required: false },
-    comments: [
+    // when a user leaves a review, we send two post requests.
+    commentsForUser: [
       {
         author: {
           type: String,
@@ -29,6 +30,7 @@ const usersSchema = new Schema(
     // _id: { type: mongoose.ObjectId },
     plants: [{ type: Schema.Types.ObjectId, ref: "Plant" }], //! ref: "plant" = the collection name in mongodb. must be singular
     // wishlist: { type: Object, required: false },
+    commentsForUser: { type: Array, required: false },
   },
   { timestamps: true }
 );
@@ -40,3 +42,7 @@ export default usersModel;
 // 51.557040137852745, -0.02915755416881117;
 
 // populate({ path: "plants" });
+
+// latitude: { type: Number, required: false },
+// longtitude: { type: Number, required: false },
+// comments: { type: Object, required: false },

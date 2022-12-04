@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Link, Navigate } from "react-router-dom";
 
 // import houseplant3 from "../../assets/appIcons/complexgold.png";
 // import houseplant3 from "../../assets/appIcons/chrome.png";
@@ -25,7 +26,7 @@ import Logout from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 
 export default function PrimarySearchAppBar() {
-  const [user, setUser] = useState(false); //! <<< DONT FORGET
+  const [user, setUser] = useState(true); //! <<< DONT FORGET
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -44,7 +45,10 @@ export default function PrimarySearchAppBar() {
         {/* <Toolbar sx={{ backgroundColor: "#003838" }}> */}
         <Toolbar sx={{ backgroundColor: "#002A2A" }}>
           <div className="plant-logo-box">
-            <img src={houseplant3} className="plant-logo" alt="" />
+            <Link to={"/"}>
+              {" "}
+              <img src={houseplant3} className="plant-logo" alt="" />
+            </Link>
           </div>
           <IconButton
             onClick={handleClick}
@@ -55,17 +59,17 @@ export default function PrimarySearchAppBar() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            {!user ? (
-              <MenuIcon
-                className="menu-icon"
-                sx={{ position: "fixed", right: "20px;" }}
-              />
-            ) : (
+            {/* {!user ? ( */}
+            <MenuIcon
+              className="menu-icon"
+              sx={{ position: "fixed", right: "20px;" }}
+            />
+            {/* ) : (
               <Avatar
                 className="menu-icon"
                 sx={{ position: "fixed", right: "20px;" }}
               />
-            )}
+            )} */}
           </IconButton>
           <React.Fragment>
             <Box
@@ -118,9 +122,10 @@ export default function PrimarySearchAppBar() {
               anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
               className="hamburger-menu"
             >
+              {/* <Link to={"/myaccount"}>My account</Link> */}
               {user ? (
                 <MenuItem>
-                  <Avatar /> My account
+                  <Avatar /> <Link to={"/myaccount"}>My account</Link>
                 </MenuItem>
               ) : (
                 <MenuItem>

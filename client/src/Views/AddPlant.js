@@ -1,9 +1,9 @@
 import React from "react";
-import { useForm, Form, XLForm } from "../Components/useForm";
+import { useForm, Form, XLForm, PlantForm } from "../Hooks/useForm";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl, FormLabel, RadioGroup, TextField } from "@mui/material";
 import Radio from "@mui/material/Radio";
-
+import Box from "@mui/material/Box";
 import MyRadioGroup from "../Components/controls/MyRadioGroup";
 import MyControls from "../Components/controls/MyControls";
 import { useContext, useEffect, useState } from "react";
@@ -13,6 +13,13 @@ import useFetch from "../Hooks/useFetch";
 import NavBar from "../Components/Navbar/NavBar.js";
 import EditIcon from "@mui/icons-material/Edit";
 import Typography from "@mui/material/Typography";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import "./views.css";
+import UploadIcon from "@mui/icons-material/Upload";
+import CreateIcon from "@mui/icons-material/Create";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import "./views.css";
 
 // todo: useFetch custom hook instead
@@ -25,12 +32,7 @@ const initialValues = {
   varigation: "",
 };
 
-const MyAccount = () => {
-  //! protected route
-  const user = {
-    username: "the plant seller",
-    aboutus: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-  };
+const AddPlant = () => {
   const [selectedFiles, setSelectedFiles] = useState([{}]);
   const [urls, setUrls] = useState({});
   const [newPost, setNewPost] = useState({});
@@ -119,51 +121,34 @@ const MyAccount = () => {
     <>
       <NavBar />
       <div className="below-nav">
-        <div className="gradient-div">
-          <h5 className="welcome-back-header">welcome back, {user.username}</h5>
-        </div>
-
-        <XLForm>
-          <h5>about us</h5>
-          {user.aboutus ? (
-            <Typography>
-              {user.aboutus} <EditIcon />
-            </Typography>
-          ) : (
-            <TextField
-              id="outlined-multiline-flexible"
-              label="about us"
-              name="aboutUs"
-              multiline
-              maxRows={4}
-              value={values.aboutUs}
-              onChange={handleInputChange}
-            />
-          )}
-        </XLForm>
-        <h5>new plant listing</h5>
-
-        {/* <img src={selectedFiles} alt="new" /> */}
-
-        <form>
+        <PlantForm>
           <input
+            className="file-picker"
             type="file"
             name="file"
             multiple="multiple"
             id="file"
             onChange={handleUpload}
           />
-          <Button variant="contained" color="success" onClick={uploadImages}>
+
+          <Button
+            fullWidth={true}
+            variant="contained"
+            color="success"
+            onClick={uploadImages}
+          >
             Upload image
           </Button>
-        </form>
-        <Form>
-          <MyControls.MyInputs
-            label="genus"
-            name="genus"
-            value={values.genus}
-            onChange={handleInputChange}
-          />
+          {urls ? (
+            <MyControls.MyInputs
+              label="genus"
+              name="genus"
+              value={values.genus}
+              onChange={handleInputChange}
+            />
+          ) : (
+            <TextField disabled></TextField>
+          )}
           <MyControls.MyInputs
             label="price"
             name="price"
@@ -214,7 +199,6 @@ const MyAccount = () => {
               />
             </RadioGroup>
           </FormControl>
-
           <FormControl>
             <FormLabel>Varigation</FormLabel>
             <RadioGroup
@@ -237,18 +221,18 @@ const MyAccount = () => {
               />
             </RadioGroup>
           </FormControl>
-        </Form>
-        <Button
-          fullWidth={true}
-          variant="contained"
-          component="label"
-          onClick={submitListing}
-        >
-          LIST PLANT
-        </Button>
+          <Button
+            fullWidth={true}
+            variant="contained"
+            component="label"
+            onClick={submitListing}
+          >
+            LIST PLANT
+          </Button>
+        </PlantForm>
       </div>
     </>
   );
 };
 
-export default MyAccount;
+export default AddPlant;

@@ -1,5 +1,6 @@
 import useFetch from "../Hooks/useFetch";
 import NavBar from "../Components/Navbar/NavBar";
+
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";

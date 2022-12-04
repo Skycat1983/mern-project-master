@@ -3,6 +3,7 @@ import Profile from "./Views/Profile.js";
 import Signup from "./Views/Signup";
 import MyAccount from "./Views/MyAccount";
 import Login from "./Views/Login";
+import AddPlant from "./Views/AddPlant";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -26,6 +27,8 @@ function App() {
           <Route exact path="myaccount" element={<MyAccount />} />
           <Route exact path="login" element={<Login />} />
           <Route exact path="profile/:id" element={<Profile />} />
+          <Route exact path="addplant" element={<AddPlant />} />
+
           <Route path="/redirect" element={<Navigate to="/" />} />
           {/* <ProtectedRoute></ProtectedRoute> */}
           {/* <Route path="*" element={<GoHome />} /> */}

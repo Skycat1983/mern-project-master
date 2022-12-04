@@ -154,6 +154,8 @@ export default Home;
 
 // QUESTIONS:
 
+// my userscollection has a commentsForUser field which stores reviews left for that user. Would it make sense for me to have a commentsByUser field too, which also stores the reviews, but this time by the user for others, and then populate links between the two? or does populating links between users make no sense, considering they belong to the same collection? //! the documentation seems to imply that we can only populate between different collections, not within a single collection. for this reason it seemed to make more sense to make a comments collection, rather
+
 // why does my object destructure of useForm show different colour coding in Signup and MyAccount?
 
 // - see Profile.js view. Why do my "{!isLoading && <h3>welcome to {data?.user?.username}'s profile </h3>}" conditionals not work without the question marks? Why is the !isLoading part not enough to stop me gettiing error of "bundle.js:1325 Uncaught TypeError: Cannot read properties of null (reading 'user')""

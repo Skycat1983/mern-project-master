@@ -1,8 +1,9 @@
 import React from "react";
-import { useForm, Form, XLForm } from "../Hooks/useForm";
+import { useForm, Form, XLForm, PlantForm } from "../Hooks/useForm";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl, FormLabel, RadioGroup, TextField } from "@mui/material";
 import Radio from "@mui/material/Radio";
+
 import MyRadioGroup from "../Components/controls/MyRadioGroup";
 import MyControls from "../Components/controls/MyControls";
 import { useContext, useEffect, useState } from "react";
@@ -13,42 +14,45 @@ import NavBar from "../Components/Navbar/NavBar.js";
 import EditIcon from "@mui/icons-material/Edit";
 import Typography from "@mui/material/Typography";
 import "./views.css";
-import Box from "@mui/material/Box";
-import temp from "../assets/temp/temp3.png";
-
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import CardMedia from "@mui/material/CardMedia";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ButtonBase from "@mui/material/ButtonBase";
 
 // todo: useFetch custom hook instead
 
 const initialValues = {
-  aboutus: "",
+  genus: "",
+  price: "",
+  rooted: "",
+  topCutting: "",
+  varigation: "",
 };
 
-const MyAccount = () => {
-  const [selectedFile, setSelectedFile] = useState([{}]);
-  const [url, setUrl] = useState({});
-
+const AddPlant = () => {
   //! protected route
-  const user = {
-    username: "the plant seller",
-    // aboutus: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-  };
-  const data = { user: { plants: { genus: "monstera", price: 40 } } };
+  const [selectedFiles, setSelectedFiles] = useState([{}]);
+  const [urls, setUrls] = useState({});
+  const [newPost, setNewPost] = useState({});
   const { values, setValues, handleInputChange } = useForm(initialValues);
 
+  useEffect(() => {
+    //? confused why this returns empty?
+    console.log("URLS", values);
+  }, [urls, values]);
+
   const handleUpload = (e) => {
-    setSelectedFile(e.target);
-    console.log(e.target.file);
+    setSelectedFiles(e.target);
+    console.log(e.target.files);
   };
 
-  const uploadAvatar = async (e) => {
+  const uploadImages = async (e) => {
     e.preventDefault();
     const formdata = new FormData();
-    formdata.append("image", selectedFile.file[0]);
+    formdata.append("image", selectedFiles.files[0]);
+    formdata.append("image", selectedFiles.files[1]);
+    formdata.append("image", selectedFiles.files[2]);
+
+    //! this does not work. why?
+    // for (let i = 0; i < selectedFiles.length; i++) {
+    //   formdata.append("image", selectedFiles.files[i]);
+    // }
 
     const requestOptions = {
       method: "POST",
@@ -62,8 +66,8 @@ const MyAccount = () => {
     );
     const result = await response.json();
     console.log("result :>> ", result);
-    console.log(setUrl(result.url));
-    console.log("url", url);
+    console.log(setUrls(result.urls));
+    console.log("urls", urls);
 
     // fetch("http://localhost:5001/api/plants/uploadimage", requestOptions)
     //   .then((response) => response.text()) //! or .json
@@ -78,7 +82,12 @@ const MyAccount = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     const urlencoded = new URLSearchParams();
-    urlencoded.append("imageUrl", url);
+    urlencoded.append("genus", values.genus);
+    urlencoded.append("varigation", values.varigation);
+    urlencoded.append("price", values.price);
+    urlencoded.append("rooted", values.rooted);
+    urlencoded.append("topcutting", values.topCutting);
+    urlencoded.append("imageUrls", urls);
 
     const requestOptions = {
       method: "POST",
@@ -106,119 +115,6 @@ const MyAccount = () => {
     <>
       <NavBar />
       <div className="below-nav">
-        <div className="gradient-div">
-          <h5 className="welcome-back-header">welcome back, {user.username}</h5>
-        </div>
-
-        <Box
-          sx={{
-            p: 2,
-            margin: 2,
-            marginTop: 10,
-          }}
-        >
-          <Typography variant="h6" gutterBottom>
-            about us
-          </Typography>
-          {user.aboutus ? (
-            <Typography variant="body1" gutterBottom>
-              {user.aboutus} <EditIcon />
-            </Typography>
-          ) : (
-            <XLForm>
-              <TextField
-                id="outlined-multiline-flexible"
-                label="about us"
-                name="aboutUs"
-                multiline
-                maxRows={4}
-                value={values.aboutUs}
-                onChange={handleInputChange}
-              />
-            </XLForm>
-          )}
-        </Box>
-        <input
-          className="file-picker"
-          type="file"
-          name="file"
-          multiple="multiple"
-          id="file"
-          onChange={handleUpload}
-        />
-
-        <Button
-          fullWidth={true}
-          variant="contained"
-          color="success"
-          onClick={uploadAvatar}
-        >
-          Upload image
-        </Button>
-
-        <XLForm></XLForm>
-
-        {/* <Grid>
-          {data &&
-            data?.user?.plants?.map((item) => {
-              return (
-                <Paper
-                  className="profile-plant-items"
-                  sx={{
-                    p: 2,
-                    margin: 2,
-                    maxWidth: 300,
-                    flexGrow: 1,
-                    backgroundColor: (theme) =>
-                      theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-                  }}
-                >
-                  <Grid container spacing={2}>
-                    <Grid item>
-                      <ButtonBase sx={{ width: 100, height: 100 }}>
-                        <CardMedia
-                          component="img"
-
-                          width="10"
-                          image={temp}
-                          alt="user pic"
-                        />
-                      </ButtonBase>
-                    </Grid>
-                    <Grid item xs={12} sm container>
-                      <Grid item xs container direction="column" spacing={2}>
-                        <Grid item xs>
-                          <Typography
-                            gutterBottom
-                            variant="subtitle1"
-                            component="div"
-                          >
-                            {item.genus}
-                          </Typography>
-                          <Typography variant="body2" gutterBottom>
-                            Family • AROID
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            listed: {item.createdAt}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <FavoriteBorderIcon />
-      
-                        </Grid>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="subtitle1" component="div">
-                          £{item.price}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              );
-            })}
-        </Grid> */}
-
         {/* <img src={selectedFiles} alt="new" /> */}
 
         {/* <form>
@@ -232,8 +128,24 @@ const MyAccount = () => {
           <Button variant="contained" color="success" onClick={uploadImages}>
             Upload image
           </Button>
-        </form>
-        <Form>
+        </form> */}
+        <PlantForm>
+          <input
+            type="file"
+            name="file"
+            multiple="multiple"
+            id="file"
+            onChange={handleUpload}
+          />
+
+          <Button
+            fullWidth={true}
+            variant="contained"
+            color="success"
+            onClick={uploadImages}
+          >
+            Upload image
+          </Button>
           <MyControls.MyInputs
             label="genus"
             name="genus"
@@ -290,7 +202,6 @@ const MyAccount = () => {
               />
             </RadioGroup>
           </FormControl>
-
           <FormControl>
             <FormLabel>Varigation</FormLabel>
             <RadioGroup
@@ -313,18 +224,18 @@ const MyAccount = () => {
               />
             </RadioGroup>
           </FormControl>
-        </Form>
-        <Button
-          fullWidth={true}
-          variant="contained"
-          component="label"
-          onClick={submitListing}
-        >
-          LIST PLANT
-        </Button> */}
+          <Button
+            fullWidth={true}
+            variant="contained"
+            component="label"
+            onClick={submitListing}
+          >
+            LIST PLANT
+          </Button>
+        </PlantForm>
       </div>
     </>
   );
 };
 
-export default MyAccount;
+export default AddPlant;

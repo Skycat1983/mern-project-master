@@ -1,4 +1,4 @@
-import { useForm, Form } from "../Components/useForm";
+import { useForm, Form } from "../Hooks/useForm";
 import MyControls from "../Components/controls/MyControls";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl, FormLabel, RadioGroup } from "@mui/material";
@@ -72,62 +72,72 @@ const Signup = () => {
   return (
     <>
       <img src={background} className="background-image2" alt="" />
-      <Form>
-        <Stack>
-          <Item>
-            <MyControls.MyInputs
-              label="email address"
-              name="emailAddress"
-              value={values.emailAddress}
-              onChange={handleInputChange}
-            />
-          </Item>
-          <Item>
-            <MyControls.MyInputs
-              variant="outlined"
-              label="display name"
-              name="displayName"
-              value={values.displayName}
-              onChange={handleInputChange}
-            />
-          </Item>
-          <Item>
-            <MyControls.MyInputs
-              label="password"
-              name="password"
-              value={values.password}
-              onChange={handleInputChange}
-            />
-          </Item>
-          <Item>
-            <FormControl>
-              <FormLabel>Membership</FormLabel>
-              <RadioGroup
-                row={true}
-                name="membership"
-                value={values.membership}
+      <div className="container">
+        <Form>
+          <Stack>
+            <Item>
+              <MyControls.MyInputs
+                label="email address"
+                id="standard-basic"
+                variant="standard"
+                name="emailAddress"
+                value={values.emailAddress}
                 onChange={handleInputChange}
-              >
-                <FormControlLabel
-                  value="false"
-                  control={<Radio />}
-                  label="Basic"
-                />
-                <FormControlLabel
-                  value="true"
-                  control={<Radio />}
-                  label="Premium"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Item>
-          {/* <Item> */}
-          <Button variant="contained" component="label" onClick={register}>
-            SUBMIT
-          </Button>
-          {/* </Item> */}
-        </Stack>
-      </Form>
+                sx={{ input: { color: "red" } }}
+              />
+            </Item>
+            <Item>
+              <MyControls.MyInputs
+                variant="outlined"
+                label="display name"
+                name="displayName"
+                value={values.displayName}
+                onChange={handleInputChange}
+              />
+            </Item>
+            <Item>
+              <MyControls.MyInputs
+                label="password"
+                name="password"
+                value={values.password}
+                onChange={handleInputChange}
+              />
+            </Item>
+            <Item>
+              <FormControl>
+                <FormLabel>Membership</FormLabel>
+                <RadioGroup
+                  row={true}
+                  name="membership"
+                  value={values.membership}
+                  onChange={handleInputChange}
+                >
+                  <FormControlLabel
+                    value="false"
+                    control={<Radio />}
+                    label="Basic"
+                  />
+                  <FormControlLabel
+                    value="true"
+                    control={<Radio />}
+                    label="Premium"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Item>
+            {/* <Item> */}
+            <Button
+              variant="contained"
+              color="success"
+              component="label"
+              onClick={register}
+            >
+              SUBMIT
+            </Button>
+            {/* </Item> */}
+          </Stack>
+        </Form>
+      </div>
     </>
   );
 };
