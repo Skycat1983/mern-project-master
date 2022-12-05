@@ -6,6 +6,12 @@ import mongoose from "mongoose";
 import plantRoutes from "./routes/plantRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import cloudinaryConfig from "./config/cloudinary.js";
+import passport from "passport";
+import passportConfig from "./config/passport.js";
+
+//! uncomment if doesn't work
+// // capital P because it's a method from passport
+// import { Passport } from "passport";
 
 // EXPRESS APP
 const app = express();
@@ -26,6 +32,10 @@ const addMiddleWares = () => {
   };
   app.use(cors(corsOptions));
   cloudinaryConfig();
+  app.use(passport.initialize());
+  passportConfig(passport);
+  //! uncomment if doesn't work
+  // app.use(Passport.initialize());
 };
 
 const startServer = () => {

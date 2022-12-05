@@ -36,6 +36,7 @@ export default function Carousel(data, isLoading) {
       >
         {data &&
           data.data?.allPlants?.map((item) => {
+            console.log("item", { ...item });
             return (
               <SwiperSlide key={item.user.id}>
                 <Card sx={{ maxWidth: 345 }}>

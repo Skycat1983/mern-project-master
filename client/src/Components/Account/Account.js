@@ -10,6 +10,8 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import "./Account.css";
 import { Link, Navigate } from "react-router-dom";
+import WallpaperIcon from "@mui/icons-material/Wallpaper";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function Account() {
   const user = { plants: false, premium: true, plants: true };
@@ -61,11 +63,16 @@ function Account() {
           </Item>
         </Grid>
         <Grid xs={8}>
-          <Item>Upload avatar: </Item>
+          <Item>Upload cover/avatar: </Item>
         </Grid>
         <Grid xs={2}>
           <Item>
-            <EditIcon></EditIcon>
+            <WallpaperIcon></WallpaperIcon>
+          </Item>
+        </Grid>
+        <Grid xs={2}>
+          <Item>
+            <AccountCircleIcon></AccountCircleIcon>
           </Item>
         </Grid>
       </Grid>

@@ -88,11 +88,6 @@ const AddPlant = () => {
     formdata.append("image", selectedFiles.files[1]);
     formdata.append("image", selectedFiles.files[2]);
 
-    //! this does not work. why?
-    // for (let i = 0; i < selectedFiles.length; i++) {
-    //   formdata.append("image", selectedFiles.files[i]);
-    // }
-
     const requestOptions = {
       method: "POST",
       body: formdata,

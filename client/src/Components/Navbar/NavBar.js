@@ -79,88 +79,90 @@ export default function PrimarySearchAppBar() {
                 alignItems: "center",
                 textAlign: "center",
               }}
-            ></Box>
-            <Menu
-              sx={{
-                top: "33px",
-                left: "35vw",
-              }}
-              // sx={{ mt: 100 }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              onClick={handleClose}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  position: "fixed",
-                  // left: 200,
-                  mt: 3.0,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
-              transformOrigin={{ horizontal: "left", vertical: "top" }}
-              anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-              className="hamburger-menu"
             >
-              {/* <Link to={"/myaccount"}>My account</Link> */}
-              {user ? (
-                <MenuItem>
-                  <Avatar /> <Link to={"/myaccount"}>My account</Link>
-                </MenuItem>
-              ) : (
-                <MenuItem>
-                  <Avatar /> Not signed in
-                </MenuItem>
-              )}
-              <Divider />
-              {/* <MenuItem>
+              <Menu
+                sx={{
+                  top: "50px",
+                  left: "35vw",
+                }}
+                // sx={{ mt: 100 }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    position: "fixed",
+                    // left: 200,
+                    mt: 3.0,
+                    ml: 20.0,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    "&:before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
+                  },
+                }}
+                transformOrigin={{ horizontal: "left", vertical: "top" }}
+                anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+                className="hamburger-menu"
+              >
+                {/* <Link to={"/myaccount"}>My account</Link> */}
+                {user ? (
+                  <MenuItem>
+                    <Avatar /> <Link to={"/myaccount"}>My account</Link>
+                  </MenuItem>
+                ) : (
+                  <MenuItem>
+                    <Avatar /> Not signed in
+                  </MenuItem>
+                )}
+                <Divider />
+                {/* <MenuItem>
                 <ListItemIcon>
                   <PersonAdd fontSize="small" />
                 </ListItemIcon>
                 Add another account
               </MenuItem> */}
-              <MenuItem>
-                <ListItemIcon>
-                  <Settings fontSize="small" />
-                </ListItemIcon>
-                Settings
-              </MenuItem>
-              {user ? (
                 <MenuItem>
                   <ListItemIcon>
-                    <Logout fontSize="small" />
+                    <Settings fontSize="small" />
                   </ListItemIcon>
-                  Logout
+                  Settings
                 </MenuItem>
-              ) : (
-                <MenuItem>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  Sign in
-                </MenuItem>
-              )}
-            </Menu>
+                {user ? (
+                  <MenuItem>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Logout
+                  </MenuItem>
+                ) : (
+                  <MenuItem>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Sign in
+                  </MenuItem>
+                )}
+              </Menu>
+            </Box>
           </React.Fragment>
         </Toolbar>
       </AppBar>
