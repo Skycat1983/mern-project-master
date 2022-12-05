@@ -85,7 +85,7 @@ const Login = () => {
   return (
     <>
       <img src={background} className="background-image2" alt="" />
-      <div className="container">
+      <div className="login-container">
         <Form>
           <Stack>
             <Item>
@@ -110,6 +110,7 @@ const Login = () => {
                 variant="contained"
                 component="label"
                 onClick={signIn}
+                color="success"
               >
                 LOGIN
               </Button>

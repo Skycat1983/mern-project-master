@@ -1,0 +1,10 @@
+.profile-tab {
+  position: relative;
+  top: 3vh;
+}
+
+.my-tab {
+  color: darkgreen !important;
+  /* background-color: darkgreen !important; */
+  ;
+}

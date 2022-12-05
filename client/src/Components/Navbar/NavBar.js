@@ -37,7 +37,7 @@ export default function PrimarySearchAppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }} className="nav-box">
+    <Box position="fixed" sx={{ flexGrow: 1 }} className="nav-box">
       <AppBar position="fixed">
         {/* <Toolbar sx={{ backgroundColor: "teal" }}> */}
         {/* <Toolbar sx={{ backgroundColor: "#1b5e20" }}> */}

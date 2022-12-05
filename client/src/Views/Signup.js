@@ -1,4 +1,4 @@
-import { useForm, Form } from "../Hooks/useForm";
+import { useForm, Form, SignupForm } from "../Hooks/useForm";
 import MyControls from "../Components/controls/MyControls";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl, FormLabel, RadioGroup } from "@mui/material";
@@ -49,7 +49,7 @@ const Signup = () => {
     urlencoded.append("email", values.emailAddress);
     urlencoded.append("username", values.displayName);
     urlencoded.append("password", values.password);
-    urlencoded.append("premium", values.membership);
+    urlencoded.append("premium", false);
     urlencoded.append(
       "avatar",
       "https://res.cloudinary.com/dzncmfirr/image/upload/v1669997773/app-images/DALL_E_2022-12-02_09.23.21_-_hyperrealistic_3D_render_of_a_monstera_leaf_encased_in_a_glass_marble_chn1wg.png"
@@ -73,7 +73,7 @@ const Signup = () => {
     <>
       <img src={background} className="background-image2" alt="" />
       <div className="container">
-        <Form>
+        <SignupForm>
           <Stack>
             <Item>
               <MyControls.MyInputs
@@ -103,7 +103,7 @@ const Signup = () => {
                 onChange={handleInputChange}
               />
             </Item>
-            <Item>
+            {/* <Item>
               <FormControl>
                 <FormLabel>Membership</FormLabel>
                 <RadioGroup
@@ -124,8 +124,7 @@ const Signup = () => {
                   />
                 </RadioGroup>
               </FormControl>
-            </Item>
-            {/* <Item> */}
+            </Item> */}
             <Button
               variant="contained"
               color="success"
@@ -134,9 +133,8 @@ const Signup = () => {
             >
               SUBMIT
             </Button>
-            {/* </Item> */}
           </Stack>
-        </Form>
+        </SignupForm>
       </div>
     </>
   );

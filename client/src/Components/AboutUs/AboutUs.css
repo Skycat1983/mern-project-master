@@ -1,0 +1,28 @@
+.about-us-avatar {
+  width: 100%;
+}
+
+.about-us {
+  width: 300px;
+  padding-top: 15px;
+  padding-left: 30px;
+}
+
+.update-button {
+  /* padding-left: 15px; */
+  position: fixed;
+  bottom: -60px;
+  left: 20px;
+  width: 100px;
+}
+
+.edit-button {
+  width: 100px;
+  margin: 20px;
+
+}
+
+
+/* .profile-headings {
+  position: absolute;
+} */
