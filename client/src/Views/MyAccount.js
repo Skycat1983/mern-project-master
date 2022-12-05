@@ -21,6 +21,8 @@ import AboutUs from "../Components/AboutUs/AboutUs.js";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import Carousel from "../Components/Carousel/Carousel.js";
+import Account from "../Components/Account/Account.js";
 
 // import temp from "../assets/temp/temp3.png";
 
@@ -30,6 +32,14 @@ import CardMedia from "@mui/material/CardMedia";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ButtonBase from "@mui/material/ButtonBase";
 import ProfileTab from "../Components/ProfileTab/ProfileTab";
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
 const MyAccount = () => {
   const [selectedFile, setSelectedFile] = useState([{}]);
@@ -63,7 +73,30 @@ const MyAccount = () => {
         </div>
       </div>
       <ProfileTab></ProfileTab>
-      <AboutUs></AboutUs>
+      <Grid
+        sx={{
+          marginTop: -14,
+        }}
+        container
+        spacing={5}
+        padding={1}
+        paddingLeft={3}
+        paddingRight={3}
+      >
+        <Grid className="profile-headings" item xs={8}>
+          <Typography sx={{ color: "#ffffff" }} variant="h6" gutterBottom>
+            {user.username}
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>
+            <img src={temp} className="about-us-avatar" alt="" />
+          </Item>
+        </Grid>
+      </Grid>
+      {/* <AboutUs></AboutUs> */}
+      {/* <Carousel></Carousel> */}
+      <Account></Account>
     </>
   );
 };

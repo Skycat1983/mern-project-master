@@ -1,0 +1,19 @@
+.account-grid {
+  position: relative;
+  /* margin-top: 60px; */
+  padding-top: 15px;
+  padding-left: 30px;
+  padding-right: 15px;
+}
+
+.selected {
+  color: darkgreen;
+}
+
+.unselected {
+  color: grey;
+}
+
+.not-possible {
+  color: lightgray;
+}

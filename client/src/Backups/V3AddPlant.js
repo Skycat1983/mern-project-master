@@ -2,7 +2,6 @@ import React from "react";
 import { useForm, Form, XLForm, PlantForm } from "../Hooks/useForm";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl, FormLabel, RadioGroup, TextField } from "@mui/material";
-import Skeleton from "@mui/material/Skeleton";
 import background from "../assets/backgrounds/photos/wetleafclose.jpg";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
@@ -32,17 +31,16 @@ import "./views.css";
 // todo: useFetch custom hook instead
 const steps = [
   {
-    label: "UPLOAD PICTURES",
+    label: "Upload pictures",
     description: `Choose good ones; they will help your listing stand out from the crowd. The maximum number is 3`,
   },
   {
-    label: "CUTTING DETAILS",
-    description:
-      "This information is useful to potential buyers. Please choose from the options available",
+    label: "Necessary info",
+    description: "Select the information from the options available",
   },
   {
-    label: "ADDITIONAL INFO",
-    description: `Almost done. Anything else that might be relevant goes here. Click the button to finish`,
+    label: "Additional info",
+    description: `Anything else that might be relevant goes here`,
   },
 ];
 const initialValues = {
@@ -150,101 +148,29 @@ const AddPlant = () => {
       .catch((error) => console.log("error", error));
   };
 
-  console.log("activeStep", activeStep);
-
   return (
     <>
       {/* <NavBar /> */}
       <img src={background} className="background-image2" alt="" />
       <div className="below-nav">
         <PlantForm>
-          <Paper
-            square
-            elevation={0}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              height: 40,
-              // tp: 50,
-              pl: 2,
-              bgcolor: "background.default",
-            }}
+          <input
+            className="file-picker"
+            type="file"
+            name="file"
+            multiple="multiple"
+            id="file"
+            onChange={handleUpload}
+          />
+
+          <Button
+            fullWidth={true}
+            variant="contained"
+            color="success"
+            onClick={uploadImages}
           >
-            <Typography>{steps[activeStep].label}</Typography>
-          </Paper>
-          <Box sx={{ height: 100, maxWidth: 400, width: "100%", p: 0 }}>
-            {steps[activeStep].description}
-          </Box>
-          {activeStep == 0 && (
-            <input
-              className="file-picker"
-              type="file"
-              name="file"
-              multiple="multiple"
-              id="file"
-              onChange={handleUpload}
-            />
-          )}
-          {activeStep == 0 && (
-            <Skeleton
-              variant="rounded"
-              // width={210}
-              height={90}
-            />
-          )}
-          {activeStep == 0 && (
-            <Button
-              fullWidth={true}
-              variant="contained"
-              color="success"
-              onClick={uploadImages}
-            >
-              Upload image
-            </Button>
-          )}
-          {activeStep == 1 && (
-            <MyControls.MyInputs
-              label="genus"
-              name="genus"
-              value={values.genus}
-              onChange={handleInputChange}
-            />
-          )}
-
-          {activeStep == 1 && (
-            <MyControls.MyInputs
-              label="price"
-              name="price"
-              value={values.price}
-              onChange={handleInputChange}
-            />
-          )}
-
-          {activeStep == 1 && (
-            <FormControl>
-              <FormLabel>Rooted</FormLabel>
-              <RadioGroup
-                row={true}
-                name="rooted"
-                value={values.rooted}
-                onChange={handleInputChange}
-              >
-                <FormControlLabel
-                  name="rooted"
-                  value="true"
-                  control={<Radio />}
-                  label="Yes"
-                />
-                <FormControlLabel
-                  name="rooted"
-                  value="false"
-                  control={<Radio />}
-                  label="No"
-                />
-              </RadioGroup>
-            </FormControl>
-          )}
-
+            Upload image
+          </Button>
           <MobileStepper
             variant="text"
             steps={maxSteps}

@@ -43,7 +43,7 @@ function AboutUs() {
   // const { values, setValues, handleInputChange } = useForm(initialValues);
   return (
     <>
-      <Grid
+      {/* <Grid
         sx={{
           marginTop: -14,
         }}
@@ -63,7 +63,7 @@ function AboutUs() {
             <img src={temp} className="about-us-avatar" alt="" />
           </Item2>
         </Grid>
-      </Grid>
+      </Grid> */}
       {user.aboutus ? (
         <Typography className="about-us" variant="body1" gutterBottom>
           {user.aboutus} <EditIcon />

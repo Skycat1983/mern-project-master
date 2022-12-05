@@ -3,6 +3,9 @@ import MyControls from "../Components/controls/MyControls";
 import useFetch from "../Hooks/useFetch";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+
 import Stack from "@mui/material/Stack";
 import { alpha, styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -116,6 +119,14 @@ const Login = () => {
               </Button>
             </Item>
           </Stack>
+          <Typography
+            sx={{
+              textAlign: "center",
+            }}
+            variant="caption"
+          >
+            No membership? <Link to={"/signup"}>Sign up</Link>
+          </Typography>
         </Form>
       </div>
     </>

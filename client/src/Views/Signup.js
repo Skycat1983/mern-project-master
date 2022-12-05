@@ -1,7 +1,7 @@
 import { useForm, Form, SignupForm } from "../Hooks/useForm";
 import MyControls from "../Components/controls/MyControls";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { FormControl, FormLabel, RadioGroup } from "@mui/material";
+import { FormControl, FormLabel, RadioGroup, Typography } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import background from "../assets/backgrounds/photos/darkleaves.jpg";
 import defaultAvatar from "../assets/temp/defaultavatar.png";
@@ -19,6 +19,7 @@ import MyRadioGroup from "../Components/controls/MyRadioGroup";
 import { useContext, useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 const initialValues = {
   emailAddress: "",
@@ -134,6 +135,14 @@ const Signup = () => {
               SUBMIT
             </Button>
           </Stack>
+          <Typography
+            sx={{
+              textAlign: "center",
+            }}
+            variant="caption"
+          >
+            Already a member? <Link to={"/login"}>Sign in</Link>
+          </Typography>
         </SignupForm>
       </div>
     </>
