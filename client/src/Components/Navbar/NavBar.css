@@ -14,20 +14,37 @@
   position: fixed;
   top: -3px;
   left: 5px;
-
+  z-index: 10;
 }
 
-.plant-logo-box {
+/* WANNTED TO MAKE LOGO RIM BUT DOES NOT WORK FOR SOME REASON */
+.logo-rim {
+  z-index: 119;
+  height: 50px;
+  width: 55px;
+  background-color: rgb(255, 255, 255);
   position: fixed;
-  height: 20px;
-  color: blueviolet;
+  border-radius: 50%;
+  top: 5px;
+  left: 15px;
 }
+
+/* .plant-logo-box {
+  position: absolute;
+  height: 2000px;
+  color: blueviolet;
+  background-color: aquamarine;
+  z-index: 1000;
+  top: 100px;
+} */
 
 .hamburger-menu {
   position: relative;
   right: 1000px !important;
   color: blue;
 }
+
+
 
 /* .nav-box {
   position: sticky;

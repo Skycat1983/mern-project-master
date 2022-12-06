@@ -15,18 +15,18 @@ const usersSchema = new Schema(
     // commentsByUser [] (the comments we left for others)
 
     // when a user leaves a review, we send two post requests.
-    commentsForUser: [
-      {
-        author: {
-          type: String,
-          required: false,
-        },
-        text: {
-          type: String,
-          required: false,
-        },
-      },
-    ],
+    // commentsForUser: [
+    //   {
+    //     author: {
+    //       type: String,
+    //       required: false,
+    //     },
+    //     text: {
+    //       type: String,
+    //       required: false,
+    //     },
+    //   },
+    // ],
     // _id: { type: mongoose.ObjectId },
     plants: [{ type: Schema.Types.ObjectId, ref: "Plant" }], //! ref: "plant" = the collection name in mongodb. must be singular
     // wishlist: { type: Object, required: false },

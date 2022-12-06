@@ -140,13 +140,14 @@ const loginUser = async (req, res) => {
 // VERIFY TOKEN/WRITSTBAND
 const getProfile = async (req, res) => {
   console.log("req.user", req.user);
-  const { email, username, _id, premium } = req.user;
+  const { email, username, _id, premium, aboutus } = req.user;
   res.status(200).json({
     // user: req.user,
     username: username,
     id: _id,
     email: email,
     premium: premium,
+    aboutus: aboutus,
   });
 };
 

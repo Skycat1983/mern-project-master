@@ -41,7 +41,8 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Signup = () => {
-  const { values, setValues, handleInputChange } = useForm(initialValues);
+  const { values, setValues, handleInputChange, handleSubmit } =
+    useForm(initialValues);
 
   const register = () => {
     const myHeaders = new Headers();
@@ -130,7 +131,9 @@ const Signup = () => {
               variant="contained"
               color="success"
               component="label"
-              onClick={register}
+              //! CHANGE THIS BACK. NORMALLY UNCOMMENTED
+              // onClick={register}
+              onClick={handleSubmit}
             >
               SUBMIT
             </Button>

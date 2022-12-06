@@ -5,13 +5,9 @@ import { FormControl, FormLabel, RadioGroup, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import cover from "../assets/backgrounds/photos/leaf.png";
 import temp from "../assets/appIcons/glassmomnstera.png";
-import Radio from "@mui/material/Radio";
-import MyRadioGroup from "../Components/controls/MyRadioGroup";
-import MyControls from "../Components/controls/MyControls";
+
 import { useContext, useEffect, useState } from "react";
-import MyInputs from "../Components/controls/MyInputs";
-import Button from "@mui/material/Button";
-import useFetch from "../Hooks/useFetch";
+
 import NavBar from "../Components/Navbar/NavBar.js";
 import EditIcon from "@mui/icons-material/Edit";
 import Typography from "@mui/material/Typography";
@@ -23,6 +19,7 @@ import Tab from "@mui/material/Tab";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import Carousel from "../Components/Carousel/Carousel.js";
 import Account from "../Components/Account/Account.js";
+import { AuthContext } from "../Contexts/AuthContext";
 
 // import temp from "../assets/temp/temp3.png";
 
@@ -55,21 +52,35 @@ const MyAccount = () => {
     // aboutus: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
   };
   const data = { user: { plants: { genus: "monstera", price: 40 } } };
+  const { isUser, getProfile, userLoggedIn } = useContext(AuthContext);
+  const { aboutus } = userLoggedIn;
+
   // const { values, setValues, handleInputChange } = useForm(initialValues);
+
+  useEffect(() => {
+    console.warn("getting profile in MyAccount");
+    getProfile();
+    console.log("userLogin", userLoggedIn);
+  }, []);
 
   return (
     <>
       <NavBar />
-      {user.premium == true && (
+      {userLoggedIn.premium == true && (
         <WorkspacePremiumIcon className="premium-badge" />
       )}
+      {/* {user.premium == true && (
+        <WorkspacePremiumIcon className="premium-badge" />
+      )} */}
 
       <div className="background-image-div">
         <img src={cover} className="background-image3" alt="" />
       </div>
       <div className="below-nav">
         <div className="gradient-div">
-          <h5 className="welcome-back-header">welcome back, {user.username}</h5>
+          <h5 className="welcome-back-header">
+            welcome back, {userLoggedIn.username}
+          </h5>
         </div>
       </div>
       <ProfileTab></ProfileTab>
@@ -85,7 +96,7 @@ const MyAccount = () => {
       >
         <Grid className="profile-headings" item xs={8}>
           <Typography sx={{ color: "#ffffff" }} variant="h6" gutterBottom>
-            {user.username}
+            {userLoggedIn.username}
           </Typography>
         </Grid>
         <Grid item xs={4}>
@@ -94,7 +105,9 @@ const MyAccount = () => {
           </Item>
         </Grid>
       </Grid>
-      {/* <AboutUs></AboutUs> */}
+      {/* <AboutUs userLoggedIn={userLoggedIn}></AboutUs> */}
+      {/* <AboutUs aboutus={aboutus}></AboutUs> */}
+
       {/* <Carousel></Carousel> */}
       <Account></Account>
     </>

@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 
 export function useForm(initialValues) {
   const [values, setValues] = useState(initialValues);
+  const [formValues, setFormValues] = useState();
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -16,10 +19,40 @@ export function useForm(initialValues) {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+  };
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+    }
+  }, [formErrors]);
+
+  const validate = (values) => {
+    const errors = {};
+    const regex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!values.displayName) {
+      errors.displayName = "username required";
+    }
+    if (!values.email) {
+      errors.email = "username required";
+    }
+    if (!values.password) {
+      errors.password = "password required";
+    }
+    return errors;
+  };
+
   return {
     values,
     setValues,
     handleInputChange,
+    handleSubmit,
   };
 }
 

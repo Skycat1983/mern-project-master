@@ -28,6 +28,9 @@ import UploadIcon from "@mui/icons-material/Upload";
 import CreateIcon from "@mui/icons-material/Create";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import "./views.css";
+import CircularProgress from "@mui/material/CircularProgress";
+import zIndex from "@mui/material/styles/zIndex";
+import { AuthContext } from "../Contexts/AuthContext";
 
 // todo: useFetch custom hook instead
 const steps = [
@@ -36,9 +39,14 @@ const steps = [
     description: `Choose good ones; they will help your listing stand out from the crowd. The maximum number is 3`,
   },
   {
+    label: "PLANT DETAILS",
+    description:
+      "Please choose the genus and species of your cutting from the options available",
+  },
+  {
     label: "CUTTING DETAILS",
     description:
-      "This information is useful to potential buyers. Please choose from the options available",
+      "This information relates to the specific of your cutting. Please choose from the following options",
   },
   {
     label: "ADDITIONAL INFO",
@@ -55,9 +63,11 @@ const initialValues = {
 
 const AddPlant = () => {
   const [selectedFiles, setSelectedFiles] = useState([{}]);
-  const [urls, setUrls] = useState({});
+  const [urls, setUrls] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [newPost, setNewPost] = useState({});
   const { values, setValues, handleInputChange } = useForm(initialValues);
+  const { isUser, getProfile, userLoggedIn } = useContext(AuthContext);
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -73,7 +83,8 @@ const AddPlant = () => {
 
   useEffect(() => {
     //? confused why this returns empty?
-    console.log("URLS", values);
+    console.log("URLS", urls);
+    setIsLoading(false);
   }, [urls, values]);
 
   const handleUpload = (e) => {
@@ -81,7 +92,14 @@ const AddPlant = () => {
     console.log(e.target.files);
   };
 
+  useEffect(() => {
+    console.warn("getting profile in AddPlants");
+    getProfile();
+    console.log("userLogin", userLoggedIn);
+  }, []);
+
   const uploadImages = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     const formdata = new FormData();
     formdata.append("image", selectedFiles.files[0]);
@@ -100,7 +118,8 @@ const AddPlant = () => {
     );
     const result = await response.json();
     console.log("result :>> ", result);
-    console.log(setUrls(result.urls));
+    setUrls(result.urls);
+    console.log("resul.Urls :>> ", result.urls);
     console.log("urls", urls);
 
     // fetch("http://localhost:5001/api/plants/uploadimage", requestOptions)
@@ -112,7 +131,10 @@ const AddPlant = () => {
     // setNewPost({...newPost, imageUrls: result})
   };
 
+  //! Is the problem that i am trying to insert objectid (user) onto plant, when this is done via populate?
+
   const submitListing = () => {
+    console.log("URLS", urls);
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     const urlencoded = new URLSearchParams();
@@ -121,7 +143,11 @@ const AddPlant = () => {
     urlencoded.append("price", values.price);
     urlencoded.append("rooted", values.rooted);
     urlencoded.append("topcutting", values.topCutting);
-    urlencoded.append("imageUrls", urls);
+    urls.forEach((url) => urlencoded.append("imageUrls", url));
+    urlencoded.append("user", userLoggedIn.id);
+
+    //! do i need to loop here?
+    // urlencoded.append("imageUrls", urls);
 
     const requestOptions = {
       method: "POST",
@@ -160,7 +186,6 @@ const AddPlant = () => {
               display: "flex",
               alignItems: "center",
               height: 40,
-              // tp: 50,
               pl: 2,
               bgcolor: "background.default",
             }}
@@ -180,11 +205,44 @@ const AddPlant = () => {
               onChange={handleUpload}
             />
           )}
-          {activeStep == 0 && (
-            <Skeleton
-              variant="rounded"
-              // width={210}
-              height={90}
+          {/* {activeStep == 0 && urls.length === 0 ? (
+            <Skeleton variant="rounded" width={190} height={90} />
+          ) : (
+            <img
+              style={{
+                width: 190,
+                height: 90,
+                objectFit: "cover",
+              }}
+              // alt={item.title}
+              src={urls[0]}
+            />
+          )} */}
+
+          {activeStep == 0 && urls.length === 0 && (
+            <Skeleton variant="rounded" width={190} height={90} />
+          )}
+          {activeStep == 0 && urls.length !== 0 && (
+            <img
+              style={{
+                width: 190,
+                height: 90,
+                objectFit: "cover",
+              }}
+              // alt={item.title}
+              src={urls[0]}
+            />
+          )}
+
+          {isLoading && (
+            <CircularProgress
+              sx={{
+                position: "fixed",
+                top: "52vh",
+                left: "45vw",
+                zIndex: "1000",
+              }}
+              color="success"
             />
           )}
           {activeStep == 0 && (
@@ -205,17 +263,16 @@ const AddPlant = () => {
               onChange={handleInputChange}
             />
           )}
-
-          {activeStep == 1 && (
+          {/* {activeStep == 1 && (
             <MyControls.MyInputs
-              label="price"
-              name="price"
-              value={values.price}
+              label="species"
+              name="species"
+              value={values.species}
               onChange={handleInputChange}
             />
-          )}
+          )} */}
 
-          {activeStep == 1 && (
+          {activeStep == 2 && (
             <FormControl>
               <FormLabel>Rooted</FormLabel>
               <RadioGroup
@@ -239,7 +296,62 @@ const AddPlant = () => {
               </RadioGroup>
             </FormControl>
           )}
-
+          {activeStep == 2 && (
+            <FormControl>
+              <FormLabel>Top cutting</FormLabel>
+              <RadioGroup
+                row={true}
+                name="topCutting"
+                value={values.topCutting}
+                onChange={handleInputChange}
+              >
+                <FormControlLabel
+                  name="topCutting"
+                  value="true"
+                  control={<Radio />}
+                  label="Yes"
+                />
+                <FormControlLabel
+                  name="topCutting"
+                  value="false"
+                  control={<Radio />}
+                  label="No"
+                />
+              </RadioGroup>
+            </FormControl>
+          )}
+          {activeStep == 2 && (
+            <FormControl>
+              <FormLabel>Varigation</FormLabel>
+              <RadioGroup
+                row={true}
+                name="varigation"
+                value={values.varigation}
+                onChange={handleInputChange}
+              >
+                <FormControlLabel
+                  name="varigation"
+                  value="true"
+                  control={<Radio />}
+                  label="Yes"
+                />
+                <FormControlLabel
+                  name="varigation"
+                  value="false"
+                  control={<Radio />}
+                  label="No"
+                />
+              </RadioGroup>
+            </FormControl>
+          )}
+          {activeStep == 3 && (
+            <MyControls.MyInputs
+              label="price"
+              name="price"
+              value={values.price}
+              onChange={handleInputChange}
+            />
+          )}
           <MobileStepper
             variant="text"
             steps={maxSteps}
@@ -274,96 +386,18 @@ const AddPlant = () => {
               </Button>
             }
           />
-          {urls ? (
-            <MyControls.MyInputs
-              label="genus"
-              name="genus"
-              value={values.genus}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <TextField disabled></TextField>
+
+          {activeStep == 3 && (
+            <Button
+              fullWidth={true}
+              variant="contained"
+              color="success"
+              component="label"
+              onClick={submitListing}
+            >
+              LIST PLANT
+            </Button>
           )}
-          <MyControls.MyInputs
-            label="price"
-            name="price"
-            value={values.price}
-            onChange={handleInputChange}
-          />
-          <FormControl>
-            <FormLabel>Rooted</FormLabel>
-            <RadioGroup
-              row={true}
-              name="rooted"
-              value={values.rooted}
-              onChange={handleInputChange}
-            >
-              <FormControlLabel
-                name="rooted"
-                value="true"
-                control={<Radio />}
-                label="Yes"
-              />
-              <FormControlLabel
-                name="rooted"
-                value="false"
-                control={<Radio />}
-                label="No"
-              />
-            </RadioGroup>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Top cutting</FormLabel>
-            <RadioGroup
-              row={true}
-              name="topCutting"
-              value={values.topCutting}
-              onChange={handleInputChange}
-            >
-              <FormControlLabel
-                name="topCutting"
-                value="true"
-                control={<Radio />}
-                label="Yes"
-              />
-              <FormControlLabel
-                name="topCutting"
-                value="false"
-                control={<Radio />}
-                label="No"
-              />
-            </RadioGroup>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Varigation</FormLabel>
-            <RadioGroup
-              row={true}
-              name="varigation"
-              value={values.varigation}
-              onChange={handleInputChange}
-            >
-              <FormControlLabel
-                name="varigation"
-                value="true"
-                control={<Radio />}
-                label="Yes"
-              />
-              <FormControlLabel
-                name="varigation"
-                value="false"
-                control={<Radio />}
-                label="No"
-              />
-            </RadioGroup>
-          </FormControl>
-          <Button
-            fullWidth={true}
-            variant="contained"
-            component="label"
-            onClick={submitListing}
-          >
-            LIST PLANT
-          </Button>
         </PlantForm>
       </div>
     </>

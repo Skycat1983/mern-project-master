@@ -44,12 +44,11 @@ export default function PrimarySearchAppBar() {
         {/* <Toolbar sx={{ backgroundColor: "#004d40" }}> */}
         {/* <Toolbar sx={{ backgroundColor: "#003838" }}> */}
         <Toolbar sx={{ backgroundColor: "#002A2A" }}>
-          <div className="plant-logo-box">
-            <Link to={"/"}>
-              {" "}
-              <img src={houseplant3} className="plant-logo" alt="" />
-            </Link>
-          </div>
+          {/* <div className="plant-logo-box"> */}
+          <Link to={"/"}>
+            <img src={houseplant3} className="plant-logo" alt="" />
+          </Link>
+          {/* </div> */}
           <IconButton
             onClick={handleClick}
             size="small"
@@ -166,6 +165,7 @@ export default function PrimarySearchAppBar() {
           </React.Fragment>
         </Toolbar>
       </AppBar>
+      <div className="logo-rim"></div>
     </Box>
   );
 }

@@ -15,8 +15,8 @@ import user1 from "../../assets/backgrounds/woman1.png";
 import { Link } from "react-router-dom";
 
 export default function Carousel(data, isLoading) {
-  console.warn("data.data in carousel", data.data);
-  console.warn("data in carousel", data);
+  // console.warn("data.data in carousel", data.data);
+  // console.warn("data in carousel", data);
 
   return (
     <>
@@ -35,16 +35,18 @@ export default function Carousel(data, isLoading) {
         loop
       >
         {data &&
-          data.data?.allPlants?.map((item) => {
-            console.log("item", { ...item });
+          data.data?.allPlants?.map((item, index) => {
+            {
+              /* console.log("item", { ...item }); */
+            }
             return (
-              <SwiperSlide key={item.user.id}>
+              <SwiperSlide key={index}>
                 <Card sx={{ maxWidth: 345 }}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
                       height="140"
-                      image={temp1}
+                      image={item.imageUrls}
                       alt="plant pic"
                     />
                     <CardContent>

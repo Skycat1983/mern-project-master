@@ -31,7 +31,7 @@ export default function Profile() {
   const location = useLocation();
   console.log("location :>> ", location.state.user);
   const [url, setUrl] = useState(
-    `http://localhost:5001/api/users/${location.state.user}`
+    `http://localhost:5001/api/users/one/${location.state.user}`
   );
   const { data, isLoading, error } = useFetch(url);
 

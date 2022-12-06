@@ -11,6 +11,9 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import { AuthContextProvider } from "./Contexts/AuthContext.js";
+import getToken from "./utils/getToken.js";
+import ProtectedRoute from "./Components/ProtectedRoute.js";
 
 // import { AuthContextProvider } from "./context/AuthContext";
 
@@ -19,24 +22,40 @@ import {
 function App() {
   return (
     <>
-      {/* <AuthContextProvider> */}
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="signup" element={<Signup />} />
-          <Route exact path="myaccount" element={<MyAccount />} />
-          <Route exact path="login" element={<Login />} />
-          <Route exact path="profile/:id" element={<Profile />} />
-          <Route exact path="addplant" element={<AddPlant />} />
+      <AuthContextProvider>
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="signup" element={<Signup />} />
 
-          <Route path="/redirect" element={<Navigate to="/" />} />
-          {/* <ProtectedRoute></ProtectedRoute> */}
-          {/* <Route path="*" element={<GoHome />} /> */}
-        </Routes>
-      </Router>
-      {/* </AuthContextProvider> */}
+            {/* <Route exact path="myaccount" element={<MyAccount />} /> */}
+            <Route exact path="login" element={<Login />} />
+            <Route exact path="profile/:id" element={<Profile />} />
+            <Route exact path="addplant" element={<AddPlant />} />
+
+            <Route path="/redirect" element={<Navigate to="/" />} />
+            {/* <ProtectedRoute></ProtectedRoute> */}
+            {/* <Route path="*" element={<GoHome />} /> */}
+            <Route
+              path="myaccount"
+              element={
+                // <ProtectedRoute>
+                <MyAccount />
+                // </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Router>
+      </AuthContextProvider>
     </>
   );
 }
 
 export default App;
+
+// <Route
+//   path="games/:id"
+//   element={
+//     <ProtectedRoute>
+//       <GameDetails />
+//     </ProtectedRoute>

@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "../Components/Navbar/NavBar";
 import useFetch from "../Hooks/useFetch";
 import CircularProgress from "@mui/material/CircularProgress";
+import { AuthContext } from "../Contexts/AuthContext";
 
 //! V1 shop
 // import cover from "../assets/backgrounds/photos/leaf.png";
@@ -29,7 +30,7 @@ import Carousel from "../Components/Carousel/Carousel.js";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -76,6 +77,13 @@ function Home() {
   const [value, setValue] = React.useState(0);
   const [url, setUrl] = useState("http://localhost:5001/api/plants/all");
   const { data, isLoading, error } = useFetch(url);
+  const { isUser, getProfile, userLoggedIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    console.warn("getting profile in Home");
+    getProfile();
+    console.log("userLogin", userLoggedIn);
+  }, []);
 
   //? see 'console.log(newValue, value);': what's going on with this toggle effect? why doesn't it print the same number twice?
   const handleChange = (event, newValue) => {
@@ -161,7 +169,15 @@ export default Home;
 
 // QUESTIONS:
 
+//? am i doing this right with authcontext?
+// - calling get profile function in Home
+// - see protectedroute. problems
+
+// Im really doing something wrong with the isLoading thing. see usefetch
+
 // usefetch for uploads? see signup. the request options
+
+// - see myaccount and the components i call. each imports the authcontext. would it make more sense to import it just to the parents, mcaccount.js, and then send the relevant detaisl as props? or will this cause event listener problems like i had before (some of my components need to CRUD). OR should i just have all these components on the main myaccount view, and not have them as compoenents at all?
 
 // - see carousel.js. on page load i get a warning about unique key prop. why is "<SwiperSlide key={item.user.id}>" not recognised?
 // - also, how do i generalise or not specify which field to load as which in carousel? what is i want to display the value of the first property, rather than something.seomthing

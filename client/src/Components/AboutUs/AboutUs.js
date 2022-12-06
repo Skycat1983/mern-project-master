@@ -31,7 +31,9 @@ const Item2 = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function AboutUs() {
+function AboutUs(props) {
+  const [value, setValue] = React.useState(0);
+
   const { values, setValues, handleInputChange } = useForm(initialValues);
   const user = {
     username: "the plant seller",
@@ -40,6 +42,18 @@ function AboutUs() {
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.",
   };
   const data = { user: { plants: { genus: "monstera", price: 40 } } };
+  console.log("userLoggedIn.about us in aboutus?", props);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    console.log(newValue, value);
+    // if (value == 1) {
+    //   setUrl("http://localhost:5001/api/plants/all");
+    // } else {
+    //   setUrl("http://localhost:5001/api/users/all");
+    // }
+  };
+
   // const { values, setValues, handleInputChange } = useForm(initialValues);
   return (
     <>
@@ -64,9 +78,9 @@ function AboutUs() {
           </Item2>
         </Grid>
       </Grid> */}
-      {user.aboutus ? (
+      {props.aboutus ? (
         <Typography className="about-us" variant="body1" gutterBottom>
-          {user.aboutus} <EditIcon />
+          {props.aboutus}
         </Typography>
       ) : (
         <XLForm>
@@ -82,11 +96,21 @@ function AboutUs() {
         </XLForm>
       )}
       {user.aboutus ? (
-        <Button className="edit-button" variant="contained" color="success">
-          edit
+        <Button
+          onClick="handleChange"
+          className="edit-button"
+          variant="contained"
+          color="success"
+        >
+          edit <EditIcon />
         </Button>
       ) : (
-        <Button className="update-button" variant="contained" color="success">
+        <Button
+          // onClick="handleChange"
+          className="update-button"
+          variant="contained"
+          color="success"
+        >
           update
         </Button>
       )}
