@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 export function useForm(initialValues) {
   const [values, setValues] = useState(initialValues);
-  const [formValues, setFormValues] = useState();
+  // const [formValues, setFormValues] = useState();
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
@@ -21,32 +21,34 @@ export function useForm(initialValues) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormErrors(validate(formValues));
+    setFormErrors(validate(values));
     setIsSubmit(true);
   };
 
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
+      console.log(values);
     }
   }, [formErrors]);
 
   const validate = (values) => {
     const errors = {};
-    const regex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const regex = /^[^\s@]+@[^\.[^\s@]{2,}$/i;
     if (!values.displayName) {
       errors.displayName = "username required";
     }
     if (!values.email) {
-      errors.email = "username required";
+      errors.email = "email required";
     }
     if (!values.password) {
       errors.password = "password required";
     }
     return errors;
   };
+
+  //! what is this?
+  // <pre>{JSON.stringify(formValues, undefined, 2)}</pre>;
 
   return {
     values,
@@ -186,3 +188,5 @@ export function PlantForm(props) {
     </form>
   );
 }
+
+// /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;

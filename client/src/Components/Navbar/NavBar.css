@@ -18,15 +18,14 @@
 }
 
 /* WANNTED TO MAKE LOGO RIM BUT DOES NOT WORK FOR SOME REASON */
-.logo-rim {
+.navbar-rim {
   z-index: 119;
-  height: 50px;
-  width: 55px;
+  height: 60px;
+  width: 100%;
   background-color: rgb(255, 255, 255);
   position: fixed;
-  border-radius: 50%;
-  top: 5px;
-  left: 15px;
+  top: 0px;
+  left: 0px;
 }
 
 /* .plant-logo-box {

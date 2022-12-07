@@ -17,20 +17,11 @@ import MyControls from "../Components/controls/MyControls";
 import { useContext, useEffect, useState } from "react";
 import MyInputs from "../Components/controls/MyInputs";
 import Button from "@mui/material/Button";
-import useFetch from "../Hooks/useFetch";
-import NavBar from "../Components/Navbar/NavBar.js";
-import EditIcon from "@mui/icons-material/Edit";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import "./views.css";
-import UploadIcon from "@mui/icons-material/Upload";
-import CreateIcon from "@mui/icons-material/Create";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import "./views.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import zIndex from "@mui/material/styles/zIndex";
 import { AuthContext } from "../Contexts/AuthContext";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // todo: useFetch custom hook instead
 const steps = [
@@ -72,6 +63,8 @@ const AddPlant = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = steps.length;
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -169,6 +162,12 @@ const AddPlant = () => {
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
+
+    if (location.state?.from) {
+      navigate(location.state.from);
+    } else {
+      navigate("/");
+    }
   };
 
   console.log("activeStep", activeStep);

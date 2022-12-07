@@ -1,17 +1,15 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../../Contexts/AuthContext.js";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link, Navigate } from "react-router-dom";
-
+import { Link, Navigate, useNavigate } from "react-router-dom";
 // import houseplant3 from "../../assets/appIcons/complexgold.png";
 // import houseplant3 from "../../assets/appIcons/chrome.png";
 import houseplant3 from "../../assets/appIcons/houseplant3.png";
@@ -25,9 +23,10 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 
-export default function PrimarySearchAppBar() {
-  const [user, setUser] = useState(true); //! <<< DONT FORGET
+export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
+  const { getProfile, userLoggedIn, logout, isUser } = useContext(AuthContext);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,19 +35,21 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
   };
 
+  const handleMenuNav = () => {
+    if (isUser) {
+      logout();
+    } else {
+      console.log("nothing");
+    }
+  };
+
   return (
     <Box position="fixed" sx={{ flexGrow: 1 }} className="nav-box">
       <AppBar position="fixed">
-        {/* <Toolbar sx={{ backgroundColor: "teal" }}> */}
-        {/* <Toolbar sx={{ backgroundColor: "#1b5e20" }}> */}
-        {/* <Toolbar sx={{ backgroundColor: "#004d40" }}> */}
-        {/* <Toolbar sx={{ backgroundColor: "#003838" }}> */}
         <Toolbar sx={{ backgroundColor: "#002A2A" }}>
-          {/* <div className="plant-logo-box"> */}
           <Link to={"/"}>
             <img src={houseplant3} className="plant-logo" alt="" />
           </Link>
-          {/* </div> */}
           <IconButton
             onClick={handleClick}
             size="small"
@@ -58,17 +59,10 @@ export default function PrimarySearchAppBar() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            {/* {!user ? ( */}
             <MenuIcon
               className="menu-icon"
               sx={{ position: "fixed", right: "20px;" }}
             />
-            {/* ) : (
-              <Avatar
-                className="menu-icon"
-                sx={{ position: "fixed", right: "20px;" }}
-              />
-            )} */}
           </IconButton>
           <React.Fragment>
             <Box
@@ -84,7 +78,6 @@ export default function PrimarySearchAppBar() {
                   top: "50px",
                   left: "35vw",
                 }}
-                // sx={{ mt: 100 }}
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
@@ -95,7 +88,6 @@ export default function PrimarySearchAppBar() {
                     overflow: "visible",
                     filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                     position: "fixed",
-                    // left: 200,
                     mt: 3.0,
                     ml: 20.0,
                     "& .MuiAvatar-root": {
@@ -122,8 +114,7 @@ export default function PrimarySearchAppBar() {
                 anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
                 className="hamburger-menu"
               >
-                {/* <Link to={"/myaccount"}>My account</Link> */}
-                {user ? (
+                {isUser ? (
                   <MenuItem>
                     <Avatar /> <Link to={"/myaccount"}>My account</Link>
                   </MenuItem>
@@ -133,31 +124,38 @@ export default function PrimarySearchAppBar() {
                   </MenuItem>
                 )}
                 <Divider />
-                {/* <MenuItem>
-                <ListItemIcon>
-                  <PersonAdd fontSize="small" />
-                </ListItemIcon>
-                Add another account
-              </MenuItem> */}
-                <MenuItem>
-                  <ListItemIcon>
-                    <Settings fontSize="small" />
-                  </ListItemIcon>
-                  Settings
-                </MenuItem>
-                {user ? (
-                  <MenuItem>
+
+                {isUser ? (
+                  <MenuItem onClick={handleMenuNav}>
                     <ListItemIcon>
                       <Logout fontSize="small" />
                     </ListItemIcon>
                     Logout
                   </MenuItem>
                 ) : (
+                  <MenuItem onClick={handleMenuNav("/signin")}>
+                    <ListItemIcon>
+                      <LoginIcon fontSize="small" />
+                    </ListItemIcon>
+                    <Link
+                      to={"/login"}
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      Sign in
+                    </Link>
+                  </MenuItem>
+                )}
+                {!isUser && (
                   <MenuItem>
                     <ListItemIcon>
-                      <Logout fontSize="small" />
+                      <LoginIcon fontSize="small" />
                     </ListItemIcon>
-                    Sign in
+                    <Link
+                      to={"/signup"}
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      Sign up
+                    </Link>
                   </MenuItem>
                 )}
               </Menu>
@@ -165,7 +163,7 @@ export default function PrimarySearchAppBar() {
           </React.Fragment>
         </Toolbar>
       </AppBar>
-      <div className="logo-rim"></div>
+      <div className="navbar-rim"></div>
     </Box>
   );
 }

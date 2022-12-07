@@ -1,34 +1,22 @@
 import { useForm, Form, SignupForm } from "../Hooks/useForm";
 import MyControls from "../Components/controls/MyControls";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl, FormLabel, RadioGroup, Typography } from "@mui/material";
-import Radio from "@mui/material/Radio";
 import background from "../assets/backgrounds/photos/darkleaves.jpg";
-import defaultAvatar from "../assets/temp/defaultavatar.png";
-
 import "./views.css";
-
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-
-import MyInputs from "../Components/controls/MyInputs";
-import MyRadioGroup from "../Components/controls/MyRadioGroup";
-
 import { useContext, useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Contexts/AuthContext";
+import HomeIcon from "@mui/icons-material/Home";
 
 const initialValues = {
   emailAddress: "",
   displayName: "",
-  // mobile: "",
-  // dateOfBirth: "",
   membership: "",
   password: "",
-  // repeatPassord: "",
 };
 
 // TODO: can this be imported once, instead of both at LOGIN and SIGNUP?
@@ -41,8 +29,19 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Signup = () => {
+  const { getProfile, userLoggedIn } = useContext(AuthContext);
   const { values, setValues, handleInputChange, handleSubmit } =
     useForm(initialValues);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleNav = () => {
+    navigate("/");
+  };
+  useEffect(() => {
+    console.warn("getting profile in Signup");
+    getProfile();
+    console.log("userLogin", userLoggedIn);
+  }, []);
 
   const register = () => {
     const myHeaders = new Headers();
@@ -73,6 +72,7 @@ const Signup = () => {
   console.log(values);
   return (
     <>
+      <HomeIcon className="go-home-icon" onClick={handleNav} />
       <img src={background} className="background-image2" alt="" />
       <div className="container">
         <SignupForm>
@@ -132,8 +132,8 @@ const Signup = () => {
               color="success"
               component="label"
               //! CHANGE THIS BACK. NORMALLY UNCOMMENTED
-              // onClick={register}
-              onClick={handleSubmit}
+              onClick={register}
+              // onClick={handleSubmit}
             >
               SUBMIT
             </Button>

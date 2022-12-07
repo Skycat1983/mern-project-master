@@ -30,6 +30,20 @@
   top: 57px;
 }
 
+.my-tab {
+  color: black !important;
+  /* background-color: darkgreen !important; */
+  ;
+}
+
+.go-home-icon {
+  color: white;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
+}
+
 .premium-badge {
   position: absolute;
   right: 20px;

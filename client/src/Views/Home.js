@@ -1,27 +1,11 @@
-import React from "react";
+import React, { Children } from "react";
 import NavBar from "../Components/Navbar/NavBar";
 import useFetch from "../Hooks/useFetch";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../Contexts/AuthContext";
-
-//! V1 shop
-// import cover from "../assets/backgrounds/photos/leaf.png";
-
-//! V2 requires new logo placemenet in center
+import { useForm, Form } from "../Hooks/useForm";
 import cover2 from "../assets/backgrounds/photos/cosyhouseplants.jpg";
-
-// import cover2 from "../assets/backgrounds/photos/cuttinginbottle.jpg";
-
-//! V3
 import cover from "../assets/backgrounds/photos/junglephoto.jpg";
-
-//! V4 need to redo object fit
-// import cover from "../assets/backgrounds/photos/darkleaves.jpg";
-
-//! illustrations
-// import cover from "../assets/backgrounds/jungle4.png";
-// import cover from "../assets/backgrounds/illustrations/jungle4.png";
-// import cover from "../assets/backgrounds/jungle9.png";
 import "./views.css";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -31,6 +15,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useEffect, useState, useContext } from "react";
+import MyControls from "../Components/controls/MyControls";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -74,15 +59,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Home() {
+  const initialValues = {
+    searchPlants: "",
+    searchUsers: "",
+  };
   const [value, setValue] = React.useState(0);
   const [url, setUrl] = useState("http://localhost:5001/api/plants/all");
   const { data, isLoading, error } = useFetch(url);
-  const { isUser, getProfile, userLoggedIn } = useContext(AuthContext);
+  const { getProfile, userLoggedIn, logout, isUser } = useContext(AuthContext);
+  const { values, setValues, handleInputChange } = useForm(initialValues);
 
   useEffect(() => {
     console.warn("getting profile in Home");
     getProfile();
     console.log("userLogin", userLoggedIn);
+    console.log("isUser", isUser);
   }, []);
 
   //? see 'console.log(newValue, value);': what's going on with this toggle effect? why doesn't it print the same number twice?
@@ -96,15 +87,6 @@ function Home() {
     }
   };
 
-  //? WHY CAN"T I DO THIS
-  // useEffect(() => {
-  //   if (value == 1) {
-  //     useFetch("http://localhost:5001/api/users/all");
-  //   } else {
-  //     useFetch("http://localhost:5001/api/plants/all");
-  //   }
-  // }, [value]);
-
   return (
     <>
       <NavBar />
@@ -115,8 +97,19 @@ function Home() {
           <img src={cover} className="background-image" alt="" />
         )}
       </div>
+      <div className="below-nav">
+        <div className="gradient-div">
+          <h5 className="welcome-back-header">
+            welcome back, {userLoggedIn.username}
+          </h5>
+        </div>
+      </div>
       <Search
         className="search-bar"
+        label="search plants"
+        name="searchPlants"
+        value={values.searchPlants}
+        onChange={handleInputChange}
         sx={{
           boxShadow: 2,
           // maxWidth: "250px",
@@ -125,10 +118,25 @@ function Home() {
         <SearchIconWrapper>
           <SearchIcon className="search-icon" />
         </SearchIconWrapper>
-        <StyledInputBase
-          placeholder="Search…"
-          inputProps={{ "aria-label": "search" }}
-        />
+        {value === 0 ? (
+          <StyledInputBase
+            placeholder="Plants…"
+            inputProps={{ "aria-label": "search" }}
+            // label="search plants"
+            // name="searchPlants"
+            // value={values.searchPlants}
+            // onChange={handleInputChange}
+          />
+        ) : (
+          <StyledInputBase
+            placeholder="Users…"
+            inputProps={{ "aria-label": "search" }}
+            // label="search users"
+            // name="searchUsers"
+            // value={values.searchUsers}
+            // onChange={handleInputChange}
+          />
+        )}
       </Search>
       {isLoading && <CircularProgress />}
       {error && <h1>Error for the user</h1>}
@@ -145,14 +153,15 @@ function Home() {
         }}
       >
         <Tabs
+          TabIndicatorProps={{ style: { backgroundColor: "green" } }}
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
           // textColor="green[900]"
           // indicatorColor="primary"
         >
-          <Tab label="PLANTS" />
-          <Tab label="SELLERS" />
+          <Tab className="my-tab" label="PLANTS" />
+          <Tab className="my-tab" label="SELLERS" />
         </Tabs>
       </Box>
       {isLoading == false && <Carousel data={data} isLoading={isLoading} />}
@@ -169,22 +178,13 @@ export default Home;
 
 // QUESTIONS:
 
-//? am i doing this right with authcontext?
-// - calling get profile function in Home
-// - see protectedroute. problems
+// does it make more sense to import authcontext to my views,  and then filter specific returns from authcontext to various compoenents as props? or does it make more sense to just import authcontext direct to each component? not sure if this causes problems similar to how i had with my event listener on my radial in last project. maybe problematic when component is imported by more than one view
 
-// Im really doing something wrong with the isLoading thing. see usefetch
+// usenavigate and uselocation as a component? i also thought of having a toggle component
 
-// usefetch for uploads? see signup. the request options
+// usemodal custom hook for redirect?
 
 // - see myaccount and the components i call. each imports the authcontext. would it make more sense to import it just to the parents, mcaccount.js, and then send the relevant detaisl as props? or will this cause event listener problems like i had before (some of my components need to CRUD). OR should i just have all these components on the main myaccount view, and not have them as compoenents at all?
-
-// - see carousel.js. on page load i get a warning about unique key prop. why is "<SwiperSlide key={item.user.id}>" not recognised?
-// - also, how do i generalise or not specify which field to load as which in carousel? what is i want to display the value of the first property, rather than something.seomthing
-
-// how should i decide what to send in the token? is there a downside to sending lots of info?
-
-// jwtAuth: "const jwtAuth = passport.authenticate("jwt", { session: false });" what does the session bit mean here?
 
 // why does my object destructure of useForm show different colour coding in Signup and MyAccount?
 
@@ -192,15 +192,8 @@ export default Home;
 
 // see login/signup. I have these const styled things. Could i just be importing those from some styles control component or something?
 
-// - see Profile.js view. Why do my "{!isLoading && <h3>welcome to {data?.user?.username}'s profile </h3>}" conditionals not work without the question marks? Why is the !isLoading part not enough to stop me gettiing error of "bundle.js:1325 Uncaught TypeError: Cannot read properties of null (reading 'user')""
-
-// - setError not working
-
 // CONFUSIONS:
 // - setTimeout(() => {});
-
-// todo: navbar formating issues. hidden icons ony appear when not in mobile view
-//? how to do try/catch with this type of fetch?
 
 // card ideas https://codepen.io/joshuaward/pen/dKmZVZ https://codepen.io/dickyal6/pen/rNeRepd
 

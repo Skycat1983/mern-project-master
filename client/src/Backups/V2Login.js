@@ -12,7 +12,6 @@ import Button from "@mui/material/Button";
 import "./views.css";
 import background from "../assets/backgrounds/photos/houseplants3.jpg";
 import { AuthContext } from "../Contexts/AuthContext";
-import HomeIcon from "@mui/icons-material/Home";
 
 // TODO: can this be imported once, instead of both at LOGIN and SIGNUP?
 const Item = styled(Paper)(({ theme }) => ({
@@ -30,29 +29,72 @@ const Login = () => {
   };
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoading, getProfile, userLoggedIn, signIn } =
-    useContext(AuthContext);
+  const { isLoading, getProfile, userLoggedIn } = useContext(AuthContext);
   const { values, setValues, handleInputChange } = useForm(initialValues);
 
-  const handleNav = () => {
-    navigate("/");
-  };
-
-  //! is there a purpose to what i'm doing here can't remember
   useEffect(() => {
+    //! DOES NOT WORK
     console.warn("getting profile in Login");
+    // const pageLoad = async () => {
+    //   const user = await getProfile();
+    // console.log("userLogin", userLoggedIn);
+    // };
     getProfile();
     console.log("userLogin", userLoggedIn);
   }, []);
 
-  const login = () => {
-    signIn(values, navigate, location);
+  const signIn = async () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("email", values.emailAddress);
+    urlencoded.append("password", values.password);
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:5001/api/users/login",
+        requestOptions
+      );
+      const result = await response.json();
+      console.log("result :>> ", result);
+      const { token } = result;
+      if (token) {
+        localStorage.setItem("token", token);
+        //! take to auth?
+        // setUser(result)
+        // isLoading(false)
+        if (location.state?.from) {
+          navigate(location.state.from, { replace: true });
+        } else {
+          navigate("/", { replace: true });
+        }
+      }
+    } catch (error) {
+      // isLoading(false)
+      console.log("error", error);
+    }
+    // const redirect = () => {
+    //   if (location.state?.from) {
+    //     navigate(location.state.from);
+    //   }
   };
+
+  //   fetch("http://localhost:5001/api/users/login", requestOptions)
+  //     .then((response) => response.text())
+  //     .then((result) => console.log(result))
+  //     .catch((error) => console.log("error", error));
+  // };
 
   console.log(values);
   return (
     <>
-      <HomeIcon className="go-home-icon" onClick={handleNav} />
       <img src={background} className="background-image2" alt="" />
       <div className="login-container">
         <Form>
@@ -78,7 +120,7 @@ const Login = () => {
                 fullWidth={true}
                 variant="contained"
                 component="label"
-                onClick={login}
+                onClick={signIn}
                 color="success"
               >
                 LOGIN
