@@ -5,19 +5,6 @@ const plantSchema = new Schema(
   {
     //! PLANT DEETS
     genus: { type: String, required: true },
-    // dateposted: { type: Date, default: Date.now },
-    // requirements: String,
-
-    //! SELLER DEETS
-    // username: { type: String, required: true },
-    // location: {
-    //   longtitude: {
-    //     type: Number,
-    //   },
-    //   latitude: {
-    //     type: Number,
-    //   },
-    // },
 
     //! SAMPLE DEETS
     varigation: { type: Boolean, required: true },

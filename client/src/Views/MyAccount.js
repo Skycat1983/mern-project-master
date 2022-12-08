@@ -69,12 +69,16 @@ const MyAccount = () => {
       {userLoggedIn.premium == true && (
         <WorkspacePremiumIcon className="premium-badge" />
       )}
-      {/* {user.premium == true && (
-        <WorkspacePremiumIcon className="premium-badge" />
-      )} */}
 
       <div className="background-image-div">
-        <img src={cover} className="background-image3" alt="" />
+        {/* <img src={cover} className="background-image3" alt="" /> */}
+        <img
+          src={
+            "https://res.cloudinary.com/dzncmfirr/image/upload/v1670433446/app-images/leaf_xjcqey.png"
+          }
+          className="background-image3"
+          alt=""
+        />
       </div>
       <div className="below-nav">
         <div className="gradient-div">

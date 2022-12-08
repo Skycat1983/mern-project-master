@@ -23,7 +23,31 @@ const getAllPlants = async (req, res) => {
 };
 
 // GET A SINGLE PLANT
-const getPlant = async (req, res) => {};
+//! problems with where to use/not use underscore with id here
+const getPlant = async (req, res) => {
+  // uncomment greens for plant retrieved, plant: null
+  //* const { _id } = req.params;
+
+  // uncomment reds for same plant every time
+  //! const { id } = req.params;
+
+  try {
+    //* const plant = await plantModel.findById(_id);
+
+    //! const plant = await plantModel.findOne({ id: req.params });
+
+    res.status(200).json({
+      msg: "plant retrieved",
+      plant,
+    });
+  } catch (error) {
+    console.log("error :>> ", error);
+    res.status(500).json({
+      error,
+      msg: "there was a problem in the server",
+    });
+  }
+};
 
 // POST A NEW PLANT
 const createPlant = async (req, res) => {
@@ -132,7 +156,7 @@ export {
   updatePlant,
 };
 
-//! image format deets below
+// //! image format deets below
 // const uploadImage = async (req, res) => {
 //   // console.log("ln 54 req.files :>> >>>>>>>", req.files);
 //   try {
@@ -175,3 +199,7 @@ export {
 //     });
 //   }
 // };
+
+//   // res.send("you requested to see plant with the id of" + req.params.id);
+//* http://localhost:5001/api/plants/id/63909911d513889bf1ec6b01
+// console.log("req", req.params.id);

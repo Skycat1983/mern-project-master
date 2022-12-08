@@ -178,9 +178,8 @@ export default Home;
 
 // QUESTIONS:
 
-// does it make more sense to import authcontext to my views,  and then filter specific returns from authcontext to various compoenents as props? or does it make more sense to just import authcontext direct to each component? not sure if this causes problems similar to how i had with my event listener on my radial in last project. maybe problematic when component is imported by more than one view
-
-// usenavigate and uselocation as a component? i also thought of having a toggle component
+// see usercontroller. req.params>? what does it mean>?
+//? const { _id } = req.params;
 
 // usemodal custom hook for redirect?
 

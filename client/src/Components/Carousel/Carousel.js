@@ -41,29 +41,37 @@ export default function Carousel(data, isLoading) {
             }
             return (
               <SwiperSlide key={index}>
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={item.imageUrls}
-                      alt="plant pic"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h7" component="div">
-                        {item.genus}
-                      </Typography>
-                      {/* <Typography variant="body2" color="text.secondary">
+                <Link
+                  to={`/plant/${item._id}`}
+                  key={item._id}
+                  state={{ plant: item._id }}
+                  // state={{ data: props.myFunction }}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Card sx={{ maxWidth: 345 }}>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={item.imageUrls}
+                        alt="plant pic"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h7" component="div">
+                          {item.genus}
+                        </Typography>
+                        {/* <Typography variant="body2" color="text.secondary">
                         <b>user:</b>
                         {item.user.email}
                       </Typography> */}
-                      <Typography variant="body2" color="text.secondary">
-                        <b> price:</b>
-                        {item.price}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
+                        <Typography variant="body2" color="text.secondary">
+                          <b> price:</b>
+                          {item.price}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Link>
               </SwiperSlide>
             );
           })}

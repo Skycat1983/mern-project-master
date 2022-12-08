@@ -38,8 +38,6 @@ export default function NavBar() {
   const handleMenuNav = () => {
     if (isUser) {
       logout();
-    } else {
-      console.log("nothing");
     }
   };
 

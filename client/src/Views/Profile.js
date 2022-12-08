@@ -1,32 +1,50 @@
-import useFetch from "../Hooks/useFetch";
-import NavBar from "../Components/Navbar/NavBar";
-
-import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import Avatar from "@mui/material/Avatar";
-import { useRadioGroup } from "@mui/material";
+import React from "react";
+import { useForm, Form, XLForm } from "../Hooks/useForm";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { FormControl, FormLabel, RadioGroup, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import CardMedia from "@mui/material/CardMedia";
-import TextField from "@mui/material/TextField";
-import Comments from "../Components/Comments/Comments";
+import cover from "../assets/backgrounds/photos/leaf.png";
+import temp from "../assets/appIcons/glassmomnstera.png";
+
+import { useContext, useEffect, useState } from "react";
+import "./views.css";
+
+import NavBar from "../Components/Navbar/NavBar.js";
+import EditIcon from "@mui/icons-material/Edit";
+import Typography from "@mui/material/Typography";
+import "./views.css";
+import Box from "@mui/material/Box";
+import AboutUs from "../Components/AboutUs/AboutUs.js";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import Carousel from "../Components/Carousel/Carousel.js";
+import Account from "../Components/Account/Account.js";
+import { AuthContext } from "../Contexts/AuthContext";
+import Plants from "../Components/Plants/Plants.js";
+import Reviews from "../Components/Reviews/Reviews.js";
+// import temp from "../assets/temp/temp3.png";
 
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import ButtonBase from "@mui/material/ButtonBase";
-import "./views.css";
-import temp from "../assets/temp/temp3.png";
+import CardMedia from "@mui/material/CardMedia";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import Box from "@mui/material/Box";
+import ButtonBase from "@mui/material/ButtonBase";
+// import ProfileTab from "../Components/ProfileTab/ProfileTab";
+import { useLocation } from "react-router-dom";
+import useFetch from "../Hooks/useFetch";
 
-const Img = styled("img")({
-  margin: "auto",
-  display: "block",
-  maxWidth: "100%",
-  maxHeight: "100%",
-});
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
 export default function Profile() {
+  const [value, setValue] = React.useState(0);
+  // const [tabDisplayed, setTabDisplayed] = useState("about");
   const [user, setUser] = useState(true);
   const location = useLocation();
   console.log("location :>> ", location.state.user);
@@ -35,131 +53,108 @@ export default function Profile() {
   );
   const { data, isLoading, error } = useFetch(url);
 
-  // console.log(location);
-  // console.warn(data.user);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    console.log(newValue);
+  };
+
+  console.warn("data", data);
 
   return (
     <>
       <NavBar />
-      <Box
-        sx={{
-          p: 2,
-          margin: 2,
-          marginTop: 10,
-        }}
-      >
-        <Avatar>H</Avatar>
-        {!isLoading && <h3>welcome to {data?.user?.username}'s profile </h3>}
+      {data?.user?.premium == true && (
+        <WorkspacePremiumIcon className="premium-badge" />
+      )}
 
-        <Typography variant="h6" gutterBottom>
-          about us
-        </Typography>
-        <Typography variant="body1" gutterBottom>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-          blanditiis tenetur unde suscipit, quam beatae rerum inventore
-          consectetur, neque doloribus, cupiditate numquam dignissimos laborum
-          fugiat deleniti? Eum quasi quidem quibusdam.
-        </Typography>
-        <h5>below are the plants we have for sale</h5>
+      <div className="background-image-div">
+        <img
+          src={
+            "https://res.cloudinary.com/dzncmfirr/image/upload/v1670433446/app-images/leaf_xjcqey.png"
+          }
+          className="background-image3"
+          alt=""
+        />
+      </div>
+      {/* <div className="below-nav"> */}
+      <div className="gradient-div">
+        <h5 className="welcome-back-header">
+          welcome to {data?.user?.username}'s profile'
+        </h5>
+        {/* </div> */}
+      </div>
+      <Box className="profile-tab" sx={{ maxWidth: { xs: 255, sm: 200 } }}>
+        <Tabs
+          TabIndicatorProps={{ style: { backgroundColor: "green" } }}
+          value={value}
+          className="my-tabs"
+          onChange={handleChange}
+          // aria-label="Tabs where selection follows focus"
+          // selectionFollowsFocus
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
+        >
+          {/* <TabScrollButton direction="left" /> */}
+
+          <Tab
+            // onClick={handleChange}
+            className="my-tab"
+            label="about"
+            name="about"
+            style={{ minWidth: "50%" }}
+          />
+          <Tab
+            // onClick={handleChange}
+            className="my-tab"
+            label="plants"
+            name="plants"
+            style={{ minWidth: "50%" }}
+          />
+          <Tab
+            // onChange={handleChange}
+            className="my-tab"
+            label="reviews"
+            name="reviews"
+            style={{ minWidth: "50%" }}
+          />
+          <Tab
+            onChange={handleChange}
+            className="my-tab"
+            label="account"
+            name="account"
+            style={{ minWidth: "50%" }}
+          />
+        </Tabs>
       </Box>
-      <Grid>
-        {data &&
-          data?.user?.plants?.map((item) => {
-            return (
-              <Paper
-                className="profile-plant-items"
-                sx={{
-                  p: 2,
-                  margin: 2,
-                  maxWidth: 300,
-                  flexGrow: 1,
-                  backgroundColor: (theme) =>
-                    theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-                }}
-              >
-                <Grid container spacing={2}>
-                  <Grid item>
-                    {/* <ButtonBase sx={{ width: 128, height: 128 }}> */}
-                    <ButtonBase sx={{ width: 100, height: 100 }}>
-                      <CardMedia
-                        component="img"
-                        // height="140"
-
-                        width="10"
-                        image={temp}
-                        alt="user pic"
-                      />
-                      {/* <Img alt="complex" image={temp} /> */}
-                    </ButtonBase>
-                  </Grid>
-                  <Grid item xs={12} sm container>
-                    <Grid item xs container direction="column" spacing={2}>
-                      <Grid item xs>
-                        <Typography
-                          gutterBottom
-                          variant="subtitle1"
-                          component="div"
-                        >
-                          {item.genus}
-                        </Typography>
-                        <Typography variant="body2" gutterBottom>
-                          Family • AROID
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          listed: {item.createdAt}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <FavoriteBorderIcon />
-                        {/* <Typography sx={{ cursor: "pointer" }} variant="body2">
-                          Remove
-                        </Typography> */}
-                      </Grid>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1" component="div">
-                        £{item.price}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Paper>
-            );
-          })}
+      <Grid
+        sx={{
+          marginTop: -14,
+        }}
+        container
+        spacing={5}
+        padding={1}
+        paddingLeft={3}
+        paddingRight={3}
+      >
+        <Grid className="profile-headings" item xs={8}>
+          <Typography sx={{ color: "#ffffff" }} variant="h6" gutterBottom>
+            {data?.user?.username}
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>
+            <img src={temp} className="about-us-avatar" alt="" />
+          </Item>
+        </Grid>
       </Grid>
-      <Box
-        sx={{
-          p: 2,
-          margin: 2,
-        }}
-      >
-        <h5>USER REVIEWS</h5>
-        <Comments></Comments>
-        {user ? (
-          <TextField
-            id="outlined-multiline-static"
-            sx={{ m: 1, width: "75vw" }}
-            label="Write a review"
-            multiline
-            rows={4}
-          />
-        ) : (
-          <TextField
-            id="outlined-multiline-static"
-            disabled
-            sx={{ m: 1, width: "75vw" }}
-            label="Write a review of this seller"
-            multiline
-            rows={4}
-            defaultValue="You need to be signed in to use this feature"
-          />
-        )}
-        {!isLoading && (
-          <h4>
-            Questions? contact us via our email address: {data?.user?.email}
-          </h4>
-        )}
-      </Box>
+      {value === 0 && <AboutUs aboutus={data?.user?.aboutus}></AboutUs>}
+      {value === 1 && <Plants plants={data?.user?.plants}></Plants>}
+      {value === 2 && (
+        <Reviews
+        // plants={data?.user?.plants}
+        ></Reviews>
+      )}
     </>
   );
 }

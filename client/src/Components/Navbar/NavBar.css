@@ -14,7 +14,7 @@
   position: fixed;
   top: -3px;
   left: 5px;
-  z-index: 10;
+  z-index: 1000;
 }
 
 /* WANNTED TO MAKE LOGO RIM BUT DOES NOT WORK FOR SOME REASON */

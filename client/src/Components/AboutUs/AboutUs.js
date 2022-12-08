@@ -97,7 +97,7 @@ function AboutUs(props) {
       )}
       {user.aboutus ? (
         <Button
-          onClick="handleChange"
+          // onClick="handleChange"
           className="edit-button"
           variant="contained"
           color="success"

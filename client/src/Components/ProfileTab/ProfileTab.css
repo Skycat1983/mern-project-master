@@ -1,3 +1,9 @@
+/* .profile-tab {
+  position: sticky;
+  top: 0;
+  padding-top: 10px;
+} */
+
 .profile-tab {
   position: relative;
   top: 3vh;
@@ -5,6 +11,8 @@
 
 .my-tab {
   color: darkgreen !important;
+  position: sticky;
+  top: 0;
   /* background-color: darkgreen !important; */
   ;
 }

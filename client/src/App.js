@@ -14,6 +14,7 @@ import {
 import { AuthContextProvider } from "./Contexts/AuthContext.js";
 import getToken from "./utils/getToken.js";
 import ProtectedRoute from "./Components/ProtectedRoute.js";
+import Listing from "./Views/Listing.js";
 
 // import { AuthContextProvider } from "./context/AuthContext";
 
@@ -31,6 +32,8 @@ function App() {
             {/* <Route exact path="myaccount" element={<MyAccount />} /> */}
             <Route exact path="login" element={<Login />} />
             <Route exact path="profile/:id" element={<Profile />} />
+            <Route exact path="plant/:id" element={<Listing />} />
+
             <Route exact path="addplant" element={<AddPlant />} />
 
             <Route path="/redirect" element={<Navigate to="/" />} />
