@@ -183,7 +183,13 @@ export default Home;
 
 // usemodal custom hook for redirect?
 
-// - see myaccount and the components i call. each imports the authcontext. would it make more sense to import it just to the parents, mcaccount.js, and then send the relevant detaisl as props? or will this cause event listener problems like i had before (some of my components need to CRUD). OR should i just have all these components on the main myaccount view, and not have them as compoenents at all?
+//! UNBELIEVABLE PLANT CONTROLLER PROBLEM!!! delete the commented code on find by id
+
+//* i have a feeling i'm using async, await wrong. please see commentcontroller, createcomment, updateauthoer/target
+
+//? can i just destroy a collection instead of deleting individual entries? will my backend automatically recreate the paths?
+
+//? populatepath problem. see getuser.
 
 // why does my object destructure of useForm show different colour coding in Signup and MyAccount?
 

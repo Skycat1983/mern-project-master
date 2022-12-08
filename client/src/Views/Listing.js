@@ -29,6 +29,12 @@ function Listing() {
   return (
     <>
       <NavBar />
+      <h2>PADDING</h2>
+      <h2>family: {data?.plant.genus}</h2>
+      <h2>rooted: {data?.plant.rooted ? "yes" : "no"}</h2>
+      <h2>topcutting: {data?.plant.topcutting ? "yes" : "no"}</h2>
+      <h2>varigation: {data?.plant.varigation ? "yes" : "no"}</h2>
+      <h2>price: {data?.plant.price}</h2>
     </>
   );
 }

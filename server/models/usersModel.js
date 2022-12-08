@@ -11,26 +11,10 @@ const usersSchema = new Schema(
     premium: { type: Boolean, required: true },
     avatar: { type: String, required: true },
     aboutus: { type: String, required: false },
-    // commentsForUser [] (the comments others left for us)
-    // commentsByUser [] (the comments we left for others)
-
-    // when a user leaves a review, we send two post requests.
-    // commentsForUser: [
-    //   {
-    //     author: {
-    //       type: String,
-    //       required: false,
-    //     },
-    //     text: {
-    //       type: String,
-    //       required: false,
-    //     },
-    //   },
-    // ],
-    // _id: { type: mongoose.ObjectId },
+    commentsfor: [{ type: Schema.Types.ObjectId, ref: "CommentFor" }],
+    commentsby: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     plants: [{ type: Schema.Types.ObjectId, ref: "Plant" }], //! ref: "plant" = the collection name in mongodb. must be singular
     // wishlist: { type: Object, required: false },
-    commentsForUser: { type: Array, required: false },
   },
   { timestamps: true }
 );

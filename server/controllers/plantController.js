@@ -29,12 +29,16 @@ const getPlant = async (req, res) => {
   //* const { _id } = req.params;
 
   // uncomment reds for same plant every time
+  const { id } = req.params;
+
   //! const { id } = req.params;
 
   try {
-    //* const plant = await plantModel.findById(_id);
+    const plant = await plantModel.findById(id);
 
-    //! const plant = await plantModel.findOne({ id: req.params });
+    //! const plant = await plantModel.findOne({ _id: id });
+
+    // const plant = await plantModel.findOne({ _id: ObjectId });
 
     res.status(200).json({
       msg: "plant retrieved",

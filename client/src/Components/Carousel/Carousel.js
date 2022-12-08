@@ -53,7 +53,7 @@ export default function Carousel(data, isLoading) {
                       <CardMedia
                         component="img"
                         height="140"
-                        image={item.imageUrls}
+                        image={item.imageUrls[0]}
                         alt="plant pic"
                       />
                       <CardContent>

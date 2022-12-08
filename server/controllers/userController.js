@@ -2,6 +2,7 @@ import usersModel from "../models/usersModel.js";
 import encryptPassword from "../utils/encryptPassword.js";
 import isPasswordCorrect from "../utils/isPasswordCorrect.js";
 import issueToken from "../utils/issueToken.js";
+import commentsModel from "../models/commentsModel.js";
 
 // GET ALL USERS
 const getAllUsers = async (req, res) => {
@@ -23,13 +24,15 @@ const getAllUsers = async (req, res) => {
 
 // GET A SINGLE USER
 const getUser = async (req, res) => {
-  console.log("req", req.params.id);
+  console.log("req>>>>>", req.params.id);
   const { username } = req.params;
   try {
     //! V1 findOne (works but parameter is fixed)
     const user = await usersModel
       .findOne({ username: username })
-      .populate({ path: "plants" });
+      .populate({ path: "plants" })
+      .populate({ path: "commentsby" });
+    // .populate({ path: "plants", path: "commentby" });
 
     // console.log("get user", user);
     res.status(200).json({

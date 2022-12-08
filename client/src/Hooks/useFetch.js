@@ -10,6 +10,7 @@ const useFetch = (url) => {
     const response = await fetch(url);
     const result = await response.json();
     setData(result);
+    setIsLoading(false);
   };
 
   // after every render //?
