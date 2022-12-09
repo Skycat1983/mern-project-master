@@ -11,7 +11,7 @@ const usersSchema = new Schema(
     premium: { type: Boolean, required: true },
     avatar: { type: String, required: true },
     aboutus: { type: String, required: false },
-    commentsfor: [{ type: Schema.Types.ObjectId, ref: "CommentFor" }],
+    commentsfor: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     commentsby: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     plants: [{ type: Schema.Types.ObjectId, ref: "Plant" }], //! ref: "plant" = the collection name in mongodb. must be singular
     // wishlist: { type: Object, required: false },

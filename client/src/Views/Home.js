@@ -97,12 +97,15 @@ function Home() {
           <img src={cover} className="background-image" alt="" />
         )}
       </div>
-      <div className="below-nav">
-        <div className="gradient-div">
-          <h5 className="welcome-back-header">
-            welcome back, {userLoggedIn.username}
-          </h5>
-        </div>
+      {/* <div className="below-nav"> */}
+      <div className="gradient-div">
+        <h5 className="welcome-back-header">
+          welcome back, {userLoggedIn.username}
+        </h5>
+      </div>
+      {/* </div> */}
+      <div className="gradient-div-invert">
+        <h5></h5>
       </div>
       <Search
         className="search-bar"

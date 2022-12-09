@@ -31,7 +31,9 @@ const getUser = async (req, res) => {
     const user = await usersModel
       .findOne({ username: username })
       .populate({ path: "plants" })
-      .populate({ path: "commentsby" });
+      .populate({ path: "commentsby" })
+      .populate({ path: "commentsfor" });
+
     // .populate({ path: "plants", path: "commentby" });
 
     // console.log("get user", user);

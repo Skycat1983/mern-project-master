@@ -79,9 +79,12 @@ export default function Profile() {
       {/* <div className="below-nav"> */}
       <div className="gradient-div">
         <h5 className="welcome-back-header">
-          welcome to {data?.user?.username}'s profile'
+          welcome to {data?.user?.username}'s profile, SETUSERNAME
         </h5>
         {/* </div> */}
+      </div>
+      <div className="gradient-div-invert">
+        <h5></h5>
       </div>
       <Box className="profile-tab" sx={{ maxWidth: { xs: 255, sm: 200 } }}>
         <Tabs
@@ -150,11 +153,7 @@ export default function Profile() {
       </Grid>
       {value === 0 && <AboutUs aboutus={data?.user?.aboutus}></AboutUs>}
       {value === 1 && <Plants plants={data?.user?.plants}></Plants>}
-      {value === 2 && (
-        <Reviews
-        // plants={data?.user?.plants}
-        ></Reviews>
-      )}
+      {value === 2 && <Reviews commentsfor={data?.user?.commentsfor}></Reviews>}
     </>
   );
 }

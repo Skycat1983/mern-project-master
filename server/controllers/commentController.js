@@ -38,21 +38,21 @@ const createComment = async (req, res) => {
       { returnOriginal: false }
     );
     console.log("updateAuthor :>> ", updateAuthor);
-    // updateAuthor.commentsby.push(savedComment._id);
-    // await updateAuthor.save();
-    const updateTarget = await userModel.findOne({ _id: target });
-    // console.log("target", target);
-    // console.log("updatetarget", updateTarget);
-    // console.log("saved comment", savedComment);
+    console.log("savedComment", savedComment);
+    const updateTarget = await userModel.findByIdAndUpdate(
+      { _id: target },
+      { $push: { commentsfor: savedComment._id } },
+      { returnOriginal: false }
+    );
+    console.log("updateTarget :>> ", updateTarget);
 
-    //! pull instead of push
-    updateTarget.commentsfor.push(savedComment._id);
-    await updateTarget.save();
+    //! pull instead of push to remove
+
     res.status(201).json({
       msg: "comment succesfully registered",
       comment: savedComment,
       updateAuthor,
-      // updateTarget,
+      updateTarget,
     });
   } catch (error) {
     res.status(500).json({ msg: "something went wrong with comment creation" });
