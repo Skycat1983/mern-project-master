@@ -9,6 +9,7 @@ export const AuthContextProvider = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userLoggedIn, setUserLoggedIn] = useState({});
   const [error, setError] = useState(null);
+  const [modalText, setModalText] = useState("");
 
   useEffect(() => {
     const token = getToken();
@@ -45,8 +46,10 @@ export const AuthContextProvider = (props) => {
         localStorage.setItem("token", token);
         //! swap around if problems
         if (location.state?.from) {
+          setModalText("Successfuly logged in. Redirecting");
           navigate(location.state.from, { replace: true });
         } else {
+          setModalText("Successfuly logged in. Redirecting");
           navigate("/", { replace: true });
         }
         isLoading(false);
@@ -54,6 +57,7 @@ export const AuthContextProvider = (props) => {
       }
     } catch (error) {
       console.log("error", error);
+      setError(error);
     }
   };
 
@@ -86,10 +90,12 @@ export const AuthContextProvider = (props) => {
   };
 
   //LOGOUT
-  const logout = () => {
+  const logout = (e) => {
+    e.preventDefault();
     localStorage.removeItem("token");
     setUserLoggedIn(false);
-    isUser(null);
+    setIsUser(null);
+    setModalText("successfully logged out");
     console.log("user logged out");
   };
 

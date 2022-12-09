@@ -1,7 +1,13 @@
 import React from "react";
 import { useForm, Form, XLForm } from "../Hooks/useForm";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { FormControl, FormLabel, RadioGroup, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  TextField,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import cover from "../assets/backgrounds/photos/leaf.png";
 import temp from "../assets/appIcons/glassmomnstera.png";
@@ -23,6 +29,7 @@ import Account from "../Components/Account/Account.js";
 import { AuthContext } from "../Contexts/AuthContext";
 import Plants from "../Components/Plants/Plants.js";
 import Reviews from "../Components/Reviews/Reviews.js";
+// import useModal from "../Hooks/useModal.js";
 // import temp from "../assets/temp/temp3.png";
 
 import Grid from "@mui/material/Grid";
@@ -33,6 +40,8 @@ import ButtonBase from "@mui/material/ButtonBase";
 // import ProfileTab from "../Components/ProfileTab/ProfileTab";
 import { useLocation } from "react-router-dom";
 import useFetch from "../Hooks/useFetch";
+import Modal from "@mui/material/Modal";
+import SummonModal from "../Components/MyModal/SummonModal.js";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -44,6 +53,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Profile() {
   const [value, setValue] = React.useState(0);
+  const [summonModal, setSummonModal] = useState(false);
   // const [tabDisplayed, setTabDisplayed] = useState("about");
   const [user, setUser] = useState(true);
   const location = useLocation();
@@ -52,17 +62,19 @@ export default function Profile() {
     `http://localhost:5001/api/users/one/${location.state.user}`
   );
   const { data, isLoading, error } = useFetch(url);
+  const { getProfile, userLoggedIn, isUser } = useContext(AuthContext);
+  // const { modalText, handleOpen, handleClose, setOpen } = useModal;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue);
   };
 
-  console.warn("data", data);
-
+  console.log(summonModal);
   return (
     <>
       <NavBar />
+
       {data?.user?.premium == true && (
         <WorkspacePremiumIcon className="premium-badge" />
       )}
@@ -79,7 +91,7 @@ export default function Profile() {
       {/* <div className="below-nav"> */}
       <div className="gradient-div">
         <h5 className="welcome-back-header">
-          welcome to {data?.user?.username}'s profile, SETUSERNAME
+          welcome to {data?.user?.username}'s profile
         </h5>
         {/* </div> */}
       </div>
@@ -151,9 +163,16 @@ export default function Profile() {
           </Item>
         </Grid>
       </Grid>
+      {/* <Button onClick={() => setSummonModal(!summonModal)}>summonModal</Button> */}
+      <SummonModal></SummonModal>
       {value === 0 && <AboutUs aboutus={data?.user?.aboutus}></AboutUs>}
       {value === 1 && <Plants plants={data?.user?.plants}></Plants>}
-      {value === 2 && <Reviews commentsfor={data?.user?.commentsfor}></Reviews>}
+      {value === 2 && (
+        <Reviews
+          // commentsfor={data?.user?.commentsfor}
+          data={data?.user}
+        ></Reviews>
+      )}
     </>
   );
 }

@@ -16,6 +16,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useEffect, useState, useContext } from "react";
 import MyControls from "../Components/controls/MyControls";
+import MyModal from "../Components/MyModal/SummonModal";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -63,6 +64,8 @@ function Home() {
     searchPlants: "",
     searchUsers: "",
   };
+  const [modalText, setModalText] = useState(false);
+
   const [value, setValue] = React.useState(0);
   const [url, setUrl] = useState("http://localhost:5001/api/plants/all");
   const { data, isLoading, error } = useFetch(url);
@@ -75,6 +78,18 @@ function Home() {
     console.log("userLogin", userLoggedIn);
     console.log("isUser", isUser);
   }, []);
+
+  useEffect(() => {
+    if (isUser) {
+      setModalText("user logged out successfully");
+    } else {
+      setModalText("user logged in successfully");
+    }
+
+    return () => {
+      setModalText(null);
+    };
+  }, [isUser]);
 
   //? see 'console.log(newValue, value);': what's going on with this toggle effect? why doesn't it print the same number twice?
   const handleChange = (event, newValue) => {
@@ -89,6 +104,7 @@ function Home() {
 
   return (
     <>
+      <MyModal text={modalText}></MyModal>
       <NavBar />
       <div className="background-image-div">
         {value == 1 ? (

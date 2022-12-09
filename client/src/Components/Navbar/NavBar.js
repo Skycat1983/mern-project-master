@@ -35,9 +35,9 @@ export default function NavBar() {
     setAnchorEl(null);
   };
 
-  const handleMenuNav = () => {
+  const handleMenuNav = (e) => {
     if (isUser) {
-      logout();
+      logout(e);
     }
   };
 

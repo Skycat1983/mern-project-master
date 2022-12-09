@@ -60,14 +60,25 @@ const createComment = async (req, res) => {
 };
 
 const deleteComment = async (req, res) => {
+  const { commentid, authorid, targetid } = req.body;
+  console.log("commentid, authorid, targetid", commentid, authorid, targetid);
   try {
     // maybe should be //? findOneAndDelete
-    const user = await userModel.deleteOne({});
+    const comment = await commentsModel.findByIdAndDelete({ _id: commentid });
+    const commentfor = await userModel.findByIdAndUpdate(
+      { _id: targetid },
+      { $pull: { commentsfor: authorid } },
+      { returnOriginal: false }
+    );
+    const commentby = await userModel.findByIdAndUpdate(
+      { _id: authorid },
+      { $pull: { commentsby: targetid } },
+      { returnOriginal: false }
+    );
 
-    console.log("delete user", user);
+    // console.log("deleted comment", comment);
     res.status(200).json({
-      msg: "user succesfully deleted",
-      // user, //! don't show because doesn't exist?
+      msg: "comment succesfully deleted",
     });
   } catch (error) {
     console.log("error :>> ", error);

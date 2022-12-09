@@ -106,28 +106,6 @@ export function SignupForm(props) {
   );
 }
 
-// export function Form(props) {
-//   return (
-//     <form
-//       style={{
-//         marginTop: "150px",
-//         marginLeft: "60px",
-//         alignItems: "center",
-//         borderRadius: "12px 12px 12px 12px",
-
-//         marginBottom: "10px",
-//         width: "190px",
-//         backgroundColor: "white",
-//         opacity: "80%",
-//         color: "green", //! only applies to basic/premium options
-//         padding: "30px",
-//       }}
-//     >
-//       {props.children}
-//     </form>
-//   );
-// }
-
 export function XLForm(props) {
   return (
     <form
@@ -190,3 +168,25 @@ export function PlantForm(props) {
 }
 
 // /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+export function ReviewForm(props) {
+  return (
+    <form
+      style={{
+        marginTop: "-0px",
+        marginLeft: "0px",
+        alignItems: "center",
+        borderRadius: "12px 12px 12px 12px",
+
+        marginBottom: "10px",
+        width: "328px",
+        backgroundColor: "white",
+        opacity: "100%",
+        color: "green", //! only applies to basic/premium options
+        // padding: "25px",
+      }}
+    >
+      {props.children}
+    </form>
+  );
+}

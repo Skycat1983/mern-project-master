@@ -22,7 +22,7 @@ const router = express.Router();
 router.post("/create", createComment);
 
 // DELETE COMMENT
-router.delete("/delete/:id", deleteComment);
+router.delete("/delete", deleteComment);
 
 // EDIT COMMENT
 // router.patch("/update/:id", updateComment);

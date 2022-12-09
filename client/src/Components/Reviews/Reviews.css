@@ -4,7 +4,7 @@
 
 .submit-review {
   position: absolute;
-  bottom: 35px;
+  bottom: 20px;
   right: -180px;
 }
 
@@ -16,11 +16,17 @@
 
 .review-box {
   margin-top: 30px;
+  /* padding-bottom: 30px; */
+}
+
+.delete-icon {
+  position: absolute;
+  left: 300px;
 }
 
 /* went mad from this settings where previously was fine */
 /* .submit-review {
   position: absolute;
-  bottom: -270px;
+  bottom: -290px;
   right: 60px;
 } */
