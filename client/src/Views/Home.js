@@ -64,12 +64,13 @@ function Home() {
     searchPlants: "",
     searchUsers: "",
   };
-  const [modalText, setModalText] = useState(false);
+  // const [modalText, setModalText] = useState(false);
 
   const [value, setValue] = React.useState(0);
   const [url, setUrl] = useState("http://localhost:5001/api/plants/all");
   const { data, isLoading, error } = useFetch(url);
-  const { getProfile, userLoggedIn, logout, isUser } = useContext(AuthContext);
+  const { getProfile, userLoggedIn, logout, isUser, isModal } =
+    useContext(AuthContext);
   const { values, setValues, handleInputChange } = useForm(initialValues);
 
   useEffect(() => {
@@ -79,17 +80,16 @@ function Home() {
     console.log("isUser", isUser);
   }, []);
 
-  useEffect(() => {
-    if (isUser) {
-      setModalText("user logged out successfully");
-    } else {
-      setModalText("user logged in successfully");
-    }
-
-    return () => {
-      setModalText(null);
-    };
-  }, [isUser]);
+  // useEffect(() => {
+  //   if (isUser) {
+  //     setModalText("user logged out successfully");
+  //   } else {
+  //     setModalText("user logged in successfully");
+  //   }
+  //   return () => {
+  //     setModalText(null);
+  //   };
+  // }, [isUser]);
 
   //? see 'console.log(newValue, value);': what's going on with this toggle effect? why doesn't it print the same number twice?
   const handleChange = (event, newValue) => {
@@ -104,9 +104,9 @@ function Home() {
 
   return (
     <>
-      <MyModal text={modalText}></MyModal>
+      {isModal && <MyModal></MyModal>}
       <NavBar />
-      <div className="background-image-div">
+      <div>
         {value == 1 ? (
           <img src={cover2} className="background-shop" alt="" />
         ) : (
@@ -115,9 +115,11 @@ function Home() {
       </div>
       {/* <div className="below-nav"> */}
       <div className="gradient-div">
-        <h5 className="welcome-back-header">
-          welcome back, {userLoggedIn.username}
-        </h5>
+        {isUser && (
+          <h5 className="welcome-back-header">
+            welcome back, {userLoggedIn.username}
+          </h5>
+        )}
       </div>
       {/* </div> */}
       <div className="gradient-div-invert">

@@ -3,6 +3,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { AuthContext } from "../../Contexts/AuthContext";
+import { useContext, useEffect, useState } from "react";
+
 import "./SummonModal.css";
 
 const style = {
@@ -18,15 +21,22 @@ const style = {
 };
 
 export default function MyModal() {
-  const [open, setOpen] = React.useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { modalText, isModal, setIsModal } = useContext(AuthContext);
+  const handleClose = () => {
+    setIsModal(false);
+  };
+
+  // const [open, setOpen] = React.useState(true);
+  // const { modalText, isModal, setIsModal } = useContext(AuthContext);
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
   return (
     <div>
       {/* <Button onClick={handleOpen}>SUMMON MODAL</Button> */}
       <Modal
-        open={open}
+        open={isModal}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -41,7 +51,7 @@ export default function MyModal() {
             Text in a modal
           </Typography>
           <Typography color="white" id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            {modalText}
           </Typography>
         </Box>
       </Modal>

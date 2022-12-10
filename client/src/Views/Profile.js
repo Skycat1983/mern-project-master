@@ -81,10 +81,12 @@ export default function Profile() {
 
       <div className="background-image-div">
         <img
-          src={
-            "https://res.cloudinary.com/dzncmfirr/image/upload/v1670433446/app-images/leaf_xjcqey.png"
-          }
-          className="background-image3"
+          src={data?.user?.coverpicture}
+          // src={
+          //   "https://res.cloudinary.com/dzncmfirr/image/upload/v1670433446/app-images/leaf_xjcqey.png"
+          // }
+          // className="background-image3"
+          className="cover"
           alt=""
         />
       </div>
@@ -104,8 +106,6 @@ export default function Profile() {
           value={value}
           className="my-tabs"
           onChange={handleChange}
-          // aria-label="Tabs where selection follows focus"
-          // selectionFollowsFocus
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
@@ -113,21 +113,18 @@ export default function Profile() {
           {/* <TabScrollButton direction="left" /> */}
 
           <Tab
-            // onClick={handleChange}
             className="my-tab"
             label="about"
             name="about"
             style={{ minWidth: "50%" }}
           />
           <Tab
-            // onClick={handleChange}
             className="my-tab"
             label="plants"
             name="plants"
             style={{ minWidth: "50%" }}
           />
           <Tab
-            // onChange={handleChange}
             className="my-tab"
             label="reviews"
             name="reviews"

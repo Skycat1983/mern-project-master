@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import getToken from "../utils/getToken.js";
+import * as React from "react";
 
 export const AuthContext = createContext();
 
@@ -10,6 +11,7 @@ export const AuthContextProvider = (props) => {
   const [userLoggedIn, setUserLoggedIn] = useState({});
   const [error, setError] = useState(null);
   const [modalText, setModalText] = useState("");
+  const [isModal, setIsModal] = React.useState(false);
 
   useEffect(() => {
     const token = getToken();
@@ -18,6 +20,36 @@ export const AuthContextProvider = (props) => {
       setError("session expired");
     }
   }, [error]);
+
+  const register = (values, navigate, location) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("email", values.emailAddress);
+    urlencoded.append("username", values.displayName);
+    urlencoded.append("password", values.password);
+    urlencoded.append("premium", false);
+    urlencoded.append(
+      "avatar",
+      "https://res.cloudinary.com/dzncmfirr/image/upload/v1669997773/app-images/DALL_E_2022-12-02_09.23.21_-_hyperrealistic_3D_render_of_a_monstera_leaf_encased_in_a_glass_marble_chn1wg.png"
+    );
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5001/api/users/create", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+
+    setModalText("Successfuly signed up. Redirecting to login");
+    setIsModal(true);
+    navigate("/login", { replace: true });
+  };
 
   const signIn = async (values, navigate, location) => {
     console.log(values);
@@ -46,12 +78,16 @@ export const AuthContextProvider = (props) => {
         localStorage.setItem("token", token);
         //! swap around if problems
         if (location.state?.from) {
-          setModalText("Successfuly logged in. Redirecting");
+          setModalText("Successfuly logged in. Redirecting to home");
+          setIsModal(true);
           navigate(location.state.from, { replace: true });
         } else {
-          setModalText("Successfuly logged in. Redirecting");
+          setModalText("Successfuly logged in. Redirecting to home");
+          setIsModal(true);
           navigate("/", { replace: true });
         }
+        setModalText("Successfuly logged in. Redirecting to home");
+        setIsModal(true);
         isLoading(false);
         isUser(true);
       }
@@ -93,9 +129,11 @@ export const AuthContextProvider = (props) => {
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
+
+    setModalText("successfully logged out");
+    setIsModal(true);
     setUserLoggedIn(false);
     setIsUser(null);
-    setModalText("successfully logged out");
     console.log("user logged out");
   };
 
@@ -106,9 +144,13 @@ export const AuthContextProvider = (props) => {
         isLoading,
         userLoggedIn,
         error,
+        isModal,
+        setIsModal,
+        modalText,
         getProfile,
         logout,
         signIn,
+        register,
       }}
     >
       {props.children}

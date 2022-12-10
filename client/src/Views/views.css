@@ -1,4 +1,34 @@
 /* HOME */
+.cover {
+  height: 56vh;
+  object-fit: contain;
+  display: block;
+  /* margin: 20px auto; */
+  /* top: 6vh; */
+
+}
+
+.background-image3 {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  height: 56vh;
+  margin: 20px auto;
+  position: relative;
+  top: 6vh;
+  z-index: -100;
+}
+
+.background-image-div {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  height: 56vh;
+  margin: 20px auto;
+  position: relative;
+  top: 6vh;
+  z-index: -100;
+}
 
 .background-image {
   display: block;

@@ -14,6 +14,7 @@ import background from "../assets/backgrounds/photos/houseplants3.jpg";
 import { AuthContext } from "../Contexts/AuthContext";
 import HomeIcon from "@mui/icons-material/Home";
 import SummonModal from "../Components/MyModal/SummonModal";
+import MyModal from "../Components/MyModal/SummonModal.js";
 
 // TODO: can this be imported once, instead of both at LOGIN and SIGNUP?
 const Item = styled(Paper)(({ theme }) => ({
@@ -25,14 +26,14 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Login = () => {
-  const [isLoginNotification, setIsLoginNotification] = useState(false);
+  // const [isLoginNotification, setIsLoginNotification] = useState(false);
   const initialValues = {
     emailAddress: "",
     password: "",
   };
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoading, getProfile, userLoggedIn, signIn, modalText } =
+  const { isLoading, getProfile, userLoggedIn, signIn, isModal } =
     useContext(AuthContext);
   const { values, setValues, handleInputChange } = useForm(initialValues);
 
@@ -47,9 +48,9 @@ const Login = () => {
     console.log("userLogin", userLoggedIn);
   }, []);
 
-  useEffect(() => {
-    setIsLoginNotification(true);
-  }, [modalText]);
+  // useEffect(() => {
+  //   setIsLoginNotification(true);
+  // }, [modalText]);
 
   const login = () => {
     signIn(values, navigate, location);
@@ -58,7 +59,7 @@ const Login = () => {
   console.log(values);
   return (
     <>
-      {isLoginNotification && <SummonModal />}
+      {isModal && <MyModal></MyModal>}
       <HomeIcon className="go-home-icon" onClick={handleNav} />
       <img src={background} className="background-image2" alt="" />
       <div className="login-container">
