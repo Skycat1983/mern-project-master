@@ -1,5 +1,6 @@
 import { useState, createContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useForm } from "../Hooks/useForm.js";
 import getToken from "../utils/getToken.js";
 import * as React from "react";
 
@@ -9,17 +10,27 @@ export const AuthContextProvider = (props) => {
   const [isUser, setIsUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [userLoggedIn, setUserLoggedIn] = useState({});
-  const [error, setError] = useState(null);
+  const [backEndError, setBackEndError] = useState({});
   const [modalText, setModalText] = useState("");
   const [isModal, setIsModal] = React.useState(false);
+  // const { setFormErrors } = useForm();
 
   useEffect(() => {
     const token = getToken();
     console.log("token>>", token);
-    if (!token) {
-      setError("session expired");
-    }
-  }, [error]);
+    // if (!token) {
+    //   setError("session expired");
+    // }
+  }, [backEndError]);
+
+  // useEffect(() => {
+  //   const token = getToken();
+  //   console.log("token>>", token);
+
+  //   return () => {
+  //     second
+  //   }
+  // }, [error])
 
   const register = (values, navigate, location) => {
     const myHeaders = new Headers();
@@ -52,6 +63,8 @@ export const AuthContextProvider = (props) => {
   };
 
   const signIn = async (values, navigate, location) => {
+    let errors = {};
+
     console.log(values);
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -73,7 +86,31 @@ export const AuthContextProvider = (props) => {
       );
       const result = await response.json();
       console.log("result :>> ", result);
+      // console.log("result.message :>> ", result.message);
+      if (result.errorMessage == "email address not found") {
+        // setBackEndError(false);
+
+        errors.email = "email address not found";
+        errors.pword = false;
+        setBackEndError(errors);
+        // console.log("EMAIL ERRORS", errors.email);
+      } else if (result.errorMessage == "incorrect password") {
+        // setBackEndError(false);
+
+        errors.email = false;
+        errors.pword = "incorrect password";
+        console.log("ERRORS>>>>>", errors);
+
+        setBackEndError(errors);
+      }
+
+      // if (errors.length !== 0) {
+      //   setError(errors);
+      //   console.warn(errors);
+      // }
+
       const { token } = result;
+
       if (token) {
         localStorage.setItem("token", token);
         //! swap around if problems
@@ -93,7 +130,7 @@ export const AuthContextProvider = (props) => {
       }
     } catch (error) {
       console.log("error", error);
-      setError(error);
+      setBackEndError(error);
     }
   };
 
@@ -101,7 +138,7 @@ export const AuthContextProvider = (props) => {
     const token = getToken();
     console.log("token :>>", token);
     if (token) {
-      setError(null);
+      setBackEndError(null);
     }
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -143,7 +180,8 @@ export const AuthContextProvider = (props) => {
         isUser,
         isLoading,
         userLoggedIn,
-        error,
+        backEndError,
+        setBackEndError,
         isModal,
         setIsModal,
         modalText,

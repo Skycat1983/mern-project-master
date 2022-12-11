@@ -15,6 +15,7 @@ import { AuthContext } from "../Contexts/AuthContext";
 import HomeIcon from "@mui/icons-material/Home";
 import SummonModal from "../Components/MyModal/SummonModal";
 import MyModal from "../Components/MyModal/SummonModal.js";
+import { formatMuiErrorMessage } from "@mui/utils";
 
 // TODO: can this be imported once, instead of both at LOGIN and SIGNUP?
 const Item = styled(Paper)(({ theme }) => ({
@@ -26,16 +27,20 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Login = () => {
-  // const [isLoginNotification, setIsLoginNotification] = useState(false);
   const initialValues = {
     emailAddress: "",
     password: "",
   };
+  const [backEndErrors, setBackEndErrors] = useState({
+    email: null,
+    pword: null,
+  });
   const navigate = useNavigate();
   const location = useLocation();
   const { isLoading, getProfile, userLoggedIn, signIn, isModal } =
     useContext(AuthContext);
-  const { values, setValues, handleInputChange } = useForm(initialValues);
+  const { values, handleInputChange, handleSubmit, formErrors, errors } =
+    useForm(initialValues);
 
   const handleNav = () => {
     navigate("/");
@@ -48,15 +53,10 @@ const Login = () => {
     console.log("userLogin", userLoggedIn);
   }, []);
 
-  // useEffect(() => {
-  //   setIsLoginNotification(true);
-  // }, [modalText]);
-
   const login = () => {
-    signIn(values, navigate, location);
+    handleSubmit();
   };
 
-  console.log(values);
   return (
     <>
       {isModal && <MyModal></MyModal>}
@@ -66,20 +66,38 @@ const Login = () => {
         <Form>
           <Stack>
             <Item>
-              <MyControls.MyInputs
-                label="email address"
-                name="emailAddress"
-                value={values.emailAddress}
-                onChange={handleInputChange}
-              />
+              {errors.email ? (
+                <MyControls.MyErrors
+                  label={errors.email}
+                  name="emailAddress"
+                  value={values.emailAddress}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <MyControls.MyInputs
+                  label="email address"
+                  name="emailAddress"
+                  value={values.emailAddress}
+                  onChange={handleInputChange}
+                />
+              )}
             </Item>
             <Item>
-              <MyControls.MyInputs
-                label="password"
-                name="password"
-                value={values.password}
-                onChange={handleInputChange}
-              />
+              {errors.pword ? (
+                <MyControls.MyErrors
+                  label={errors.pword}
+                  name="password"
+                  value={values.password}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <MyControls.MyInputs
+                  label="password"
+                  name="password"
+                  value={values.password}
+                  onChange={handleInputChange}
+                />
+              )}
             </Item>
             <Item>
               <Button
@@ -107,18 +125,3 @@ const Login = () => {
   );
 };
 export default Login;
-
-// try {
-//   const response = await fetch(
-//     "http://localhost:5001/api/users/login",
-//     requestOptions
-//   );
-//   const result = await response.json();
-//   console.log("result :>> ", result);
-//   const { token } = result;
-//   if (token) {
-//     localStorage.setItem("token", token);
-//   }
-// } catch (error) {
-//   console.log("error", error);
-// }

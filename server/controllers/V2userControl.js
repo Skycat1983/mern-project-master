@@ -106,13 +106,13 @@ const loginUser = async (req, res) => {
     console.log("existingUser :>> ", existingUser);
 
     if (!existingUser) {
-      res.status(401).json({ errorMessage: "email address not found" });
+      res.status(200).json({ emailMessage: "email address not found" });
     } else {
       const verified = await isPasswordCorrect(password, existingUser.password);
       // console.log("verified", verified);
       if (!verified && existingUser) {
         res.status(401).json({
-          errorMessage: "incorrect password",
+          passwordMesssage: "incorrect password",
           // emailMessage: "email address found",
         });
       }

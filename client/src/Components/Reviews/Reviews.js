@@ -79,6 +79,8 @@ const Comments = (data) => {
         p: 2,
       }}
     >
+      <h4>{data?.data?.commentsfor.length} people left a review</h4>
+
       {data &&
         data?.data?.commentsfor?.map((comment) => {
           return (

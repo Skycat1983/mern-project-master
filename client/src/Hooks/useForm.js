@@ -1,48 +1,75 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Contexts/AuthContext";
+// import validationForm from "../Components/myValidation.js";
 // import Paper from "@mui/material/Paper";
-
-// import "../views/views.css";
 
 export function useForm(initialValues) {
   const [values, setValues] = useState(initialValues);
-  // const [formValues, setFormValues] = useState();
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [errors, setErrors] = useState({ email: null, pword: null });
+  const [formErrors, setFormErrors] = useState({ email: null, pword: null });
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { backEndError, signIn } = useContext(AuthContext);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     console.log(e.target.values);
     setValues({
       ...values,
-      [name]: value, // updating respective value property that triggers onChange event. //! for example: fullName, or emailAddress.
+      [name]: value,
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormErrors(validate(values));
-    setIsSubmit(true);
+  const handleSubmit = () => {
+    setFormErrors(validateFrontEnd(values));
   };
 
   useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(values);
+    if (Object.keys(formErrors).length === 0) {
+      setErrors({ email: null, pword: null });
+      signIn(values, navigate, location);
+    } else {
+      setErrors(formErrors);
     }
+    return () => {
+      console.log();
+    };
   }, [formErrors]);
 
-  const validate = (values) => {
-    const errors = {};
-    const regex = /^[^\s@]+@[^\.[^\s@]{2,}$/i;
-    if (!values.displayName) {
-      errors.displayName = "username required";
+  useEffect(() => {
+    setErrors(validateBackEnd());
+  }, [backEndError]);
+
+  const validateFrontEnd = (values) => {
+    let errors = {};
+    if (initialValues.displayName && !values.displayName.trim()) {
+      errors.username = "username required";
     }
-    if (!values.email) {
+
+    if (!values.emailAddress) {
       errors.email = "email required";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.emailAddress)
+    ) {
+      errors.email = "email address is invalid";
     }
     if (!values.password) {
-      errors.password = "password required";
+      errors.pword = "password required";
+    } else if (values.password.length < 4) {
+      errors.pword = "password too short";
+    }
+    return errors;
+  };
+
+  const validateBackEnd = () => {
+    let errors = {};
+    if (backEndError?.email) {
+      errors.email = "email address not found";
+    }
+    if (backEndError?.pword) {
+      errors.pword = "incorrect password";
     }
     return errors;
   };
@@ -55,6 +82,10 @@ export function useForm(initialValues) {
     setValues,
     handleInputChange,
     handleSubmit,
+    formErrors,
+    errors,
+    setFormErrors,
+    validateFrontEnd,
   };
 }
 
@@ -63,6 +94,7 @@ export function Form(props) {
     <form
       style={{
         variant: "standard",
+        // margin: "normal",
         id: "standard-basic",
         marginTop: "40px",
         marginLeft: "60px",

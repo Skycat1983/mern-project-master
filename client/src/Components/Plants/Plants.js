@@ -6,6 +6,9 @@ function Plants(data) {
   return (
     <>
       <Grid>
+        <h4>
+          {data?.username}USERNAME has {data?.plants?.length} plants for sale
+        </h4>
         {data &&
           data.plants?.map((item) => {
             return (
