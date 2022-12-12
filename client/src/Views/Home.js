@@ -190,21 +190,16 @@ function Home() {
   );
 }
 
-// TODO:
-// - useErrors / useModal hook
-// - useFetch for Login & Signup
-// - redirect after form submitted successfully
-
 export default Home;
 
 // QUESTIONS:
 
-// see usercontroller. req.params>? what does it mean>?
-//? const { _id } = req.params;
+// see autth context signup. there is abtype of fetch i'm not comfortable using. 'result' seems accessible to console log but not other things? seems strange
+// also: in auth context but login, not sure if my errors in login should be part of a 'catch' for actual errors.
 
-// usemodal custom hook for redirect?
+// Linkto not working from navbar when i set to redirect to profile/{userLoggedIn.username}
 
-//! UNBELIEVABLE PLANT CONTROLLER PROBLEM!!! delete the commented code on find by id
+// filter by premium users first in carousel not working as hoped
 
 //* i have a feeling i'm using async, await wrong. please see commentcontroller, createcomment, updateauthoer/target
 

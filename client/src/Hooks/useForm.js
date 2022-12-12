@@ -7,11 +7,15 @@ import { AuthContext } from "../Contexts/AuthContext";
 
 export function useForm(initialValues) {
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState({ email: null, pword: null });
+  const [errors, setErrors] = useState({
+    email: null,
+    username: null,
+    pword: null,
+  });
   const [formErrors, setFormErrors] = useState({ email: null, pword: null });
   const navigate = useNavigate();
   const location = useLocation();
-  const { backEndError, signIn } = useContext(AuthContext);
+  const { backEndError, signIn, register } = useContext(AuthContext);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -29,12 +33,16 @@ export function useForm(initialValues) {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0) {
       setErrors({ email: null, pword: null });
-      signIn(values, navigate, location);
+      if (location.pathname === "/login") {
+        signIn(values, navigate, location);
+      } else if (location.pathname === "/signup") {
+        register(values, navigate, location);
+      }
     } else {
       setErrors(formErrors);
     }
     return () => {
-      console.log();
+      // console.log();
     };
   }, [formErrors]);
 
@@ -44,9 +52,6 @@ export function useForm(initialValues) {
 
   const validateFrontEnd = (values) => {
     let errors = {};
-    if (initialValues.displayName && !values.displayName.trim()) {
-      errors.username = "username required";
-    }
 
     if (!values.emailAddress) {
       errors.email = "email required";
@@ -55,6 +60,15 @@ export function useForm(initialValues) {
     ) {
       errors.email = "email address is invalid";
     }
+    if (location.pathname === "/signup" && !values.displayName.trim()) {
+      errors.username = "username required";
+    } else if (
+      location.pathname === "/signup" &&
+      values.displayName.length < 4
+    ) {
+      errors.username = "username too short";
+    }
+
     if (!values.password) {
       errors.pword = "password required";
     } else if (values.password.length < 4) {

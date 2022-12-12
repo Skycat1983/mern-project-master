@@ -7,7 +7,7 @@ const getAllPlants = async (req, res) => {
   try {
     const allPlants = await plantModel
       .find({})
-      .populate({ path: "user", select: ["email", "password"] });
+      .populate({ path: "user", select: ["email", "password", "premium"] });
     console.log("all plants", allPlants);
     res.status(200).json({
       number: allPlants.length,

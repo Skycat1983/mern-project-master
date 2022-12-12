@@ -41,6 +41,8 @@ export default function NavBar() {
     }
   };
 
+  console.log("userLoggedIn.username", userLoggedIn.username);
+
   return (
     <Box position="fixed" sx={{ flexGrow: 1 }} className="nav-box">
       <AppBar position="fixed">
@@ -114,7 +116,13 @@ export default function NavBar() {
               >
                 {isUser ? (
                   <MenuItem>
-                    <Avatar /> <Link to={"/myaccount"}>My account</Link>
+                    <Avatar />{" "}
+                    <Link to={"/myaccount"}>
+                      {userLoggedIn.username}'s account
+                    </Link>
+                    {/* <Link to={`/profile/${userLoggedIn.username}`}>
+                      {userLoggedIn.username}'s account
+                    </Link> */}
                   </MenuItem>
                 ) : (
                   <MenuItem>

@@ -54,33 +54,14 @@ const initialValues = {
 };
 
 const AddPlant = () => {
-  // const [selectedFiles, setSelectedFiles] = useState([{}]);
-  // const [urls, setUrls] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [newPost, setNewPost] = useState({});
-  // const [modalText, setModalText] = useState("");
-  // const [isModal, setIsModal] = React.useState(false);
-
+  const [selectedFiles, setSelectedFiles] = useState([{}]);
+  const [urls, setUrls] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [newPost, setNewPost] = useState({});
+  const [modalText, setModalText] = useState("");
+  const [isModal, setIsModal] = React.useState(false);
   const { values, setValues, handleInputChange } = useForm(initialValues);
-  const {
-    isUser,
-    getProfile,
-    userLoggedIn,
-    handleUpload,
-    uploadImages,
-    isLoading,
-    submitListing,
-    setUrls,
-    urls,
-    isModal,
-    setIsModal,
-  } = useContext(AuthContext);
-
-  useEffect(() => {
-    setUrls(false);
-    setIsModal(false);
-    setValues(initialValues);
-  }, []);
+  const { isUser, getProfile, userLoggedIn } = useContext(AuthContext);
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -96,8 +77,15 @@ const AddPlant = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleClick = () => {
-    submitListing(values, navigate);
+  useEffect(() => {
+    //? confused why this returns empty?
+    console.log("URLS", urls);
+    setIsLoading(false);
+  }, [urls, values]);
+
+  const handleUpload = (e) => {
+    setSelectedFiles(e.target);
+    console.log(e.target.files);
   };
 
   useEffect(() => {
@@ -106,7 +94,88 @@ const AddPlant = () => {
     console.log("userLogin", userLoggedIn);
   }, []);
 
+  const uploadImages = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    const formdata = new FormData();
+    formdata.append("image", selectedFiles.files[0]);
+    formdata.append("image", selectedFiles.files[1]);
+    formdata.append("image", selectedFiles.files[2]);
+
+    const requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    const response = await fetch(
+      "http://localhost:5001/api/plants/uploadimage",
+      requestOptions
+    );
+    const result = await response.json();
+    console.log("result :>> ", result);
+    setUrls(result.urls);
+    console.log("resul.Urls :>> ", result.urls);
+    console.log("urls", urls);
+
+    // fetch("http://localhost:5001/api/plants/uploadimage", requestOptions)
+    //   .then((response) => response.text()) //! or .json
+    //   .then((result) => console.log("result>>", result))
+    //   .then((result) => setUrls(result))
+    //   .catch((error) => console.log("error", error));
+
+    // setNewPost({...newPost, imageUrls: result})
+  };
+
   //! Is the problem that i am trying to insert objectid (user) onto plant, when this is done via populate?
+
+  const submitListing = () => {
+    console.log("URLS", urls);
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("genus", values.genus);
+    urlencoded.append("varigation", values.varigation);
+    urlencoded.append("price", values.price);
+    urlencoded.append("rooted", values.rooted);
+    urlencoded.append("topcutting", values.topCutting);
+    urls.forEach((url) => urlencoded.append("imageUrls", url));
+    urlencoded.append("user", userLoggedIn.id);
+
+    //! do i need to loop here?
+    // urlencoded.append("imageUrls", urls);
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    // const response = await fetch(
+    //   "http://localhost:5001/api/plants/create",
+    //   requestOptions
+    // );
+    // const result = await response.json();
+    // console.log("result :>> ", result);
+    // console.log(setUrls(result));
+    // console.log("urls", urls);
+
+    fetch("http://localhost:5001/api/plants/create", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+
+    if (location.state?.from) {
+      setModalText("Plant successfully listed. Redirecting");
+      setIsModal(true);
+      navigate(location.state.from);
+    } else {
+      setModalText("Plant successfully listed. Redirecting");
+      setIsModal(true);
+      navigate("/");
+    }
+  };
 
   console.log("activeStep", activeStep);
 
@@ -157,10 +226,10 @@ const AddPlant = () => {
             />
           )} */}
 
-          {activeStep == 0 && !urls && (
+          {activeStep == 0 && urls.length === 0 && (
             <Skeleton variant="rounded" width={190} height={90} />
           )}
-          {activeStep == 0 && urls && (
+          {activeStep == 0 && urls.length !== 0 && (
             <img
               style={{
                 width: 190,
@@ -186,7 +255,6 @@ const AddPlant = () => {
           {activeStep == 0 && (
             <Button
               fullWidth={true}
-              disabled={urls}
               variant="contained"
               color="success"
               onClick={uploadImages}
@@ -302,7 +370,7 @@ const AddPlant = () => {
                 onClick={handleNext}
                 disabled={
                   activeStep === maxSteps - 1 ||
-                  !urls ||
+                  urls.length === 0 ||
                   (activeStep === 1 && !values.genus) ||
                   (activeStep === 2 &&
                     (!values.rooted ||
@@ -336,12 +404,12 @@ const AddPlant = () => {
 
           {activeStep == 3 && (
             <Button
-              disabled={!values.price}
+              disabled={activeStep === 3 && !values.price}
               fullWidth={true}
               variant="contained"
               color="success"
               component="label"
-              onClick={handleClick}
+              onClick={submitListing}
             >
               LIST PLANT
             </Button>

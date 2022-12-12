@@ -5,11 +5,15 @@ import { useForm, Form, XLForm } from "../../Hooks/useForm.js";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
+import { useEffect, useState, useContext } from "react";
+
 import temp from "../../assets/appIcons/glassmomnstera.png";
 import "./AboutUs.css";
 import { FormControl, FormLabel, RadioGroup, TextField } from "@mui/material";
 import MyControls from "../controls/MyControls";
 import Button from "@mui/material/Button";
+import { AuthContext } from "../../Contexts/AuthContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const initialValues = {
   aboutUs: "",
@@ -33,87 +37,83 @@ const Item2 = styled(Paper)(({ theme }) => ({
 
 function AboutUs(props) {
   const [value, setValue] = React.useState(0);
-
+  const [toggle, setToggle] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
   const { values, setValues, handleInputChange } = useForm(initialValues);
-  const user = {
-    username: "the plant seller",
-    // aboutus: false,
-    aboutus:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.",
-  };
-  const data = { user: { plants: { genus: "monstera", price: 40 } } };
+  const { getProfile, userLoggedIn, logout, isUser, isModal } =
+    useContext(AuthContext);
   console.log("userLoggedIn.about us in aboutus?", props);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    console.log(newValue, value);
-    // if (value == 1) {
-    //   setUrl("http://localhost:5001/api/plants/all");
-    // } else {
-    //   setUrl("http://localhost:5001/api/users/all");
-    // }
+  useEffect(() => {
+    console.warn("getting profile in aboutus");
+    getProfile();
+  }, []);
+
+  const dateChange = new Date(`${userLoggedIn.createdAt}`).toLocaleDateString(
+    "en-GB"
+  );
+
+  const handleUpdate = () => {
+    setToggle(!toggle);
+    console.log(toggle);
+    if (!toggle && values.aboutUs !== "") {
+      console.warn("this would be an update");
+    }
   };
 
-  // const { values, setValues, handleInputChange } = useForm(initialValues);
+  console.log(values.aboutUs);
+
   return (
     <>
-      {/* <Grid
-        sx={{
-          marginTop: -14,
-        }}
-        container
-        spacing={5}
-        padding={1}
-        paddingLeft={3}
-        paddingRight={3}
-      >
-        <Grid className="profile-headings" item xs={8}>
-          <Typography sx={{ color: "#ffffff" }} variant="h6" gutterBottom>
-            {user.username}
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Item2>
-            <img src={temp} className="about-us-avatar" alt="" />
-          </Item2>
-        </Grid>
-      </Grid> */}
+      <Typography className="about-us" variant="body1" gutterBottom>
+        member since: {dateChange}
+      </Typography>
       {props.aboutus ? (
         <Typography className="about-us" variant="body1" gutterBottom>
           {props.aboutus}
         </Typography>
+      ) : toggle ? (
+        <Typography className="about-us" variant="body1" gutterBottom>
+          {userLoggedIn.username == location.state.user
+            ? "you haven't added any information here yet"
+            : "this user hasn't added any information here yet"}
+        </Typography>
       ) : (
         <XLForm>
-          <TextField
+          <MyControls.MyTextbox
             id="outlined-multiline-flexible"
             label="about us"
             name="aboutUs"
+            value={values.aboutUs}
             multiline
             maxRows={4}
-            value={values.aboutUs}
+            // values={values.aboutUs}
             onChange={handleInputChange}
           />
         </XLForm>
       )}
-      {user.aboutus ? (
+
+      {userLoggedIn.username == location.state.user && (
         <Button
-          // onClick="handleChange"
+          onClick={handleUpdate}
+          // onClick={() => {
+          //   !toggle && values.aboutus ? handleUpdate() : setToggle(!toggle);
+          // }}
           className="edit-button"
           variant="contained"
           color="success"
         >
-          edit <EditIcon />
+          {toggle ? "edit" : "update"} <EditIcon />
         </Button>
-      ) : (
-        <Button
-          // onClick="handleChange"
+      )}
+      {/* <Button
           className="update-button"
           variant="contained"
           color="success"
         >
           update
-        </Button>
-      )}
+        </Button> */}
     </>
   );
 }

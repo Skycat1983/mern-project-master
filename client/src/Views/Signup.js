@@ -20,6 +20,12 @@ const initialValues = {
   password: "",
 };
 
+const coverPictures = [
+  "https://res.cloudinary.com/dzncmfirr/image/upload/v1670689110/app-images/assortedleaves_ufpexr.jpg",
+  "https://res.cloudinary.com/dzncmfirr/image/upload/v1670433446/app-images/leaf_xjcqey.png",
+  "https://res.cloudinary.com/dzncmfirr/image/upload/v1670000820/app-images/gilles-lambert-mSK5nNsAsLY-unsplash_k58jhe.jpg",
+];
+
 // TODO: can this be imported once, instead of both at LOGIN and SIGNUP?
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -31,47 +37,40 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Signup = () => {
   const [cover, setCover] = useState("");
+  const [backEndErrors, setBackEndErrors] = useState({
+    email: null,
+    username: null,
+    pword: null,
+  });
   const { getProfile, userLoggedIn, isModal, register } =
     useContext(AuthContext);
-  const { values, setValues, handleInputChange, handleSubmit } =
+  const { values, handleInputChange, handleSubmit, errors } =
     useForm(initialValues);
   const navigate = useNavigate();
   const location = useLocation();
+
   const handleNav = () => {
     navigate("/");
   };
+
   useEffect(() => {
     console.warn("getting profile in Signup");
     getProfile();
     console.log("userLogin", userLoggedIn);
   }, []);
 
+  // console.log(coverPictures[1]);
+
   const signup = () => {
-    register(values, navigate, location);
+    handleSubmit();
+    // register(values, navigate, location);
   };
+
+  // Math.floor(Math.random() * 11)
 
   // const generateRandomIntegerInRange = (min, max) => {
   //   return Math.floor(Math.random() * (max - min + 1)) + min;
   // };
-
-  const generateRandomIntegerInRange = (min, max) => {
-    if (Math.floor(Math.random() * (max - min + 1)) + min == 1) {
-      setCover(
-        "https://res.cloudinary.com/dzncmfirr/image/upload/v1670689110/app-images/assortedleaves_ufpexr.jpg"
-      );
-    } else if (Math.floor(Math.random() * (max - min + 1)) + min == 1) {
-      setCover(
-        "https://res.cloudinary.com/dzncmfirr/image/upload/v1670433446/app-images/leaf_xjcqey.png"
-      );
-    } else if (Math.floor(Math.random() * (max - min + 1)) + min == 3) {
-      setCover(
-        "https://res.cloudinary.com/dzncmfirr/image/upload/v1670000820/app-images/gilles-lambert-mSK5nNsAsLY-unsplash_k58jhe.jpg"
-      );
-    }
-  };
-
-  console.warn(generateRandomIntegerInRange(1, 3));
-  console.log(cover);
 
   // const register = () => {
   //   const myHeaders = new Headers();
@@ -109,55 +108,59 @@ const Signup = () => {
         <SignupForm>
           <Stack>
             <Item>
-              <MyControls.MyInputs
-                label="email address"
-                id="standard-basic"
-                variant="standard"
-                name="emailAddress"
-                value={values.emailAddress}
-                onChange={handleInputChange}
-                sx={{ input: { color: "red" } }}
-              />
-            </Item>
-            <Item>
-              <MyControls.MyInputs
-                variant="outlined"
-                label="display name"
-                name="displayName"
-                value={values.displayName}
-                onChange={handleInputChange}
-              />
-            </Item>
-            <Item>
-              <MyControls.MyInputs
-                label="password"
-                name="password"
-                value={values.password}
-                onChange={handleInputChange}
-              />
-            </Item>
-            {/* <Item>
-              <FormControl>
-                <FormLabel>Membership</FormLabel>
-                <RadioGroup
-                  row={true}
-                  name="membership"
-                  value={values.membership}
+              {errors.email ? (
+                <MyControls.MyErrors
+                  label={errors.email}
+                  name="emailAddress"
+                  value={values.emailAddress}
                   onChange={handleInputChange}
-                >
-                  <FormControlLabel
-                    value="false"
-                    control={<Radio />}
-                    label="Basic"
-                  />
-                  <FormControlLabel
-                    value="true"
-                    control={<Radio />}
-                    label="Premium"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Item> */}
+                />
+              ) : (
+                <MyControls.MyInputs
+                  label="email address"
+                  name="emailAddress"
+                  value={values.emailAddress}
+                  onChange={handleInputChange}
+                />
+              )}
+            </Item>
+            <Item>
+              {errors.username ? (
+                <MyControls.MyErrors
+                  variant="outlined"
+                  label={errors.username}
+                  name="displayName"
+                  value={values.displayName}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <MyControls.MyInputs
+                  variant="outlined"
+                  label="display name"
+                  name="displayName"
+                  value={values.displayName}
+                  onChange={handleInputChange}
+                />
+              )}
+            </Item>
+            <Item>
+              {errors.pword ? (
+                <MyControls.MyErrors
+                  label={errors.pword}
+                  name="password"
+                  value={values.password}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <MyControls.MyInputs
+                  label="password"
+                  name="password"
+                  value={values.password}
+                  onChange={handleInputChange}
+                />
+              )}
+            </Item>
+
             <Button
               variant="contained"
               color="success"

@@ -37,14 +37,16 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoading, getProfile, userLoggedIn, signIn, isModal } =
+  const { isLoading, getProfile, userLoggedIn, isModal } =
     useContext(AuthContext);
-  const { values, handleInputChange, handleSubmit, formErrors, errors } =
+  const { values, handleInputChange, handleSubmit, errors } =
     useForm(initialValues);
 
   const handleNav = () => {
     navigate("/");
   };
+
+  console.log(location);
 
   //! is there a purpose to what i'm doing here can't remember
   useEffect(() => {

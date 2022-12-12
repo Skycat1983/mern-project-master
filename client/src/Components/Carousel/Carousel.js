@@ -34,46 +34,79 @@ export default function Carousel(data, isLoading) {
         // }}
         loop
       >
+        {/* `${data?.data?.commentsfor.length} */}
         {data &&
           data.data?.allPlants?.map((item, index) => {
-            {
-              /* console.log("item", { ...item }); */
+            if (item.user.premium === true) {
+              return (
+                <SwiperSlide key={index}>
+                  <Link
+                    to={`/plant/${item._id}`}
+                    key={item._id}
+                    state={{ plant: item._id }}
+                    // state={{ data: props.myFunction }}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Card sx={{ maxWidth: 345 }}>
+                      <CardActionArea>
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={item.imageUrls[0]}
+                          alt="plant pic"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h7" component="div">
+                            {item.genus}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            <b> price:</b>
+                            {item.price}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Link>
+                </SwiperSlide>
+              );
             }
-            return (
-              <SwiperSlide key={index}>
-                <Link
-                  to={`/plant/${item._id}`}
-                  key={item._id}
-                  state={{ plant: item._id }}
-                  // state={{ data: props.myFunction }}
-                  style={{ textDecoration: "none" }}
-                >
-                  <Card sx={{ maxWidth: 345 }}>
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={item.imageUrls[0]}
-                        alt="plant pic"
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h7" component="div">
-                          {item.genus}
-                        </Typography>
-                        {/* <Typography variant="body2" color="text.secondary">
-                        <b>user:</b>
-                        {item.user.email}
-                      </Typography> */}
-                        <Typography variant="body2" color="text.secondary">
-                          <b> price:</b>
-                          {item.price}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Link>
-              </SwiperSlide>
-            );
+          })}
+
+        {data &&
+          data.data?.allPlants?.map((item, index) => {
+            if (item.user.premium === false) {
+              return (
+                <SwiperSlide key={index}>
+                  <Link
+                    to={`/plant/${item._id}`}
+                    key={item._id}
+                    state={{ plant: item._id }}
+                    // state={{ data: props.myFunction }}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Card sx={{ maxWidth: 345 }}>
+                      <CardActionArea>
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={item.imageUrls[0]}
+                          alt="plant pic"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h7" component="div">
+                            {item.genus}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            <b> price:</b>
+                            {item.price}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Link>
+                </SwiperSlide>
+              );
+            }
           })}
 
         {data &&
@@ -93,8 +126,6 @@ export default function Carousel(data, isLoading) {
                         component="img"
                         height="140"
                         image={item.avatar}
-                        // image="https://res.cloudinary.com/dzncmfirr/image/upload/v1669997773/app-images/DALL_E_2022-12-02_09.23.21_-_hyperrealistic_3D_render_of_a_monstera_leaf_encased_in_a_glass_marble_chn1wg.png"
-                        // image={user1}
                         alt="user pic"
                       />
                       <CardContent>

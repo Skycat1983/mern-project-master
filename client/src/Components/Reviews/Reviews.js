@@ -20,6 +20,7 @@ import MyControls from "../controls/MyControls";
 import MyRadioGroup from "../controls/MyRadioGroup";
 import Radio from "@mui/material/Radio";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useLocation } from "react-router-dom";
 
 const initialValues = {
   text: "",
@@ -28,6 +29,7 @@ const initialValues = {
 
 const Comments = (data) => {
   const [rating, setRating] = useState(0);
+  const location = useLocation();
   const { getProfile, userLoggedIn, logout, isUser } = useContext(AuthContext);
   const { values, setValues, handleInputChange, handleSubmit } =
     useForm(initialValues);
@@ -79,7 +81,18 @@ const Comments = (data) => {
         p: 2,
       }}
     >
-      <h4>{data?.data?.commentsfor.length} people left a review</h4>
+      <h4>
+        {data?.data?.commentsfor.length == 0
+          ? "be the first to leave a review of this seller"
+          : `${data?.data?.commentsfor.length} people left a review of this seller`}
+      </h4>
+      {/* <h4>
+        {data?.data?.commentsfor.length == 0 &&
+          "be the first to leave a review of this seller"}{" "}
+        {data?.data?.commentsfor.length == 1
+          ? "1 person left a review of this seller"
+          : `${data?.data?.commentsfor.length} people left a review of this seller`}
+      </h4> */}
 
       {data &&
         data?.data?.commentsfor?.map((comment) => {
@@ -114,7 +127,11 @@ const Comments = (data) => {
         <Paper className="review-box">
           <MyControls.MyTextbox
             id="outlined-multiline-flexible"
-            label="leave a review of this seller"
+            label={
+              userLoggedIn.username == location.state.user
+                ? "no you can't review yourself"
+                : "leave a review of this seller"
+            }
             variant="standard"
             name="text"
             value={values.text}
@@ -195,15 +212,28 @@ const Comments = (data) => {
             <StarBorderIcon />
             <StarBorderIcon />
           </div>
-          <Button
-            className="submit-review"
-            variant="contained"
-            color="success"
-            component="label"
-            onClick={leaveReview}
-          >
-            SUBMIT
-          </Button>
+          {userLoggedIn.username == location.state.user ? (
+            <Button
+              disabled
+              className="submit-review"
+              variant="contained"
+              color="success"
+              component="label"
+              onClick={leaveReview}
+            >
+              SUBMIT
+            </Button>
+          ) : (
+            <Button
+              className="submit-review"
+              variant="contained"
+              color="success"
+              component="label"
+              onClick={leaveReview}
+            >
+              SUBMIT
+            </Button>
+          )}
         </Paper>
       </ReviewForm>
     </Box>

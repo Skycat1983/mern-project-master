@@ -54,8 +54,6 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Profile() {
   const [value, setValue] = React.useState(0);
   const [summonModal, setSummonModal] = useState(false);
-  // const [tabDisplayed, setTabDisplayed] = useState("about");
-  const [user, setUser] = useState(true);
   const location = useLocation();
   console.log("location :>> ", location.state.user);
   const [url, setUrl] = useState(
@@ -63,7 +61,6 @@ export default function Profile() {
   );
   const { data, isLoading, error } = useFetch(url);
   const { getProfile, userLoggedIn, isUser } = useContext(AuthContext);
-  // const { modalText, handleOpen, handleClose, setOpen } = useModal;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -162,7 +159,9 @@ export default function Profile() {
       </Grid>
       {/* <Button onClick={() => setSummonModal(!summonModal)}>summonModal</Button> */}
       <SummonModal></SummonModal>
-      {value === 0 && <AboutUs aboutus={data?.user?.aboutus}></AboutUs>}
+      {value === 0 && (
+        <AboutUs data={data} aboutus={data?.user?.aboutus}></AboutUs>
+      )}
       {value === 1 && <Plants plants={data?.user?.plants}></Plants>}
       {value === 2 && (
         <Reviews

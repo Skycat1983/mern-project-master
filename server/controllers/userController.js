@@ -63,12 +63,10 @@ const createUser = async (req, res) => {
     });
     if (existingEmail) {
       res.status(403).json({
-        msg: "task failed successfully: this email address already has an account",
+        emailError: "account already exists",
       }); // TODO: RESET PASSWORD
     } else if (existingUsername) {
-      res
-        .status(403)
-        .json({ msg: "task failed successfully: username already in use" });
+      res.status(403).json({ usernameError: "username taken" });
     } else {
       const hashedPassword = await encryptPassword(password);
       console.log("hashedPassword =", hashedPassword);
@@ -143,7 +141,7 @@ const loginUser = async (req, res) => {
 // VERIFY TOKEN/WRITSTBAND
 const getProfile = async (req, res) => {
   console.log("req.user", req.user);
-  const { email, username, _id, premium, aboutus } = req.user;
+  const { email, username, _id, premium, aboutus, createdAt } = req.user;
   res.status(200).json({
     // user: req.user,
     username: username,
@@ -151,6 +149,7 @@ const getProfile = async (req, res) => {
     email: email,
     premium: premium,
     aboutus: aboutus,
+    createdAt: createdAt,
   });
 };
 
