@@ -42,20 +42,12 @@ function AboutUs(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const { values, setValues, handleInputChange } = useForm(initialValues);
-  const {
-    getProfile,
-    userLoggedIn,
-    logout,
-    setModalText,
-    isUser,
-    isModal,
-    setIsModal,
-    patchUser,
-  } = useContext(AuthContext);
-  // console.log("userLoggedIn.about us in aboutus?", props);
+  const { getProfile, userLoggedIn, logout, isUser, isModal, patchUser } =
+    useContext(AuthContext);
+  console.log("userLoggedIn.about us in aboutus?", props);
 
   useEffect(() => {
-    // console.warn("getting profile in aboutus");
+    console.warn("getting profile in aboutus");
     getProfile();
   }, []);
 
@@ -67,8 +59,7 @@ function AboutUs(props) {
     setToggle(!toggle);
     console.log(toggle);
     if (!toggle && values.aboutUs !== "") {
-      // console.warn("this would be an update", values.aboutUs, userLoggedIn);
-      patchUser(values, userLoggedIn.username);
+      console.warn("this would be an update");
     }
   };
 
@@ -80,9 +71,9 @@ function AboutUs(props) {
       <Typography className="about-us" variant="body1" gutterBottom>
         member since: {dateChange}
       </Typography>
-      {toggle && props?.aboutus ? (
+      {props.aboutus ? (
         <Typography className="about-us" variant="body1" gutterBottom>
-          {props?.aboutus}
+          {props.aboutus}
         </Typography>
       ) : toggle ? (
         <Typography className="about-us" variant="body1" gutterBottom>

@@ -175,22 +175,53 @@ const deleteUser = async (req, res) => {
 
 // UPDATE A USER
 const updateUser = async (req, res) => {
+  const { username, aboutus } = req.body;
+  const filter = { username: username };
+  const update = { aboutus: aboutus };
+
+  //! i wanted to try something like this:
+  // const { username, toPatch } = req.body;
+
   try {
-    const user = await usersModel.findOneAndUpdate({ comments });
+    const user = await usersModel.findOneAndUpdate(filter, update, {
+      new: true,
+      //! and this
+      // toPatch: toPatch,
+    });
 
     console.log("update user", user);
     res.status(200).json({
-      msg: "profile succesfully updated",
       user,
+      modal: "about us succesfully updated",
     });
   } catch (error) {
     console.log("error :>> ", error);
     res.status(500).json({
       error,
-      msg: "there was a problem in the server",
+      modal: "there was a problem in the server",
     });
   }
 };
+
+//!  UNSURE IF CODE BELOW IS USED
+// const updateUser = async (req, res) => {
+//   // console.log("req>>>>>", req.params.id);
+//   try {
+//     const user = await usersModel.findOneAndUpdate({ comments });
+
+//     console.log("update user", user);
+//     res.status(200).json({
+//       msg: "profile succesfully updated",
+//       user,
+//     });
+//   } catch (error) {
+//     console.log("error :>> ", error);
+//     res.status(500).json({
+//       error,
+//       msg: "there was a problem in the server",
+//     });
+//   }
+// };
 
 export {
   getAllUsers,

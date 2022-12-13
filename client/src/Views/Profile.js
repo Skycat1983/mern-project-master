@@ -11,7 +11,7 @@ import {
 import { styled } from "@mui/material/styles";
 import cover from "../assets/backgrounds/photos/leaf.png";
 import temp from "../assets/appIcons/glassmomnstera.png";
-
+import Tooltip from "@mui/material/Tooltip";
 import { useContext, useEffect, useState } from "react";
 import "./views.css";
 
@@ -66,16 +66,18 @@ export default function Profile() {
     setValue(newValue);
     console.log(newValue);
   };
+  console.warn(location.state);
+  console.warn(location);
 
   console.log(summonModal);
   return (
     <>
       <NavBar />
-
       {data?.user?.premium == true && (
-        <WorkspacePremiumIcon className="premium-badge" />
+        <Tooltip title="premium user">
+          <WorkspacePremiumIcon className="premium-badge" />
+        </Tooltip>
       )}
-
       <div className="background-image-div">
         <img
           src={data?.user?.coverpicture}
@@ -89,9 +91,14 @@ export default function Profile() {
       </div>
       {/* <div className="below-nav"> */}
       <div className="gradient-div">
-        <h5 className="welcome-back-header">
-          welcome to {data?.user?.username}'s profile
-        </h5>
+        {userLoggedIn?.username == location.state.user ? (
+          <h5 className="welcome-back-header">welcome to your profile</h5>
+        ) : (
+          <h5 className="welcome-back-header">
+            welcome to {data?.user?.username}'s profile
+          </h5>
+        )}
+
         {/* </div> */}
       </div>
       <div className="gradient-div-invert">
@@ -159,16 +166,12 @@ export default function Profile() {
       </Grid>
       {/* <Button onClick={() => setSummonModal(!summonModal)}>summonModal</Button> */}
       <SummonModal></SummonModal>
+
       {value === 0 && (
         <AboutUs data={data} aboutus={data?.user?.aboutus}></AboutUs>
       )}
       {value === 1 && <Plants plants={data?.user?.plants}></Plants>}
-      {value === 2 && (
-        <Reviews
-          // commentsfor={data?.user?.commentsfor}
-          data={data?.user}
-        ></Reviews>
-      )}
+      {value === 2 && <Reviews data={data?.user}></Reviews>}
     </>
   );
 }

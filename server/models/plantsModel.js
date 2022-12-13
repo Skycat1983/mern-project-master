@@ -19,6 +19,7 @@ const plantSchema = new Schema(
     // wishlist: Number,
     price: { type: Number, required: true },
     user: { type: Schema.Types.ObjectId, ref: "User" },
+    // fact: { type: Schema.Types.ObjectId, ref: "Fact" },
 
     // user: { type: Schema.Types.ObjectId, ref: "User" },
   },

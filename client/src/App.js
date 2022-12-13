@@ -34,7 +34,7 @@ function App() {
             <Route exact path="profile/:id" element={<Profile />} />
             <Route exact path="plant/:id" element={<Listing />} />
 
-            <Route exact path="addplant" element={<AddPlant />} />
+            {/* <Route exact path="addplant" element={<AddPlant />} /> */}
 
             <Route path="/redirect" element={<Navigate to="/" />} />
             {/* <ProtectedRoute></ProtectedRoute> */}
@@ -44,6 +44,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <MyAccount />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="addplant"
+              element={
+                <ProtectedRoute>
+                  <AddPlant />
                 </ProtectedRoute>
               }
             />

@@ -117,12 +117,15 @@ export default function NavBar() {
                 {isUser ? (
                   <MenuItem>
                     <Avatar />{" "}
-                    <Link to={"/myaccount"}>
-                      {userLoggedIn.username}'s account
-                    </Link>
-                    {/* <Link to={`/profile/${userLoggedIn.username}`}>
+                    {/* <Link to={"/myaccount"}>
                       {userLoggedIn.username}'s account
                     </Link> */}
+                    <Link
+                      to={`/profile/${userLoggedIn.username}`}
+                      state={{ user: userLoggedIn.username }}
+                    >
+                      {userLoggedIn.username}'s account
+                    </Link>
                   </MenuItem>
                 ) : (
                   <MenuItem>

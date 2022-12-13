@@ -9,6 +9,8 @@ import {
   Paper,
   TextField,
   RadioGroup,
+  inputAdornmentClasses,
+  useFormControl,
 } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
@@ -21,48 +23,32 @@ import MyRadioGroup from "../controls/MyRadioGroup";
 import Radio from "@mui/material/Radio";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useLocation } from "react-router-dom";
+import { convertLength } from "@mui/material/styles/cssUtils";
+import MyModal from "../../Components/MyModal/SummonModal.js";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const initialValues = {
   text: "",
-  rating: "",
+  rating: "0",
 };
 
 const Comments = (data) => {
-  const [rating, setRating] = useState(0);
+  // const [rating, setRating] = useState(0);
+  // const [rating, setRating] = useState(0);
+  const [average, setAverage] = useState(false);
   const location = useLocation();
-  const { getProfile, userLoggedIn, logout, isUser } = useContext(AuthContext);
+  const toAverage = [];
+  // const { focused } = useFormControl() || {};
+  const {
+    getProfile,
+    userLoggedIn,
+    isUser,
+    isModal,
+    leaveReview,
+    deleteReview,
+  } = useContext(AuthContext);
   const { values, setValues, handleInputChange, handleSubmit } =
     useForm(initialValues);
-
-  const getAverageScore = (rating) => {
-    // console.log("rating", rating);
-    // console.log("commentsfor", commentsfor);
-    // commentsfor.commentsfor.forEach((item) => {
-    //   console.log(item.rating);
-  };
-
-  const leaveReview = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("text", values.text);
-    urlencoded.append("rating", values.rating);
-    urlencoded.append("author", userLoggedIn.id);
-    urlencoded.append("target", data.data._id);
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
-
-    fetch("http://localhost:5001/api/comments/create/", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  };
 
   console.log("data", data);
 
@@ -71,76 +57,148 @@ const Comments = (data) => {
     console.log("userLoggedIn", userLoggedIn);
   }, []);
 
-  const handleDelete = () => {
-    console.log("delete comment");
+  const handleDelete = (comment) => {
+    console.warn("CLG delete", comment);
+    deleteReview(comment);
   };
 
+  // function MyLabelText() {
+  //   const { focused } = useFormControl() || {};
+
+  //   const helperText = React.useMemo(() => {
+  //     if (focused) {
+  //       return "This field is being focused";
+  //     }
+
+  //     return "Helper text";
+  //   }, [focused]);
+
+  //   return <FormHelperText>{helperText}</FormHelperText>;
+  // }
+
+  // const labelText = React.useMemo(() => {
+  //   if (focused) {
+  //     return "but you're still trying...";
+  //   } else {
+  //     return;
+  //     ("no you can't leave a review of yourself");
+  //   }
+
+  //   return "Helper text";
+  // }, [focused]);
+
+  const handleClick = () => {
+    leaveReview(values, userLoggedIn, data);
+  };
+
+  console.log(values);
+  // const handleClick = () => {
+  //   if (values.rating != 0) {
+  //     leaveReview();
+  //   } else if ((values.rating = 0)) {
+  //     // setModalText(your review must contain a rating),
+  //     setIsModal(true);
+  //   }
+  // };
+
+  const clg = (where) => {
+    console.log(where);
+  };
+  // const getAverageScore = () => {};
+  // console.warn(toAverage);
+
   return (
-    <Box
-      sx={{
-        p: 2,
-      }}
-    >
-      <h4>
-        {data?.data?.commentsfor.length == 0
-          ? "be the first to leave a review of this seller"
-          : `${data?.data?.commentsfor.length} people left a review of this seller`}
-      </h4>
-      {/* <h4>
-        {data?.data?.commentsfor.length == 0 &&
-          "be the first to leave a review of this seller"}{" "}
-        {data?.data?.commentsfor.length == 1
-          ? "1 person left a review of this seller"
-          : `${data?.data?.commentsfor.length} people left a review of this seller`}
-      </h4> */}
+    <>
+      {isModal && <MyModal></MyModal>}
 
-      {data &&
-        data?.data?.commentsfor?.map((comment) => {
-          return (
-            <Paper>
-              {userLoggedIn.id === comment.author && (
-                <DeleteIcon
-                  className="delete-icon"
-                  onClick={handleDelete}
-                ></DeleteIcon>
-              )}
+      <Box
+        sx={{
+          p: 2,
+        }}
+      >
+        {!isUser}
+        <h4>
+          {data?.data?.commentsfor.length == 0
+            ? "be the first to leave a review of this seller"
+            : data?.data?.commentsfor.length == 1
+            ? "1 person left a review of this seller"
+            : `${data?.data?.commentsfor.length}` +
+              " people left a review of this seller"}
+        </h4>
+        {/* {average && <StarIcon />}
+      {average >= 1.4 <StarIcon />}
+      <StarBorderIcon />
+      <StarBorderIcon />
+      <StarBorderIcon />
+      <StarBorderIcon /> */}
+        <h4>{average}</h4>
 
-              {getAverageScore(comment.rating)}
-              <Typography
-                sx={{ m: 5, width: "29ch" }}
-                variant="body1"
-                gutterBottom
-              >
-                {comment.text}
-              </Typography>
-              <div className="star-div-comments-for">
-                <StarIcon />
-                {comment.rating >= 2 ? <StarIcon /> : <StarBorderIcon />}
-                {comment.rating >= 3 ? <StarIcon /> : <StarBorderIcon />}
-                {comment.rating >= 4 ? <StarIcon /> : <StarBorderIcon />}
-                {comment.rating >= 5 ? <StarIcon /> : <StarBorderIcon />}
-              </div>
-            </Paper>
-          );
-        })}
-      <ReviewForm>
-        <Paper className="review-box">
-          <MyControls.MyTextbox
-            id="outlined-multiline-flexible"
-            label={
-              userLoggedIn.username == location.state.user
-                ? "no you can't review yourself"
-                : "leave a review of this seller"
+        {data &&
+          data?.data?.commentsfor?.map((comment) => {
+            {
+              /* let i = [0];
+            toAverage.push(comment.rating);
+            if (data.data.commentsfor[i] == data.data.commentsfor.length - 1) {
+              const sum = toAverage.reduce(
+                (accumulator, value) => accumulator + value,
+                0
+              );
+              const userAverage = sum / toAverage.length || 0;
+              setAverage(userAverage);
+              {
+                setAverage(`${sum / toAverage.length || 0}`);
+              }
+            } */
             }
-            variant="standard"
-            name="text"
-            value={values.text}
-            onChange={handleInputChange}
-            sx={{ m: 4, width: "26ch" }}
-          />
 
-          <div className="star-div">
-            {/* {rating >= 1 ? (
+            return (
+              <Paper key={comment.id}>
+                {userLoggedIn?.id == comment?.author && (
+                  <DeleteIcon
+                    className="delete-icon"
+                    onClick={() => `${handleDelete(comment)}`}
+                  ></DeleteIcon>
+                )}
+
+                {/* {getAverageScore(comment.rating)} */}
+                <Typography
+                  sx={{ m: 5, width: "29ch" }}
+                  variant="body1"
+                  gutterBottom
+                >
+                  {comment.text}
+                </Typography>
+                <div className="star-div-comments-for">
+                  <StarIcon />
+                  {comment.rating >= 2 ? <StarIcon /> : <StarBorderIcon />}
+                  {comment.rating >= 3 ? <StarIcon /> : <StarBorderIcon />}
+                  {comment.rating >= 4 ? <StarIcon /> : <StarBorderIcon />}
+                  {comment.rating >= 5 ? <StarIcon /> : <StarBorderIcon />}
+                </div>
+              </Paper>
+            );
+          })}
+        <ReviewForm>
+          <Paper className="review-box">
+            {/* <h6 position="absolute">signed in as:</h6> */}
+            <MyControls.MyTextbox
+              id="outlined-multiline-flexible"
+              label={
+                userLoggedIn.username == location.state.user
+                  ? "no you can't post a review of yourself "
+                  : !isUser
+                  ? "login to post a review"
+                  : "leave a review of this seller"
+              }
+              variant="standard"
+              name="text"
+              value={values.text}
+              onChange={handleInputChange}
+              sx={{ m: 4, width: "26ch" }}
+            />
+
+            <div className="star-div">
+              {/* {rating >= 1 ? (
             <StarIcon onClick={handleClick(1)} />
           ) : (
             <StarBorderIcon onClick={handleClick(1)} />
@@ -165,78 +223,79 @@ const Comments = (data) => {
           ) : (
             <StarBorderIcon onClick={handleClick(5)} />
           )} */}
-            <FormControl>
-              <FormLabel>Rating</FormLabel>
-              <RadioGroup
-                row={true}
-                // label="rating"
-                name="rating"
-                value={values.rating}
-                onChange={handleInputChange}
+              <FormControl>
+                <FormLabel>Rating</FormLabel>
+                <RadioGroup
+                  row={true}
+                  // label="rating"
+                  name="rating"
+                  value={values.rating}
+                  onChange={handleInputChange}
+                >
+                  <FormControlLabel
+                    name="rating"
+                    value="1"
+                    control={<Radio />}
+                    label="1"
+                  />
+                  <FormControlLabel
+                    name="rating"
+                    value="2"
+                    control={<Radio />}
+                    label="2"
+                  />
+                  <FormControlLabel
+                    name="rating"
+                    value="3"
+                    control={<Radio />}
+                    label="3"
+                  />
+                  <FormControlLabel
+                    name="rating"
+                    value="4"
+                    control={<Radio />}
+                    label="4"
+                  />
+                  <FormControlLabel
+                    name="rating"
+                    value="5"
+                    control={<Radio />}
+                    label="5"
+                  />
+                </RadioGroup>
+              </FormControl>
+              <StarBorderIcon />
+              <StarBorderIcon />
+              <StarBorderIcon />
+              <StarBorderIcon />
+              <StarBorderIcon />
+            </div>
+            {userLoggedIn?.username == location.state.user || !isUser ? (
+              <Button
+                disabled
+                className="submit-review"
+                variant="contained"
+                color="success"
+                component="label"
+                // onClick={handleClick}
               >
-                <FormControlLabel
-                  name="rating"
-                  value="1"
-                  control={<Radio />}
-                  label="1"
-                />
-                <FormControlLabel
-                  name="rating"
-                  value="2"
-                  control={<Radio />}
-                  label="2"
-                />
-                <FormControlLabel
-                  name="rating"
-                  value="3"
-                  control={<Radio />}
-                  label="3"
-                />
-                <FormControlLabel
-                  name="rating"
-                  value="4"
-                  control={<Radio />}
-                  label="4"
-                />
-                <FormControlLabel
-                  name="rating"
-                  value="5"
-                  control={<Radio />}
-                  label="5"
-                />
-              </RadioGroup>
-            </FormControl>
-            <StarBorderIcon />
-            <StarBorderIcon />
-            <StarBorderIcon />
-            <StarBorderIcon />
-            <StarBorderIcon />
-          </div>
-          {userLoggedIn.username == location.state.user ? (
-            <Button
-              disabled
-              className="submit-review"
-              variant="contained"
-              color="success"
-              component="label"
-              onClick={leaveReview}
-            >
-              SUBMIT
-            </Button>
-          ) : (
-            <Button
-              className="submit-review"
-              variant="contained"
-              color="success"
-              component="label"
-              onClick={leaveReview}
-            >
-              SUBMIT
-            </Button>
-          )}
-        </Paper>
-      </ReviewForm>
-    </Box>
+                SUBMIT
+              </Button>
+            ) : (
+              <Button
+                className="submit-review"
+                variant="contained"
+                color="success"
+                component="label"
+                onClick={handleClick}
+              >
+                SUBMIT
+              </Button>
+            )}
+          </Paper>
+        </ReviewForm>
+      </Box>
+    </>
   );
 };
 

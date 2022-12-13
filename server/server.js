@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import plantRoutes from "./routes/plantRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
+import factRoutes from "./routes/factRoutes.js";
+
 import cloudinaryConfig from "./config/cloudinary.js";
 import passport from "passport";
 import passportConfig from "./config/passport.js";
@@ -50,6 +52,7 @@ const loadRoutes = () => {
   app.use("/api/plants", plantRoutes);
   app.use("/api/users", userRoutes);
   app.use("/api/comments", commentRoutes);
+  app.use("/api/facts", factRoutes);
 };
 
 //  connect to DB

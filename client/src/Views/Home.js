@@ -194,22 +194,28 @@ export default Home;
 
 // QUESTIONS:
 
-// see autth context signup. there is abtype of fetch i'm not comfortable using. 'result' seems accessible to console log but not other things? seems strange
+// TODO: redirect after submitting review
+
+//! see usercontroller.js,  updateUser: i wanted to make this code reusable
+//? MAYBE NOW WORKING: see authcontext patchuser. why can't i access 'result' durinng the end of function? i want to set my modal text not mannually
+
+// see autth context signup. there is a type of fetch i'm not comfortable using. 'result' seems accessible to console log but not other things? seems strange
+
 // also: in auth context but login, not sure if my errors in login should be part of a 'catch' for actual errors.
+
+// averages in user reviews
 
 // Linkto not working from navbar when i set to redirect to profile/{userLoggedIn.username}
 
 // filter by premium users first in carousel not working as hoped
 
+//  any general pointers for how i should structure my future tasks? is it not too much to keep piling  things into auth context?
+
+// bit unsure how often i should be using getprofile and when. it's just to see if session expired?
+
 //* i have a feeling i'm using async, await wrong. please see commentcontroller, createcomment, updateauthoer/target
 
-//? can i just destroy a collection instead of deleting individual entries? will my backend automatically recreate the paths?
-
-//? populatepath problem. see getuser.
-
 // why does my object destructure of useForm show different colour coding in Signup and MyAccount?
-
-// my userscollection has a commentsForUser field which stores reviews left for that user. Would it make sense for me to have a commentsByUser field too, which also stores the reviews, but this time by the user for others, and then populate links between the two? or does populating links between users make no sense, considering they belong to the same collection? //! the documentation seems to imply that we can only populate between different collections, not within a single collection. for this reason it seemed to make more sense to make a comments collection, rather
 
 // see login/signup. I have these const styled things. Could i just be importing those from some styles control component or something?
 

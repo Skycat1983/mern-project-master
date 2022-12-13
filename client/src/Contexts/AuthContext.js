@@ -8,12 +8,11 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([{}]);
-  const [isUser, setIsUser] = useState(null);
+  const [isUser, setIsUser] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [userLoggedIn, setUserLoggedIn] = useState({});
   const [backEndError, setBackEndError] = useState({});
   const [urls, setUrls] = useState([]);
-
   const [modalText, setModalText] = useState("");
   const [isModal, setIsModal] = React.useState(false);
   // const { setFormErrors } = useForm();
@@ -233,16 +232,86 @@ export const AuthContextProvider = (props) => {
         navigate("/")
       )
       .catch((error) => console.log("error", error));
+  };
 
-    // if (location.state?.from) {
-    //   setModalText("Plant successfully listed. Redirecting");
-    //   setIsModal(true);
-    //   navigate(location.state.from);
-    // } else {
-    //   setModalText("Plant successfully listed. Redirecting");
-    //   setIsModal(true);
-    //   navigate("/");
-    // }
+  const leaveReview = async (values, userLoggedIn, data) => {
+    console.log(values.rating);
+    if (values.rating == "0" || values.text == "") {
+      setModalText("your review must contain text and a rating");
+      setIsModal(true);
+    } else {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+      const urlencoded = new URLSearchParams();
+      urlencoded.append("text", values.text);
+      urlencoded.append("rating", values.rating);
+      urlencoded.append("author", userLoggedIn.id);
+      urlencoded.append("target", data.data._id);
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: "follow",
+      };
+
+      fetch("http://localhost:5001/api/comments/create/", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log("error", error));
+    }
+  };
+
+  const deleteReview = (comment) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("commentid", comment._id);
+    urlencoded.append("authorid", comment.author);
+    urlencoded.append("targetid", comment.target);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch(
+      "http://localhost:5001/api/comments/delete/?commentid=63927468f69b23134cca4682&authorid=63925855d8151d521b9fc92a&targetid=63925895d8151d521b9fc936",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  };
+
+  const patchUser = async (values, userLoggedIn) => {
+    // console.warn("IMPRTANT", values, userLoggedIn);
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("username", userLoggedIn);
+    urlencoded.append("aboutus", values.aboutUs);
+
+    const requestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch(
+      "http://localhost:5001/api/users/update/aboutus/theplantseller",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => setModalText(`${result.modal}`, console.log(result)))
+      // .then(setModalText(`${result.modal}`), setIsModal(true), navigate("/"))
+      .catch((error) => console.log("error", error));
   };
 
   //LOGOUT
@@ -253,7 +322,7 @@ export const AuthContextProvider = (props) => {
     setModalText("successfully logged out");
     setIsModal(true);
     setUserLoggedIn(false);
-    setIsUser(null);
+    setIsUser(false);
     console.log("user logged out");
   };
 
@@ -267,6 +336,7 @@ export const AuthContextProvider = (props) => {
         setBackEndError,
         isModal,
         setIsModal,
+        setModalText,
         modalText,
         getProfile,
         handleUpload,
@@ -274,6 +344,9 @@ export const AuthContextProvider = (props) => {
         setUrls,
         urls,
         submitListing,
+        leaveReview,
+        deleteReview,
+        patchUser,
         logout,
         signIn,
         register,

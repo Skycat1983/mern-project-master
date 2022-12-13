@@ -35,5 +35,5 @@ router.get("/profile", jwtAuth, getProfile);
 router.delete("/delete/:id", deleteUser);
 
 // UPDATE PROFILE
-router.patch("/update/:username", updateUser);
+router.patch("/update/aboutus/:username", updateUser);
 export default router;
