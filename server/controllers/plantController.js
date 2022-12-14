@@ -1,6 +1,7 @@
 import plantModel from "../models/plantsModel.js";
 import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/usersModel.js";
+import factModel from "../models/factsModel.js";
 
 // GET ALL PLANTS
 const getAllPlants = async (req, res) => {
@@ -34,7 +35,7 @@ const getPlant = async (req, res) => {
   //! const { id } = req.params;
 
   try {
-    const plant = await plantModel.findById(id);
+    const plant = await plantModel.findById(id).populate({ path: "fact" });
 
     //! const plant = await plantModel.findOne({ _id: id });
 
@@ -70,17 +71,36 @@ const createPlant = async (req, res) => {
       user,
     });
     console.log("plant :>> ", plant);
-    console.log("USER", user);
+    // const savedPlant = await plant.save();
     // https://attacomsian.com/blog/mongoose-push-pull-items-from-array
     // await plantModel.create({ _id: user });
-    const updateUser = await userModel.findOne({ _id: user });
-    console.log("the user to be updated", updateUser);
-    updateUser.plants.push(plant._id);
-    await updateUser.save();
+    //! we are here
+    const getFacts = await factModel.findOne({ genus: genus });
+    console.log("getFacts", getFacts);
+    // const savedFact = await getFacts.save();
+
+    // const { _id } = getFacts;
+    // const updatePlantWithFacts = await userModel.updateOne({fact: })
+    // plant.fact.push(updatePlantWithFacts._id);
+    // await plant.save();
+
+    //! could maybe just be updateOne
+    const updatePlant = await plantModel.findByIdAndUpdate(
+      { _id: plant._id },
+      { $push: { fact: getFacts._id } },
+      { returnOriginal: false }
+    );
+
+    const updateUserWithPlants = await userModel.findOne({ _id: user });
+    console.log("the user to be updated", updateUserWithPlants);
+    updateUserWithPlants.plants.push(plant._id);
+    await updateUserWithPlants.save();
 
     res.status(200).json({
       msg: "plant succesfully added",
       plant,
+      updatePlant,
+      // savedFact,
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -113,14 +133,19 @@ const uploadImage = async (req, res) => {
 
 // DELETE A PLANT
 const deletePlant = async (req, res) => {
+  const { plantid, userid } = req.body;
   try {
-    // maybe should be //? findOneAndDelete
-    const deletePlant = await plantModel.deleteOne({});
+    const deletePlant = await plantModel.findByIdAndDelete({ _id: plantid });
+    const deletePlantFromUser = await userModel.findByIdAndUpdate(
+      { _id: userid },
+      { $pull: { plants: plantid } },
+      { returnOriginal: false }
+    );
 
     console.log("delete plant", deletePlant);
     res.status(200).json({
-      msg: "plant succesfully deleted",
-      plant,
+      modal: "plant succesfully deleted",
+      plantid,
     });
   } catch (error) {
     console.log("error :>> ", error);
@@ -207,3 +232,15 @@ export {
 //   // res.send("you requested to see plant with the id of" + req.params.id);
 //* http://localhost:5001/api/plants/id/63909911d513889bf1ec6b01
 // console.log("req", req.params.id);
+
+// try {
+// } catch (error) {
+//   res.status(400).json({ error: "problem after updatePlantWithFacts" });
+// }
+// const updatePlantWithFacts = await factModel.findOne({ genus: genus });
+// plant.fact.push(updatePlantWithFacts._id);
+// await plant.save();
+// const updateUserWithPlants = await userModel.findOne({ _id: user });
+// console.log("the user to be updated", updateUserWithPlants);
+// updateUserWithPlants.plants.push(plant._id);
+// await updateUserWithPlants.save();

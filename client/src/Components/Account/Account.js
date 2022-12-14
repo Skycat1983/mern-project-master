@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
@@ -15,19 +15,38 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
 import { AuthContext } from "../../Contexts/AuthContext";
 
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "left",
+  // rowGap: "15px",
+  color: theme.palette.text.secondary,
+}));
+
+const initialValues = {
+  membership: "",
+};
+
 function Account() {
+  const [toggle, setToggle] = useState(true);
+  const [defaults, setDefaults] = useState();
   const [startingValues, setStartingValues] = useState({});
   const user = { plants: false, premium: true, plants: true };
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "left",
-    // rowGap: "15px",
-    color: theme.palette.text.secondary,
-  }));
 
   const { isUser, getProfile, userLoggedIn } = useContext(AuthContext);
+
+  const handleUpdate = () => {
+    setToggle(!toggle);
+    console.log(toggle);
+    // if (!toggle && values.aboutUs !== "") {
+    //   patchUser(values, userLoggedIn.username);
+    // }
+  };
+
+  useEffect(() => {
+    setDefaults();
+  }, []);
 
   return (
     <div>
@@ -41,6 +60,7 @@ function Account() {
               className={
                 userLoggedIn.premium == true ? "selected" : "unselected"
               }
+              onClick={handleUpdate}
             ></WorkspacePremiumIcon>
           </Item>
         </Grid>
@@ -53,10 +73,10 @@ function Account() {
             ></SentimentDissatisfiedIcon>
           </Item>
         </Grid>
-        <Grid xs={8}>
+        {/* <Grid xs={8}>
           <Item>Add/remove listing: </Item>
-        </Grid>
-        <Grid xs={2}>
+        </Grid> */}
+        {/* <Grid xs={2}>
           <Item>
             <Link to={"/addplant"}>
               <AddCircleOutlineIcon className="unselected"></AddCircleOutlineIcon>
@@ -70,9 +90,9 @@ function Account() {
               className={user.plants == false ? "not-possible" : "unselected"}
             ></RemoveCircleOutlineIcon>
           </Item>
-        </Grid>
+        </Grid> */}
         <Grid xs={8}>
-          <Item>Upload cover/avatar: </Item>
+          <Item>Change cover/avatar: </Item>
         </Grid>
         <Grid xs={2}>
           <Item>
@@ -85,7 +105,9 @@ function Account() {
           </Item>
         </Grid>
       </Grid>
-      <Button className="update-changes">UPDATE CHANGES</Button>
+      <Button color="success" variant="outlined" className="update-changes">
+        UPDATE CHANGES
+      </Button>
     </div>
   );
 }

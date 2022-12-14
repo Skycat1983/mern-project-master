@@ -53,12 +53,6 @@ export const AuthContextProvider = (props) => {
       redirect: "follow",
     };
 
-    //! cant do things this way
-    // fetch("http://localhost:5001/api/users/create", requestOptions)
-    //   .then((response) => response.text())
-    //   .then((result) => console.log(result))
-    //   .catch((error) => console.log("error", error));
-
     try {
       const response = await fetch(
         "http://localhost:5001/api/users/create",
@@ -183,28 +177,15 @@ export const AuthContextProvider = (props) => {
       body: formdata,
       redirect: "follow",
     };
-
     const response = await fetch(
       "http://localhost:5001/api/plants/uploadimage",
       requestOptions
     );
     const result = await response.json();
-    // console.log("result :>> ", result);
     setUrls(result.urls);
-    // console.log("resul.Urls :>> ", result.urls);
-    // console.log("urls", urls);
-
-    // fetch("http://localhost:5001/api/plants/uploadimage", requestOptions)
-    //   .then((response) => response.text()) //! or .json
-    //   .then((result) => console.log("result>>", result))
-    //   .then((result) => setUrls(result))
-    //   .catch((error) => console.log("error", error));
-
-    // setNewPost({...newPost, imageUrls: result})
   };
 
   const submitListing = (values, navigate) => {
-    // console.log("URLS", urls);
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     const urlencoded = new URLSearchParams();
@@ -234,7 +215,13 @@ export const AuthContextProvider = (props) => {
       .catch((error) => console.log("error", error));
   };
 
-  const leaveReview = async (values, userLoggedIn, data) => {
+  const leaveReview = async (
+    values,
+    userLoggedIn,
+    data,
+    navigate,
+    location
+  ) => {
     console.log(values.rating);
     if (values.rating == "0" || values.text == "") {
       setModalText("your review must contain text and a rating");
@@ -259,6 +246,11 @@ export const AuthContextProvider = (props) => {
       fetch("http://localhost:5001/api/comments/create/", requestOptions)
         .then((response) => response.text())
         .then((result) => console.log(result))
+        .then(
+          setModalText("Review posted successfully. Add redirecting!"),
+          setIsModal(true)
+          // navigate()
+        )
         .catch((error) => console.log("error", error));
     }
   };
@@ -285,6 +277,29 @@ export const AuthContextProvider = (props) => {
     )
       .then((response) => response.text())
       .then((result) => console.log(result))
+      .then(setModalText("Review deleted"), setIsModal(true))
+      .catch((error) => console.log("error", error));
+  };
+
+  const deletePlant = (item) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("plantid", item._id);
+    urlencoded.append("userid", item.user);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5001/api/plants/delete/12345", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .then(setModalText("Plant deleted"), setIsModal(true))
       .catch((error) => console.log("error", error));
   };
 
@@ -346,6 +361,7 @@ export const AuthContextProvider = (props) => {
         submitListing,
         leaveReview,
         deleteReview,
+        deletePlant,
         patchUser,
         logout,
         signIn,

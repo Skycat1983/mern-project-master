@@ -11,16 +11,9 @@ const plantSchema = new Schema(
     rooted: { type: Boolean, required: true },
     topcutting: { type: Boolean, required: true },
     imageUrls: { type: Array, required: true },
-    // nodes: { type: Number },
-    // height: { type: Number, required: true },
-    // width: { type: Number, required: true },
-    // passport: { type: Boolean, required: true },
-    // additonalinfo: { type: String },
-    // wishlist: Number,
     price: { type: Number, required: true },
     user: { type: Schema.Types.ObjectId, ref: "User" },
-    // fact: { type: Schema.Types.ObjectId, ref: "Fact" },
-
+    fact: { type: Schema.Types.ObjectId, ref: "Fact" },
     // user: { type: Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }

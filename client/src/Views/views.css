@@ -53,6 +53,10 @@
   z-index: -100;
 }
 
+.fact-icons {
+  height: 30px;
+}
+
 /* MULTI */
 .below-nav {
   /* background-color: aqua; */

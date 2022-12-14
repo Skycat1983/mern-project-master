@@ -194,7 +194,17 @@ export default Home;
 
 // QUESTIONS:
 
-// TODO: redirect after submitting review
+// TODO: usememo on wishlist search. location context for language and currency conversion.
+
+// need public id and url. public id is end of url. public id was not stored. cloudinary uploader destroy.
+
+// "Uncaught TypeError: Cannot read properties of null (reading 'user')" when navigating to profile page sometimes. see when i turn navigating on after posting review
+
+// delete image if i navigate away fromm addplant
+
+// go over how isloading is working. how should i be using it. what is best practice. in authcontext it is set to false. when should i be turning it off then on?
+
+// useref for tab settings? are there other areas i don't want to reset?
 
 //! see usercontroller.js,  updateUser: i wanted to make this code reusable
 //? MAYBE NOW WORKING: see authcontext patchuser. why can't i access 'result' durinng the end of function? i want to set my modal text not mannually
@@ -202,6 +212,8 @@ export default Home;
 // see autth context signup. there is a type of fetch i'm not comfortable using. 'result' seems accessible to console log but not other things? seems strange
 
 // also: in auth context but login, not sure if my errors in login should be part of a 'catch' for actual errors.
+
+// see plants.js component. sometimes submit button does not load. cannot understand why
 
 // averages in user reviews
 

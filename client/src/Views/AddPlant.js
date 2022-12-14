@@ -23,6 +23,7 @@ import zIndex from "@mui/material/styles/zIndex";
 import { AuthContext } from "../Contexts/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import MyModal from "../Components/MyModal/SummonModal.js";
+import HomeIcon from "@mui/icons-material/Home";
 
 // todo: useFetch custom hook instead
 const steps = [
@@ -54,13 +55,6 @@ const initialValues = {
 };
 
 const AddPlant = () => {
-  // const [selectedFiles, setSelectedFiles] = useState([{}]);
-  // const [urls, setUrls] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [newPost, setNewPost] = useState({});
-  // const [modalText, setModalText] = useState("");
-  // const [isModal, setIsModal] = React.useState(false);
-
   const { values, setValues, handleInputChange } = useForm(initialValues);
   const {
     isUser,
@@ -100,20 +94,24 @@ const AddPlant = () => {
     submitListing(values, navigate);
   };
 
+  const handleNav = () => {
+    navigate("/");
+  };
+
   useEffect(() => {
     console.warn("getting profile in AddPlants");
     getProfile();
-    console.log("userLogin", userLoggedIn);
+    // console.log("userLogin", userLoggedIn);
   }, []);
 
   //! Is the problem that i am trying to insert objectid (user) onto plant, when this is done via populate?
 
-  console.log("activeStep", activeStep);
+  // console.log("activeStep", activeStep);
 
   return (
     <>
       {isModal && <MyModal></MyModal>}
-      {/* <NavBar /> */}
+      <HomeIcon className="go-home-icon" onClick={handleNav} />
       <img src={background} className="background-image2" alt="" />
       <div className="below-nav">
         <PlantForm>

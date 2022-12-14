@@ -18,3 +18,8 @@
 .not-possible {
   color: lightgray;
 }
+
+.update-changes {
+  left: 20px;
+  bottom: -10px;
+}

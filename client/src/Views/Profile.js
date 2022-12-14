@@ -69,7 +69,7 @@ export default function Profile() {
   console.warn(location.state);
   console.warn(location);
 
-  console.log(summonModal);
+  // console.log(summonModal);
   return (
     <>
       <NavBar />
@@ -134,13 +134,15 @@ export default function Profile() {
             name="reviews"
             style={{ minWidth: "50%" }}
           />
-          <Tab
-            onChange={handleChange}
-            className="my-tab"
-            label="account"
-            name="account"
-            style={{ minWidth: "50%" }}
-          />
+          {userLoggedIn?.username == location.state.user && (
+            <Tab
+              onChange={handleChange}
+              className="my-tab"
+              label="account"
+              name="account"
+              style={{ minWidth: "50%" }}
+            />
+          )}
         </Tabs>
       </Box>
       <Grid
@@ -172,6 +174,9 @@ export default function Profile() {
       )}
       {value === 1 && <Plants plants={data?.user?.plants}></Plants>}
       {value === 2 && <Reviews data={data?.user}></Reviews>}
+      {userLoggedIn?.username == location.state.user && value === 3 && (
+        <Account></Account>
+      )}
     </>
   );
 }

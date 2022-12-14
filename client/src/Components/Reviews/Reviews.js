@@ -22,7 +22,7 @@ import MyControls from "../controls/MyControls";
 import MyRadioGroup from "../controls/MyRadioGroup";
 import Radio from "@mui/material/Radio";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { convertLength } from "@mui/material/styles/cssUtils";
 import MyModal from "../../Components/MyModal/SummonModal.js";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -33,10 +33,9 @@ const initialValues = {
 };
 
 const Comments = (data) => {
-  // const [rating, setRating] = useState(0);
-  // const [rating, setRating] = useState(0);
   const [average, setAverage] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const toAverage = [];
   // const { focused } = useFormControl() || {};
   const {
@@ -88,24 +87,8 @@ const Comments = (data) => {
   // }, [focused]);
 
   const handleClick = () => {
-    leaveReview(values, userLoggedIn, data);
+    leaveReview(values, userLoggedIn, data, navigate, location);
   };
-
-  console.log(values);
-  // const handleClick = () => {
-  //   if (values.rating != 0) {
-  //     leaveReview();
-  //   } else if ((values.rating = 0)) {
-  //     // setModalText(your review must contain a rating),
-  //     setIsModal(true);
-  //   }
-  // };
-
-  const clg = (where) => {
-    console.log(where);
-  };
-  // const getAverageScore = () => {};
-  // console.warn(toAverage);
 
   return (
     <>
@@ -134,7 +117,7 @@ const Comments = (data) => {
         <h4>{average}</h4>
 
         {data &&
-          data?.data?.commentsfor?.map((comment) => {
+          data?.data?.commentsfor?.map((comment, index) => {
             {
               /* let i = [0];
             toAverage.push(comment.rating);
@@ -152,12 +135,12 @@ const Comments = (data) => {
             }
 
             return (
-              <Paper key={comment.id}>
+              <Paper key={index}>
                 {userLoggedIn?.id == comment?.author && (
-                  <DeleteIcon
+                  <ClearIcon
                     className="delete-icon"
                     onClick={() => `${handleDelete(comment)}`}
-                  ></DeleteIcon>
+                  ></ClearIcon>
                 )}
 
                 {/* {getAverageScore(comment.rating)} */}
