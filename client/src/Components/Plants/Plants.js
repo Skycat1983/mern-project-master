@@ -29,9 +29,11 @@ function Plants(data) {
   return (
     <>
       <Grid>
-        <Link to={"/addplant"}>
-          <AddCircleOutlineIcon className="unselected"></AddCircleOutlineIcon>
-        </Link>
+        {userLoggedIn?.username == location.state.user && (
+          <Link to={"/addplant"}>
+            <AddCircleOutlineIcon className="unselected"></AddCircleOutlineIcon>
+          </Link>
+        )}
         <h4>
           {data?.username}USERNAME has {data?.plants?.length} plants for sale
         </h4>
@@ -53,7 +55,8 @@ function Plants(data) {
                     theme.palette.mode === "dark" ? "#1A2027" : "#fff",
                 }}
               >
-                {userLoggedIn?.username == location?.pathname.substring(9) && (
+                {/* {userLoggedIn?.username == location?.pathname.substring(9) && ( */}
+                {userLoggedIn?.username == location.state.user && (
                   <ClearIcon
                     className="delete-icon"
                     onClick={() => `${handleDelete(item)}`}

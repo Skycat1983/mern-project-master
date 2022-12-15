@@ -7,7 +7,8 @@ const createComment = async (req, res) => {
 
   //! TODO: only one review between author and subject
   // // from the user who is logged in
-  const { text, rating, author, target } = req.body;
+  const { text, rating, author, target, authorusername, targetusername } =
+    req.body;
 
   // // the profile we are on is the target
   // const { target } = req.params;
@@ -27,6 +28,8 @@ const createComment = async (req, res) => {
       rating: rating,
       author: author,
       target: target,
+      authorusername: authorusername,
+      targetusername: targetusername,
     });
 
     const savedComment = await newComment.save();

@@ -17,6 +17,8 @@ import StarIcon from "@mui/icons-material/Star";
 import "./Reviews.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Contexts/AuthContext";
+import { LangContext } from "../../Contexts/LangContext.js";
+import TranslatedContent from "../TranslatedContent";
 import { useForm, ReviewForm } from "../../Hooks/useForm";
 import MyControls from "../controls/MyControls";
 import MyRadioGroup from "../controls/MyRadioGroup";
@@ -101,12 +103,14 @@ const Comments = (data) => {
       >
         {!isUser}
         <h4>
-          {data?.data?.commentsfor.length == 0
-            ? "be the first to leave a review of this seller"
-            : data?.data?.commentsfor.length == 1
-            ? "1 person left a review of this seller"
-            : `${data?.data?.commentsfor.length}` +
-              " people left a review of this seller"}
+          {data?.data?.commentsfor.length == 0 ? (
+            <TranslatedContent contentID="beTheFirst" />
+          ) : data?.data?.commentsfor.length == 1 ? (
+            <TranslatedContent contentID="oneReview" />
+          ) : (
+            `${data?.data?.commentsfor.length}` +
+            <TranslatedContent contentID="manyReviews" />
+          )}
         </h4>
         {/* {average && <StarIcon />}
       {average >= 1.4 <StarIcon />}
@@ -145,12 +149,20 @@ const Comments = (data) => {
 
                 {/* {getAverageScore(comment.rating)} */}
                 <Typography
-                  sx={{ m: 5, width: "29ch" }}
+                  sx={{ m: 5, width: "29ch", fontWeight: "bold" }}
+                  variant="body1"
+                  gutterBottom
+                >
+                  {comment.authorusername}
+                </Typography>
+                <Typography
+                  sx={{ m: 5, width: "29ch", fontStyle: "italic" }}
                   variant="body1"
                   gutterBottom
                 >
                   {comment.text}
                 </Typography>
+
                 <div className="star-div-comments-for">
                   <StarIcon />
                   {comment.rating >= 2 ? <StarIcon /> : <StarBorderIcon />}
@@ -167,11 +179,13 @@ const Comments = (data) => {
             <MyControls.MyTextbox
               id="outlined-multiline-flexible"
               label={
-                userLoggedIn.username == location.state.user
-                  ? "no you can't post a review of yourself "
-                  : !isUser
-                  ? "login to post a review"
-                  : "leave a review of this seller"
+                userLoggedIn.username == location.state.user ? (
+                  <TranslatedContent contentID="cantReviewSelf" />
+                ) : !isUser ? (
+                  <TranslatedContent contentID="loginToPost" />
+                ) : (
+                  <TranslatedContent contentID="writeReview" />
+                )
               }
               variant="standard"
               name="text"

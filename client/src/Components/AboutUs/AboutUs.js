@@ -13,6 +13,8 @@ import { FormControl, FormLabel, RadioGroup, TextField } from "@mui/material";
 import MyControls from "../controls/MyControls";
 import Button from "@mui/material/Button";
 import { AuthContext } from "../../Contexts/AuthContext";
+import { LangContext } from "../../Contexts/LangContext.js";
+import TranslatedContent from "../TranslatedContent";
 import { useLocation, useNavigate } from "react-router-dom";
 import MyModal from "../../Components/MyModal/SummonModal.js";
 
@@ -78,7 +80,7 @@ function AboutUs(props) {
     <>
       {isModal && <MyModal></MyModal>}
       <Typography className="about-us" variant="body1" gutterBottom>
-        member since: {dateChange}
+        <TranslatedContent contentID="memberSince" />: {dateChange}
       </Typography>
       {toggle && props?.aboutus ? (
         <Typography className="about-us" variant="body1" gutterBottom>
@@ -87,8 +89,8 @@ function AboutUs(props) {
       ) : toggle ? (
         <Typography className="about-us" variant="body1" gutterBottom>
           {userLoggedIn.username == location.state.user
-            ? "you haven't added any information here yet"
-            : "this user hasn't added any information here yet"}
+            ? "You haven't added any information here yet"
+            : "This user hasn't added any information here yet"}
         </Typography>
       ) : (
         <XLForm>

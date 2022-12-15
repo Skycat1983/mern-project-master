@@ -14,7 +14,6 @@ import temp from "../assets/appIcons/glassmomnstera.png";
 import Tooltip from "@mui/material/Tooltip";
 import { useContext, useEffect, useState } from "react";
 import "./views.css";
-
 import NavBar from "../Components/Navbar/NavBar.js";
 import EditIcon from "@mui/icons-material/Edit";
 import Typography from "@mui/material/Typography";
@@ -27,6 +26,9 @@ import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import Carousel from "../Components/Carousel/Carousel.js";
 import Account from "../Components/Account/Account.js";
 import { AuthContext } from "../Contexts/AuthContext";
+import { LangContext } from "../Contexts/LangContext.js";
+import TranslatedContent from "../Components/TranslatedContent";
+
 import Plants from "../Components/Plants/Plants.js";
 import Reviews from "../Components/Reviews/Reviews.js";
 // import useModal from "../Hooks/useModal.js";
@@ -92,7 +94,9 @@ export default function Profile() {
       {/* <div className="below-nav"> */}
       <div className="gradient-div">
         {userLoggedIn?.username == location.state.user ? (
-          <h5 className="welcome-back-header">welcome to your profile</h5>
+          <h5 className="welcome-back-header">
+            <TranslatedContent contentID="welcomeToYourProfile" />
+          </h5>
         ) : (
           <h5 className="welcome-back-header">
             welcome to {data?.user?.username}'s profile
@@ -118,19 +122,20 @@ export default function Profile() {
 
           <Tab
             className="my-tab"
-            label="about"
+            label=<TranslatedContent contentID="about" />
             name="about"
             style={{ minWidth: "50%" }}
           />
           <Tab
             className="my-tab"
-            label="plants"
+            // label="plants"
+            label=<TranslatedContent contentID="plants" />
             name="plants"
             style={{ minWidth: "50%" }}
           />
           <Tab
             className="my-tab"
-            label="reviews"
+            label=<TranslatedContent contentID="reviews" />
             name="reviews"
             style={{ minWidth: "50%" }}
           />
@@ -138,7 +143,7 @@ export default function Profile() {
             <Tab
               onChange={handleChange}
               className="my-tab"
-              label="account"
+              label=<TranslatedContent contentID="account" />
               name="account"
               style={{ minWidth: "50%" }}
             />

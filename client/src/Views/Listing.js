@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import NavBar from "../Components/Navbar/NavBar";
 import useFetch from "../Hooks/useFetch";
+import { LangContext } from "../Contexts/LangContext.js";
+import TranslatedContent from "../Components/TranslatedContent";
 
 function Listing() {
   const location = useLocation();
@@ -29,15 +31,33 @@ function Listing() {
     <>
       <NavBar />
       <h2>PADDING</h2>
-      <h2>family: {data?.plant.genus}</h2>
-      <h2>rooted: {data?.plant.rooted ? "yes" : "no"}</h2>
+
+      <h2>
+        <TranslatedContent contentID="genus" />: {data?.plant.genus}
+      </h2>
+      <h2>
+        <TranslatedContent contentID="rooted" />:{" "}
+        {data?.plant.rooted ? "yes" : "no"}
+      </h2>
       <h2>topcutting: {data?.plant.topcutting ? "yes" : "no"}</h2>
-      <h2>varigation: {data?.plant.varigation ? "yes" : "no"}</h2>
-      <h2>price: {data?.plant.price}</h2>
-      <h2>difficulty: {data?.plant.fact.difficulty}</h2>
+      <h2>
+        <TranslatedContent contentID="varigation" />:{" "}
+        {data?.plant.varigation ? "yes" : "no"}
+      </h2>
+      <h2>
+        <TranslatedContent contentID="price" />: {data?.plant.price}
+      </h2>
+      <h2>
+        <TranslatedContent contentID="difficulty" />:
+        {data?.plant.fact.difficulty}
+      </h2>
       <h2>directsunlight: {data?.plant.fact.directsunlight}</h2>
-      <h2>humidity: {data?.plant.fact.humidity}</h2>
-      <h2>origin: {data?.plant.fact.origin}</h2>
+      <h2>
+        <TranslatedContent contentID="humidity" />: {data?.plant.fact.humidity}
+      </h2>
+      <h2>
+        <TranslatedContent contentID="origin" />: {data?.plant.fact.origin}
+      </h2>
       <h2>toxicity: {data?.plant.fact.toxicity}</h2>
       <h6>about: {data?.plant.fact.about}</h6>
       {data && (

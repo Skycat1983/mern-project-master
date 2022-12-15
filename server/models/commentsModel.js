@@ -6,6 +6,8 @@ const commentsSchema = new Schema(
     rating: { type: Number, required: true },
     author: { type: Schema.Types.ObjectId, ref: "User" },
     target: { type: Schema.Types.ObjectId, ref: "User" },
+    authorusername: { type: String, required: true },
+    targetusername: { type: String, required: true },
   },
   { timestamps: true }
 );

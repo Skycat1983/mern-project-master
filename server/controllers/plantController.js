@@ -35,7 +35,10 @@ const getPlant = async (req, res) => {
   //! const { id } = req.params;
 
   try {
-    const plant = await plantModel.findById(id).populate({ path: "fact" });
+    const plant = await plantModel
+      .findById(id)
+      .populate({ path: "fact" })
+      .populate({ path: "user" });
 
     //! const plant = await plantModel.findOne({ _id: id });
 

@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../Contexts/AuthContext.js";
+import { LangContext } from "../../Contexts/LangContext.js";
+import TranslatedContent from "../TranslatedContent";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -124,12 +126,13 @@ export default function NavBar() {
                       to={`/profile/${userLoggedIn.username}`}
                       state={{ user: userLoggedIn.username }}
                     >
-                      {userLoggedIn.username}'s account
+                      {userLoggedIn.username}'s{" "}
+                      <TranslatedContent contentID="account" />
                     </Link>
                   </MenuItem>
                 ) : (
                   <MenuItem>
-                    <Avatar /> Not signed in
+                    <Avatar /> <TranslatedContent contentID="notSignedIn" />
                   </MenuItem>
                 )}
                 <Divider />
@@ -139,7 +142,7 @@ export default function NavBar() {
                     <ListItemIcon>
                       <Logout fontSize="small" />
                     </ListItemIcon>
-                    Logout
+                    <TranslatedContent contentID="logout" />
                   </MenuItem>
                 ) : (
                   <MenuItem onClick={handleMenuNav("/signin")}>
@@ -150,7 +153,7 @@ export default function NavBar() {
                       to={"/login"}
                       style={{ textDecoration: "none", color: "black" }}
                     >
-                      Sign in
+                      <TranslatedContent contentID="signIn" />
                     </Link>
                   </MenuItem>
                 )}
@@ -163,7 +166,7 @@ export default function NavBar() {
                       to={"/signup"}
                       style={{ textDecoration: "none", color: "black" }}
                     >
-                      Sign up
+                      <TranslatedContent contentID="signUp" />
                     </Link>
                   </MenuItem>
                 )}

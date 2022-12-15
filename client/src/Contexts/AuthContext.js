@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "../Hooks/useForm.js";
 import getToken from "../utils/getToken.js";
 import * as React from "react";
+import { LangContext } from "./LangContext.js";
+import TranslatedContent from "../Components/TranslatedContent";
 
 export const AuthContext = createContext();
 
@@ -68,7 +70,7 @@ export const AuthContextProvider = (props) => {
       setBackEndError(error);
     }
 
-    setModalText("Successfuly signed up. Redirecting to login");
+    setModalText(<TranslatedContent contentID="successfullySignedUp" />);
     setIsModal(true);
     navigate("/login", { replace: true });
   };
@@ -103,6 +105,9 @@ export const AuthContextProvider = (props) => {
         errors.pword = "incorrect password";
         // console.log("ERRORS>>>>>", errors);
 
+        //! is this necessary?
+        // setBackEndError(<TranslatedContent contentID="YourReviewMustContain" />);
+
         setBackEndError(errors);
       }
 
@@ -112,15 +117,15 @@ export const AuthContextProvider = (props) => {
         localStorage.setItem("token", token);
         //! swap around if problems
         if (location.state?.from) {
-          setModalText("Successfuly logged in. Redirecting to home");
+          setModalText(<TranslatedContent contentID="SuccessfullyLoggedIn" />);
           setIsModal(true);
           navigate(location.state.from, { replace: true });
         } else {
-          setModalText("Successfuly logged in. Redirecting to home");
+          setModalText(<TranslatedContent contentID="SuccessfullyLoggedIn" />);
           setIsModal(true);
           navigate("/", { replace: true });
         }
-        setModalText("Successfuly logged in. Redirecting to home");
+        setModalText(<TranslatedContent contentID="SuccessfullyLoggedIn" />);
         setIsModal(true);
         isLoading(false);
         isUser(true);
@@ -208,7 +213,7 @@ export const AuthContextProvider = (props) => {
       .then((response) => response.text())
       .then((result) => console.log(result))
       .then(
-        setModalText("Plant successfully listed. Redirecting"),
+        setModalText(<TranslatedContent contentID="plantListed" />),
         setIsModal(true),
         navigate("/")
       )
@@ -224,7 +229,7 @@ export const AuthContextProvider = (props) => {
   ) => {
     console.log(values.rating);
     if (values.rating == "0" || values.text == "") {
-      setModalText("your review must contain text and a rating");
+      setModalText(<TranslatedContent contentID="YourReviewMustContain" />);
       setIsModal(true);
     } else {
       const myHeaders = new Headers();
@@ -235,6 +240,8 @@ export const AuthContextProvider = (props) => {
       urlencoded.append("rating", values.rating);
       urlencoded.append("author", userLoggedIn.id);
       urlencoded.append("target", data.data._id);
+      urlencoded.append("authorusername", userLoggedIn.username);
+      urlencoded.append("targetusername", data.data.username);
 
       const requestOptions = {
         method: "POST",
@@ -247,7 +254,9 @@ export const AuthContextProvider = (props) => {
         .then((response) => response.text())
         .then((result) => console.log(result))
         .then(
-          setModalText("Review posted successfully. Add redirecting!"),
+          setModalText(
+            <TranslatedContent contentID="ReviewPostedSuccessfully" />
+          ),
           setIsModal(true)
           // navigate()
         )
@@ -334,7 +343,7 @@ export const AuthContextProvider = (props) => {
     e.preventDefault();
     localStorage.removeItem("token");
 
-    setModalText("successfully logged out");
+    setModalText(<TranslatedContent contentID="SuccessfullyLoggedOut" />);
     setIsModal(true);
     setUserLoggedIn(false);
     setIsUser(false);

@@ -24,6 +24,8 @@ import { AuthContext } from "../Contexts/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import MyModal from "../Components/MyModal/SummonModal.js";
 import HomeIcon from "@mui/icons-material/Home";
+import { LangContext } from "../Contexts/LangContext.js";
+import TranslatedContent from "../Components/TranslatedContent";
 
 // todo: useFetch custom hook instead
 const steps = [
@@ -52,6 +54,9 @@ const initialValues = {
   rooted: "",
   topCutting: "",
   varigation: "",
+  // rooted: null,
+  // topCutting: null,
+  // varigation: null,
 };
 
 const AddPlant = () => {

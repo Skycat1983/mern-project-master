@@ -3,6 +3,8 @@ import NavBar from "../Components/Navbar/NavBar";
 import useFetch from "../Hooks/useFetch";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../Contexts/AuthContext";
+import { LangContext } from "../Contexts/LangContext.js";
+import TranslatedContent from "../Components/TranslatedContent";
 import { useForm, Form } from "../Hooks/useForm";
 import cover2 from "../assets/backgrounds/photos/cosyhouseplants.jpg";
 import cover from "../assets/backgrounds/photos/junglephoto.jpg";
@@ -117,7 +119,8 @@ function Home() {
       <div className="gradient-div">
         {isUser && (
           <h5 className="welcome-back-header">
-            welcome back, {userLoggedIn.username}
+            <TranslatedContent contentID="welcomeBack" />
+            {userLoggedIn.username}
           </h5>
         )}
       </div>
@@ -141,7 +144,9 @@ function Home() {
         </SearchIconWrapper>
         {value === 0 ? (
           <StyledInputBase
-            placeholder="Plants…"
+            placeholder="plants"
+            //! can't be translated?
+            // placeholder=<TranslatedContent contentID="plants" />
             inputProps={{ "aria-label": "search" }}
             // label="search plants"
             // name="searchPlants"
@@ -181,8 +186,14 @@ function Home() {
           // textColor="green[900]"
           // indicatorColor="primary"
         >
-          <Tab className="my-tab" label="PLANTS" />
-          <Tab className="my-tab" label="SELLERS" />
+          <Tab
+            className="my-tab"
+            label=<TranslatedContent contentID="plants" />
+          />
+          <Tab
+            className="my-tab"
+            label=<TranslatedContent contentID="sellers" />
+          />
         </Tabs>
       </Box>
       {isLoading == false && <Carousel data={data} isLoading={isLoading} />}
@@ -195,6 +206,8 @@ export default Home;
 // QUESTIONS:
 
 // TODO: usememo on wishlist search. location context for language and currency conversion.
+
+//! addplants steps hard to translate
 
 // need public id and url. public id is end of url. public id was not stored. cloudinary uploader destroy.
 

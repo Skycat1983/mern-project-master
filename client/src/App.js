@@ -12,53 +12,62 @@ import {
   Routes,
 } from "react-router-dom";
 import { AuthContextProvider } from "./Contexts/AuthContext.js";
+import { LangContextProvider } from "./Contexts/LangContext.js";
+
 import getToken from "./utils/getToken.js";
 import ProtectedRoute from "./Components/ProtectedRoute.js";
 import Listing from "./Views/Listing.js";
+import { useState } from "react";
 
 // import { AuthContextProvider } from "./context/AuthContext";
 
 //! locations stuff https://stackoverflow.com/questions/20089582/how-to-get-a-url-parameter-in-express
 // array https://mongoosejs.com/docs/api.html#schemaarray_SchemaArray-set
 function App() {
+  const [language, setLanguage] = useState("english");
+  function toggleLanguage() {
+    setLanguage((language) => (language === "english" ? "german" : "english"));
+  }
   return (
     <>
-      <AuthContextProvider>
-        <Router>
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="signup" element={<Signup />} />
+      <LangContextProvider value={{ language, toggleLanguage }}>
+        <AuthContextProvider>
+          <Router>
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="signup" element={<Signup />} />
 
-            {/* <Route exact path="myaccount" element={<MyAccount />} /> */}
-            <Route exact path="login" element={<Login />} />
-            <Route exact path="profile/:id" element={<Profile />} />
-            <Route exact path="plant/:id" element={<Listing />} />
+              {/* <Route exact path="myaccount" element={<MyAccount />} /> */}
+              <Route exact path="login" element={<Login />} />
+              <Route exact path="profile/:id" element={<Profile />} />
+              <Route exact path="plant/:id" element={<Listing />} />
 
-            {/* <Route exact path="addplant" element={<AddPlant />} /> */}
+              {/* <Route exact path="addplant" element={<AddPlant />} /> */}
 
-            <Route path="/redirect" element={<Navigate to="/" />} />
-            {/* <ProtectedRoute></ProtectedRoute> */}
-            {/* <Route path="*" element={<GoHome />} /> */}
-            <Route
-              path="myaccount"
-              element={
-                <ProtectedRoute>
-                  <MyAccount />
-                </ProtectedRoute>
-              }
-            />
+              <Route path="/redirect" element={<Navigate to="/" />} />
+              {/* <ProtectedRoute></ProtectedRoute> */}
+              {/* <Route path="*" element={<GoHome />} /> */}
+              <Route
+                path="myaccount"
+                element={
+                  <ProtectedRoute>
+                    <MyAccount />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route
-              path="addplant"
-              element={
-                // <ProtectedRoute>
-                <AddPlant />
-                // </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </Router>
-      </AuthContextProvider>
+              <Route
+                path="addplant"
+                element={
+                  // <ProtectedRoute>
+                  <AddPlant />
+                  // </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </Router>
+        </AuthContextProvider>
+      </LangContextProvider>
     </>
   );
 }

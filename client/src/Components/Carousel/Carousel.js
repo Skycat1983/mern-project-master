@@ -13,6 +13,8 @@ import { CardActionArea } from "@mui/material";
 import temp1 from "../../assets/temp/temp1.png";
 import user1 from "../../assets/backgrounds/woman1.png";
 import { Link } from "react-router-dom";
+import { LangContext } from "../../Contexts/LangContext.js";
+import TranslatedContent from "../TranslatedContent";
 
 export default function Carousel(data, isLoading) {
   // console.warn("data.data in carousel", data.data);
@@ -60,7 +62,9 @@ export default function Carousel(data, isLoading) {
                             {item.genus}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
-                            <b> price:</b>
+                            <b>
+                              <TranslatedContent contentID="price" />
+                            </b>
                             {item.price}
                           </Typography>
                         </CardContent>
@@ -97,7 +101,9 @@ export default function Carousel(data, isLoading) {
                             {item.genus}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
-                            <b> price:</b>
+                            <b>
+                              <TranslatedContent contentID="price" />
+                            </b>
                             {item.price}
                           </Typography>
                         </CardContent>
@@ -133,7 +139,9 @@ export default function Carousel(data, isLoading) {
                           {item.username}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          <b> plants:</b>
+                          <b>
+                            <TranslatedContent contentID="plants" />:
+                          </b>
                           {item.plants.length}
                         </Typography>
                       </CardContent>
