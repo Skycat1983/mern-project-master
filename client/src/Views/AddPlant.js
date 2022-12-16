@@ -70,6 +70,7 @@ const AddPlant = () => {
     isLoading,
     submitListing,
     setUrls,
+    setPublicIds,
     urls,
     isModal,
     setIsModal,
@@ -77,6 +78,7 @@ const AddPlant = () => {
 
   useEffect(() => {
     setUrls(false);
+    setPublicIds(false);
     setIsModal(false);
     setValues(initialValues);
   }, []);
@@ -111,8 +113,6 @@ const AddPlant = () => {
 
   //! Is the problem that i am trying to insert objectid (user) onto plant, when this is done via populate?
 
-  // console.log("activeStep", activeStep);
-
   return (
     <>
       {isModal && <MyModal></MyModal>}
@@ -146,19 +146,6 @@ const AddPlant = () => {
               onChange={handleUpload}
             />
           )}
-          {/* {activeStep == 0 && urls.length === 0 ? (
-            <Skeleton variant="rounded" width={190} height={90} />
-          ) : (
-            <img
-              style={{
-                width: 190,
-                height: 90,
-                objectFit: "cover",
-              }}
-              // alt={item.title}
-              src={urls[0]}
-            />
-          )} */}
 
           {activeStep == 0 && !urls && (
             <Skeleton variant="rounded" width={190} height={90} />

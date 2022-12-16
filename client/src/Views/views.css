@@ -83,7 +83,16 @@
   right: 20px;
   top: 65px;
   color: white;
+  z-index: 1005;
+}
+
+.favourite-badge {
+  position: relative;
+  right: -280px;
+  top: -385px;
+  color: white;
   z-index: 5;
+  color: red !important;
 }
 
 /* .file-picker {

@@ -5,6 +5,7 @@ import {
   Button,
   FormControl,
   FormLabel,
+  IconButton,
   RadioGroup,
   TextField,
 } from "@mui/material";
@@ -28,7 +29,7 @@ import Account from "../Components/Account/Account.js";
 import { AuthContext } from "../Contexts/AuthContext";
 import { LangContext } from "../Contexts/LangContext.js";
 import TranslatedContent from "../Components/TranslatedContent";
-
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Plants from "../Components/Plants/Plants.js";
 import Reviews from "../Components/Reviews/Reviews.js";
 // import useModal from "../Hooks/useModal.js";
@@ -40,7 +41,7 @@ import CardMedia from "@mui/material/CardMedia";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ButtonBase from "@mui/material/ButtonBase";
 // import ProfileTab from "../Components/ProfileTab/ProfileTab";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import useFetch from "../Hooks/useFetch";
 import Modal from "@mui/material/Modal";
 import SummonModal from "../Components/MyModal/SummonModal.js";
@@ -56,11 +57,10 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Profile() {
   const [value, setValue] = React.useState(0);
   const [summonModal, setSummonModal] = useState(false);
+  const { id } = useParams();
   const location = useLocation();
-  console.log("location :>> ", location.state.user);
-  const [url, setUrl] = useState(
-    `http://localhost:5001/api/users/one/${location.state.user}`
-  );
+  // console.log("location :>> ", location.state.user);
+  const [url, setUrl] = useState(`http://localhost:5001/api/users/one/${id}`);
   const { data, isLoading, error } = useFetch(url);
   const { getProfile, userLoggedIn, isUser } = useContext(AuthContext);
 
@@ -71,25 +71,28 @@ export default function Profile() {
   console.warn(location.state);
   console.warn(location);
 
-  // console.log(summonModal);
+  const toggleFave = () => {
+    console.log("fave");
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <>
       <NavBar />
       {data?.user?.premium == true && (
         <Tooltip title="premium user">
-          <WorkspacePremiumIcon className="premium-badge" />
+          <WorkspacePremiumIcon
+            className="premium-badge"
+            onClick={toggleFave}
+          />
         </Tooltip>
       )}
+
       <div className="background-image-div">
-        <img
-          src={data?.user?.coverpicture}
-          // src={
-          //   "https://res.cloudinary.com/dzncmfirr/image/upload/v1670433446/app-images/leaf_xjcqey.png"
-          // }
-          // className="background-image3"
-          className="cover"
-          alt=""
-        />
+        <img src={data?.user?.coverpicture} className="cover" alt="" />
       </div>
       {/* <div className="below-nav"> */}
       <div className="gradient-div">
@@ -182,6 +185,10 @@ export default function Profile() {
       {userLoggedIn?.username == location.state.user && value === 3 && (
         <Account></Account>
       )}
+
+      <IconButton>
+        <FavoriteBorderIcon className="favourite-badge" onClick={toggleFave} />
+      </IconButton>
     </>
   );
 }

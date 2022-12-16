@@ -16,13 +16,15 @@ import Button from "@mui/material/Button";
 import { AuthContext } from "../../Contexts/AuthContext";
 import { LangContext } from "../../Contexts/LangContext.js";
 import TranslatedContent from "../TranslatedContent";
+import EuroIcon from "@mui/icons-material/Euro";
+import CurrencyPoundIcon from "@mui/icons-material/CurrencyPound";
+import IconButton from "@mui/material/IconButton";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
+  ...theme.typography.body1,
+  padding: theme.spacing(2),
   textAlign: "left",
-  // rowGap: "15px",
   color: theme.palette.text.secondary,
 }));
 
@@ -32,6 +34,8 @@ const initialValues = {
 
 function Account() {
   const [toggle, setToggle] = useState(true);
+  const [membership, setMembership] = useState("");
+  const [randomInt, setRandomInt] = useState(0);
   const [defaults, setDefaults] = useState();
   const [startingValues, setStartingValues] = useState({});
   const user = { plants: false, premium: true, plants: true };
@@ -54,6 +58,12 @@ function Account() {
 
   useEffect(() => {
     setDefaults();
+    if (userLoggedIn.premium == true) {
+      setMembership("premium");
+    } else {
+      setMembership("basic");
+    }
+    console.log("membership", membership);
   }, []);
 
   // const LanguageButton = () => {};
@@ -61,37 +71,67 @@ function Account() {
   //   <TranslatedContent contentID="hello" />;
   // }
 
+  const handleRandom = () => {
+    getRnd(0, 10);
+  };
+
+  const getRnd = (min, max) => {
+    let result = Math.floor(Math.random() * (max - min)) + min;
+    setRandomInt(result);
+    // return Math.floor(Math.random() * (max - min)) + min;
+  };
+
+  function toggleMembership() {
+    setMembership((membership) =>
+      membership === "basic" ? "premium" : "basic"
+    );
+  }
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(event.target);
+  };
+
   return (
-    <div>
-      <Grid className="account-grid" rowSpacing={2} container spacing={2}>
-        <Grid xs={8}>
-          <Item>
-            <TranslatedContent contentID="membership" />
-          </Item>
-        </Grid>
-        <Grid xs={2}>
-          <Item>
-            <WorkspacePremiumIcon
-              className={
-                userLoggedIn.premium == true ? "selected" : "unselected"
-              }
-              onClick={handleUpdate}
-            ></WorkspacePremiumIcon>
-          </Item>
-        </Grid>
-        <Grid xs={2}>
-          <Item>
-            <SentimentDissatisfiedIcon
-              className={
-                userLoggedIn.premium == true ? "unselected" : "selected"
-              }
-            ></SentimentDissatisfiedIcon>
-          </Item>
-        </Grid>
-        {/* <Grid xs={8}>
+    <Paper className="review-box">
+      <div>
+        <Grid
+          className="account-grid"
+          alignItems="center"
+          rowSpacing={3}
+          container
+          spacing={2}
+        >
+          <Grid xs={8}>
+            <Item>
+              <TranslatedContent contentID="membership" />
+            </Item>
+          </Grid>
+          <Grid xs={2}>
+            <Item>
+              <WorkspacePremiumIcon
+                className={membership == "premium" ? "selected" : "unselected"}
+                // className={
+                //   userLoggedIn.premium == true ? "selected" : "unselected"
+                // }
+                onClick={toggleMembership}
+                // onClick={handleUpdate}
+              ></WorkspacePremiumIcon>
+            </Item>
+          </Grid>
+          <Grid xs={2}>
+            <Item>
+              <SentimentDissatisfiedIcon
+                className={
+                  userLoggedIn.premium == true ? "unselected" : "selected"
+                }
+                onClick={handleUpdate}
+              ></SentimentDissatisfiedIcon>
+            </Item>
+          </Grid>
+          {/* <Grid xs={8}>
           <Item>Add/remove listing: </Item>
         </Grid> */}
-        {/* <Grid xs={2}>
+          {/* <Grid xs={2}>
           <Item>
             <Link to={"/addplant"}>
               <AddCircleOutlineIcon className="unselected"></AddCircleOutlineIcon>
@@ -106,39 +146,42 @@ function Account() {
             ></RemoveCircleOutlineIcon>
           </Item>
         </Grid> */}
-        <Grid xs={8}>
-          <Item>
-            <TranslatedContent contentID="changeCoverAvatar" />
-          </Item>
+          <Grid xs={8}>
+            <Item>
+              <TranslatedContent contentID="changeCoverAvatar" />
+            </Item>
+          </Grid>
+          <Grid xs={2}>
+            <Item>
+              <WallpaperIcon></WallpaperIcon>
+            </Item>
+          </Grid>
+          <Grid xs={2}>
+            <Item>
+              <AccountCircleIcon></AccountCircleIcon>
+            </Item>
+          </Grid>
         </Grid>
-        <Grid xs={2}>
-          <Item>
-            <WallpaperIcon></WallpaperIcon>
-          </Item>
-        </Grid>
-        <Grid xs={2}>
-          <Item>
-            <AccountCircleIcon></AccountCircleIcon>
-          </Item>
-        </Grid>
-      </Grid>
-      {/* <TranslatedContent> */}
-      <Button color="success" variant="outlined" className="update-changes">
-        <TranslatedContent contentID="update" />
-      </Button>
-      {/* </TranslatedContent> */}
-      <p>
-        <TranslatedContent contentID="hello" />
-      </p>
-      <Button color="success" variant="outlined" onClick={toggleLanguage}>
-        {language}
-      </Button>
-      <Button color="secondary" variant="outlined" onClick={toggleCurrency}>
-        {currency}
-      </Button>
-      <h2>{currency}</h2>
-      <h2>{convertCurrency(110)}</h2>
-    </div>
+        <Button color="success" variant="outlined" className="update-changes">
+          <TranslatedContent contentID="update" />
+        </Button>
+        <p>
+          <TranslatedContent contentID="hello" />
+        </p>
+        <Button color="success" variant="outlined" onClick={toggleLanguage}>
+          {language}
+        </Button>
+        <Button color="secondary" variant="outlined" onClick={toggleCurrency}>
+          {currency}
+        </Button>
+        <Button color="error" variant="outlined" onClick={handleRandom}>
+          getRandomNumber
+        </Button>
+        <h2>{currency}</h2>
+        <h2>{convertCurrency(110)}</h2>
+        <h2>random number: {randomInt}</h2>
+      </div>
+    </Paper>
   );
 }
 

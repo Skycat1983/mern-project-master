@@ -11,6 +11,7 @@ import {
   RadioGroup,
   inputAdornmentClasses,
   useFormControl,
+  IconButton,
 } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
@@ -92,6 +93,18 @@ const Comments = (data) => {
     leaveReview(values, userLoggedIn, data, navigate, location);
   };
 
+  // const getAverage = () => {
+  //   for (let i = 0; i < data?.data?.commentsfor.length; i++) {
+  //     if (data?.data?.commentsfor[i] !== 0) toAverage.push(5);
+  //     console.log(a[i]);
+  //   }
+  // };
+
+  const handleStarClick = () => {
+    console.log("star click");
+  };
+
+  console.log("toAverage", toAverage);
   return (
     <>
       {isModal && <MyModal></MyModal>}
@@ -118,14 +131,18 @@ const Comments = (data) => {
       <StarBorderIcon />
       <StarBorderIcon />
       <StarBorderIcon /> */}
-        <h4>{average}</h4>
+        {/* <h4>{average}</h4> */}
 
         {data &&
           data?.data?.commentsfor?.map((comment, index) => {
             {
-              /* let i = [0];
-            toAverage.push(comment.rating);
-            if (data.data.commentsfor[i] == data.data.commentsfor.length - 1) {
+              {
+                /* let i = [0];
+              toAverage.push(comment.rating); */
+              }
+
+              {
+                /* if (data.data.commentsfor[i] == data.data.commentsfor.length - 1) {
               const sum = toAverage.reduce(
                 (accumulator, value) => accumulator + value,
                 0
@@ -136,6 +153,7 @@ const Comments = (data) => {
                 setAverage(`${sum / toAverage.length || 0}`);
               }
             } */
+              }
             }
 
             return (
@@ -261,11 +279,51 @@ const Comments = (data) => {
                   />
                 </RadioGroup>
               </FormControl>
-              <StarBorderIcon />
-              <StarBorderIcon />
-              <StarBorderIcon />
-              <StarBorderIcon />
-              <StarBorderIcon />
+              {/* <FormControl> */}
+              {/* <FormLabel>Rating</FormLabel>
+                <RadioGroup
+                  row={true}
+                  // label="rating"
+                  name="rating"
+                  value={values.rating}
+                  onChange={handleInputChange}
+                >
+                  <FormControlLabel
+                    name="rating"
+                    value="1"
+                    control={<Radio />}
+                    label="1"
+                  > */}
+              <IconButton>
+                <StarBorderIcon>
+                  {/* <FormControlLabel
+                          name="rating"
+                          value="1"
+                          control={<Radio />}
+                          label="1"
+                        /> */}
+                </StarBorderIcon>
+              </IconButton>
+              <IconButton
+              // onClick={handleStarClick}
+              >
+                <StarBorderIcon onClick={handleStarClick} />
+              </IconButton>
+              {/* </FormControlLabel> */}
+              <IconButton>
+                <StarBorderIcon />
+              </IconButton>
+              <IconButton>
+                <StarBorderIcon />
+              </IconButton>
+              <IconButton>
+                <StarBorderIcon />
+              </IconButton>
+              <IconButton>
+                <StarBorderIcon />
+              </IconButton>
+              {/* </RadioGroup> */}
+              {/* </FormControl> */}
             </div>
             {userLoggedIn?.username == location.state.user || !isUser ? (
               <Button

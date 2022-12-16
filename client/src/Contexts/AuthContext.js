@@ -15,6 +15,7 @@ export const AuthContextProvider = (props) => {
   const [userLoggedIn, setUserLoggedIn] = useState({});
   const [backEndError, setBackEndError] = useState({});
   const [urls, setUrls] = useState([]);
+  const [publicIds, setPublicIds] = useState([]);
   const [modalText, setModalText] = useState("");
   const [isModal, setIsModal] = React.useState(false);
   // const { setFormErrors } = useForm();
@@ -30,8 +31,9 @@ export const AuthContextProvider = (props) => {
   useEffect(() => {
     //? confused why this returns empty?
     console.log("URLS", urls);
+    console.log("publicIds", publicIds);
     setIsLoading(false);
-  }, [urls]);
+  }, [urls, publicIds]);
 
   const register = async (values, navigate, location) => {
     let errors = {};
@@ -188,6 +190,8 @@ export const AuthContextProvider = (props) => {
     );
     const result = await response.json();
     setUrls(result.urls);
+    setPublicIds(result.publicIds);
+    console.log("publicIds", publicIds);
   };
 
   const submitListing = (values, navigate) => {
@@ -200,6 +204,7 @@ export const AuthContextProvider = (props) => {
     urlencoded.append("rooted", values.rooted);
     urlencoded.append("topcutting", values.topCutting);
     urls.forEach((url) => urlencoded.append("imageUrls", url));
+    publicIds.forEach((publicId) => urlencoded.append("publicIds", publicId));
     urlencoded.append("user", userLoggedIn.id);
 
     const requestOptions = {
@@ -291,12 +296,14 @@ export const AuthContextProvider = (props) => {
   };
 
   const deletePlant = (item) => {
+    const { publicIds } = item;
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
     urlencoded.append("plantid", item._id);
     urlencoded.append("userid", item.user);
+    publicIds.forEach((publicId) => urlencoded.append("imageids", publicId));
 
     const requestOptions = {
       method: "DELETE",
@@ -366,6 +373,7 @@ export const AuthContextProvider = (props) => {
         handleUpload,
         uploadImages,
         setUrls,
+        setPublicIds,
         urls,
         submitListing,
         leaveReview,

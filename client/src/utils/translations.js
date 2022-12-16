@@ -31,6 +31,7 @@ export const translations = {
     SuccessfullyLoggedOut: "successfully logged out",
     successfullySignedUp: "Successfuly signed up. Redirecting to login",
     update: "update",
+    varigation: "varigation",
     welcomeBack: "Welcome back ",
     welcomeToYourProfile: "Welcome to your profile",
     writeReview: "write a review of this seller",

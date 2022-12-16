@@ -19,10 +19,6 @@ import ProtectedRoute from "./Components/ProtectedRoute.js";
 import Listing from "./Views/Listing.js";
 import { useState } from "react";
 
-// import { AuthContextProvider } from "./context/AuthContext";
-
-//! locations stuff https://stackoverflow.com/questions/20089582/how-to-get-a-url-parameter-in-express
-// array https://mongoosejs.com/docs/api.html#schemaarray_SchemaArray-set
 function App() {
   const [language, setLanguage] = useState("english");
   function toggleLanguage() {
@@ -36,14 +32,10 @@ function App() {
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route exact path="signup" element={<Signup />} />
-
-              {/* <Route exact path="myaccount" element={<MyAccount />} /> */}
               <Route exact path="login" element={<Login />} />
               <Route exact path="profile/:id" element={<Profile />} />
               <Route exact path="plant/:id" element={<Listing />} />
-
               {/* <Route exact path="addplant" element={<AddPlant />} /> */}
-
               <Route path="/redirect" element={<Navigate to="/" />} />
               {/* <ProtectedRoute></ProtectedRoute> */}
               {/* <Route path="*" element={<GoHome />} /> */}
@@ -59,9 +51,9 @@ function App() {
               <Route
                 path="addplant"
                 element={
-                  // <ProtectedRoute>
-                  <AddPlant />
-                  // </ProtectedRoute>
+                  <ProtectedRoute>
+                    <AddPlant />
+                  </ProtectedRoute>
                 }
               />
             </Routes>
@@ -73,10 +65,3 @@ function App() {
 }
 
 export default App;
-
-// <Route
-//   path="games/:id"
-//   element={
-//     <ProtectedRoute>
-//       <GameDetails />
-//     </ProtectedRoute>

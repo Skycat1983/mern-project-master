@@ -24,15 +24,6 @@ function ProtectedRoute({ children }) {
         <Navigate to="/" replace state={{ from: location }} />
       )}
     </>
-    // <>
-    //   {isLoading ? (
-    //     <p>...is loading</p>
-    //   ) : isUser ? (
-    //     children
-    //   ) : (
-    //     <Navigate to="/" />
-    //   )}
-    // </>
   );
 }
 

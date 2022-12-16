@@ -12,6 +12,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContext";
 import HomeIcon from "@mui/icons-material/Home";
 import MyModal from "../Components/MyModal/SummonModal.js";
+// import getRndInteger from "../utils/getRndInteger.js";
 
 const initialValues = {
   emailAddress: "",
@@ -56,6 +57,8 @@ const Signup = () => {
   useEffect(() => {
     console.warn("getting profile in Signup");
     getProfile();
+    // console.log(getRndInteger(0, 10));
+
     console.log("userLogin", userLoggedIn);
   }, []);
 

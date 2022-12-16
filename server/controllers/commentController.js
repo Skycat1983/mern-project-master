@@ -62,20 +62,25 @@ const createComment = async (req, res) => {
   }
 };
 
+//! V1 const commentby = await userModel.findByIdAndUpdate(
+//! V2 const commentby = await userModel.findByIdAndDelete(
+
 const deleteComment = async (req, res) => {
   const { commentid, authorid, targetid } = req.body;
   console.log("commentid, authorid, targetid", commentid, authorid, targetid);
   try {
     // maybe should be //? findOneAndDelete
     const comment = await commentsModel.findByIdAndDelete({ _id: commentid });
-    const commentfor = await userModel.findByIdAndUpdate(
-      { _id: targetid },
-      { $pull: { commentsfor: authorid } },
+    // const commentby = await userModel.findByIdAndDelete(
+    const auth = await userModel.findByIdAndUpdate(
+      { _id: authorid },
+      { $pull: { commentsby: commentid } },
       { returnOriginal: false }
     );
-    const commentby = await userModel.findByIdAndUpdate(
-      { _id: authorid },
-      { $pull: { commentsby: targetid } },
+    // const commentfor = await userModel.findByIdAndDelete(
+    const targ = await userModel.findByIdAndUpdate(
+      { _id: targetid },
+      { $pull: { commentsfor: commentid } },
       { returnOriginal: false }
     );
 

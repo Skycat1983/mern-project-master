@@ -11,6 +11,7 @@ const plantSchema = new Schema(
     rooted: { type: Boolean, required: true },
     topcutting: { type: Boolean, required: true },
     imageUrls: { type: Array, required: true },
+    publicIds: { type: Array, required: true },
     price: { type: Number, required: true },
     user: { type: Schema.Types.ObjectId, ref: "User" },
     fact: { type: Schema.Types.ObjectId, ref: "Fact" },

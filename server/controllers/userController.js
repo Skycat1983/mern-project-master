@@ -55,7 +55,9 @@ const createUser = async (req, res) => {
   console.log("create user", req.body);
   const { email, username, password, premium, avatar } = req.body;
   // TODO: express email vaidation HERE
-
+  if (!email) {
+    res.send(546);
+  }
   try {
     const existingEmail = await usersModel.findOne({ email: req.body.email });
     const existingUsername = await usersModel.findOne({
@@ -203,25 +205,91 @@ const updateUser = async (req, res) => {
   }
 };
 
-//!  UNSURE IF CODE BELOW IS USED
-// const updateUser = async (req, res) => {
-//   // console.log("req>>>>>", req.params.id);
-//   try {
-//     const user = await usersModel.findOneAndUpdate({ comments });
-
-//     console.log("update user", user);
-//     res.status(200).json({
-//       msg: "profile succesfully updated",
-//       user,
-//     });
-//   } catch (error) {
-//     console.log("error :>> ", error);
-//     res.status(500).json({
-//       error,
-//       msg: "there was a problem in the server",
-//     });
-//   }
-// };
+const addRemoveSubscription = async (req, res) => {
+  const { subscriberid, providerid } = req.body;
+  try {
+    const findingSubscriber = await usersModel.findById({ _id: subscriberid });
+    if (findingSubscriber.subscriptions.length === 0) {
+      const findingSubs = await usersModel.findByIdAndUpdate(
+        { _id: subscriberid },
+        { $push: { subscriptions: providerid } },
+        {
+          returnOriginal: false,
+        }
+      );
+      const findingProvider = await usersModel.findById({ _id: providerid });
+      if (findingProvider.subscribers.length === 0) {
+        const findingSubs = await usersModel.findByIdAndUpdate(
+          { _id: providerid },
+          { $push: { subscribers: subscriberid } },
+          {
+            returnOriginal: false,
+          }
+        );
+        res.status(201).json({
+          msg: "added to favorites",
+          // user: {
+          // },
+        });
+      }
+    }
+    if (findingSubscriber.subscriptions.length > 0) {
+      if (findingSubscriber.subscriptions.includes(providerid)) {
+        try {
+          const removeSubscription = await usersModel.findByIdAndUpdate(
+            { _id: subscriberid },
+            { $pull: { subscriptions: providerid } },
+            {
+              returnOriginal: false,
+            }
+          );
+          const removeSubscriber = await usersModel.findByIdAndUpdate(
+            { _id: providerid },
+            { $pull: { subscribiers: subscriberid } },
+            {
+              returnOriginal: false,
+            }
+          );
+          res.status(201).json({
+            msg: "removed from favourites",
+            // user: {
+            // },
+          });
+        } catch {
+          res.status(500).json({ msg: "error removing favorite" });
+        }
+      }
+    } else {
+      try {
+        const addSubscription = await usersModel.findByIdAndUpdate(
+          { _id: subscriberid },
+          { $push: { subscriptions: providerid } },
+          {
+            returnOriginal: false,
+          }
+        );
+        const addSubscriber = await usersModel.findByIdAndUpdate(
+          { _id: providerid },
+          { $push: { subscriptions: subscriberid } },
+          {
+            returnOriginal: false,
+          }
+        );
+        res.status(201).json({
+          msg: "added to favorites",
+          // user: {
+          // },
+        });
+        console.log("findingFavourites >>>", findingFavourites);
+      } catch (error) {
+        res.status(500).json({ msg: "error adding subs" });
+      }
+    }
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ msg: "user clicking in favourites not found" });
+  }
+};
 
 export {
   getAllUsers,
@@ -231,6 +299,7 @@ export {
   getUser,
   updateUser,
   loginUser,
+  addRemoveSubscription,
 };
 
 //! https://mongoosejs.com/docs/queries.html check documentation for each query type

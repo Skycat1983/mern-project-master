@@ -66,7 +66,6 @@ function Home() {
     searchPlants: "",
     searchUsers: "",
   };
-  // const [modalText, setModalText] = useState(false);
 
   const [value, setValue] = React.useState(0);
   const [url, setUrl] = useState("http://localhost:5001/api/plants/all");
@@ -76,10 +75,10 @@ function Home() {
   const { values, setValues, handleInputChange } = useForm(initialValues);
 
   useEffect(() => {
-    console.warn("getting profile in Home");
+    // console.warn("getting profile in Home");
     getProfile();
-    console.log("userLogin", userLoggedIn);
-    console.log("isUser", isUser);
+    // console.log("userLogin", userLoggedIn);
+    // console.log("isUser", isUser);
   }, []);
 
   // useEffect(() => {
@@ -206,43 +205,28 @@ export default Home;
 // QUESTIONS:
 
 // TODO: usememo on wishlist search. location context for language and currency conversion.
+//* // refresh page after item added/deleted/updated
+//* useref for tab settings? are there other areas i don't want to reset?
+//* delete image if i navigate away from addplant
+//*
 
-//! addplants steps hard to translate
+//! questions
 
-// need public id and url. public id is end of url. public id was not stored. cloudinary uploader destroy.
+// protected route confusion. when i try to turn it on it causes problems
 
-// "Uncaught TypeError: Cannot read properties of null (reading 'user')" when navigating to profile page sometimes. see when i turn navigating on after posting review
-
-// delete image if i navigate away fromm addplant
-
-// go over how isloading is working. how should i be using it. what is best practice. in authcontext it is set to false. when should i be turning it off then on?
-
-// useref for tab settings? are there other areas i don't want to reset?
-
-//! see usercontroller.js,  updateUser: i wanted to make this code reusable
-//? MAYBE NOW WORKING: see authcontext patchuser. why can't i access 'result' durinng the end of function? i want to set my modal text not mannually
-
-// see autth context signup. there is a type of fetch i'm not comfortable using. 'result' seems accessible to console log but not other things? seems strange
-
-// also: in auth context but login, not sure if my errors in login should be part of a 'catch' for actual errors.
-
-// see plants.js component. sometimes submit button does not load. cannot understand why
-
-// averages in user reviews
-
-// Linkto not working from navbar when i set to redirect to profile/{userLoggedIn.username}
-
-// filter by premium users first in carousel not working as hoped
-
-//  any general pointers for how i should structure my future tasks? is it not too much to keep piling  things into auth context?
+// delete image if nav away before submit  (useModal)
 
 // bit unsure how often i should be using getprofile and when. it's just to see if session expired?
 
-//* i have a feeling i'm using async, await wrong. please see commentcontroller, createcomment, updateauthoer/target
+// go over how should i be using isLoading. what is best practice? in authcontext it is set to false. when should i be turning it off then on? or it's better set to true as default?
 
-// why does my object destructure of useForm show different colour coding in Signup and MyAccount?
+// see plants.js component. sometimes submit button does not load. cannot understand why
 
-// see login/signup. I have these const styled things. Could i just be importing those from some styles control component or something?
+// filter by premium users first in carousel not working as hoped
+
+//! see usercontroller.js,  updateUser: i wanted to make this code reusable
+
+// also: in auth context but login, not sure if my errors in login should be part of a 'catch' for actual errors.
 
 // CONFUSIONS:
 // - setTimeout(() => {});
@@ -251,7 +235,7 @@ export default Home;
 
 // caoursel ideas https://github.com/nolimits4web/swiper https://github.com/maxmarinich/react-alice-carousel https://github.com/kidjp85/react-id-swiper
 
-{
+http: {
   /* <h3 className="welcome-user">HELLO USER</h3> */
 }
 {

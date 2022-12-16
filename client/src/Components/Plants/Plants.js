@@ -24,8 +24,6 @@ function Plants(data) {
   }, []);
 
   console.log("data", data);
-  // console.log("substring", location.pathname.substring(9));
-  // console.log("userLoggedIn?.id", userLoggedIn?.username);
   return (
     <>
       <Grid>

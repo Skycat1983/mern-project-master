@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import NavBar from "../Components/Navbar/NavBar";
 import useFetch from "../Hooks/useFetch";
 import { LangContext } from "../Contexts/LangContext.js";
@@ -7,10 +7,10 @@ import TranslatedContent from "../Components/TranslatedContent";
 
 function Listing() {
   const location = useLocation();
+  //! this is saying i must come from previous page
   console.log("location :>> ", location.state.plant);
-  const [url, setUrl] = useState(
-    `http://localhost:5001/api/plants/id/${location.state.plant}`
-  );
+  const { id } = useParams();
+  const [url, setUrl] = useState(`http://localhost:5001/api/plants/id/${id}`);
   const { data, isLoading, error } = useFetch(url);
   const { directsunlight } = `${data?.plant.fact?.directsunlight}`;
   console.log(data);
@@ -59,6 +59,19 @@ function Listing() {
         <TranslatedContent contentID="origin" />: {data?.plant.fact.origin}
       </h2>
       <h2>toxicity: {data?.plant.fact.toxicity}</h2>
+      <Link
+        to={`/profile/${data?.plant?.user.username}`}
+        // to={`/profile/${data?.plant?.user.username}`}
+        key={data?.plant.user.username}
+        //! bit confused by this!
+        state={{ user: data?.plant.user.username }}
+        style={{ textDecoration: "none" }}
+      >
+        <h2>
+          <TranslatedContent contentID="account" />: {data?.plant.user.username}
+          : {data?.plant.fact.toxicity}
+        </h2>
+      </Link>
       <h6>about: {data?.plant.fact.about}</h6>
       {data && (
         <img

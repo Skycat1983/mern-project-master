@@ -8,6 +8,7 @@ import {
   getUser,
   loginUser,
   updateUser,
+  addRemoveSubscription,
 } from "../controllers/userController.js";
 import jwtAuth from "../middlewares/jwtAuth.js";
 
@@ -34,6 +35,9 @@ router.get("/profile", jwtAuth, getProfile);
 // DELETE ACCOUNT
 router.delete("/delete/:id", deleteUser);
 
-// UPDATE PROFILE
+// UPDATE PROFILE (about us)
 router.patch("/update/aboutus/:username", updateUser);
+
+// UPDATE PROFILE (subscriptions/subscribers)
+router.patch("/update/subs/:id", addRemoveSubscription);
 export default router;

@@ -5,6 +5,8 @@ dotenv.config();
 import mongoose from "mongoose";
 import plantRoutes from "./routes/plantRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import subscriptionRoutes from "./routes/subscriptionRoutes.js";
+
 import commentRoutes from "./routes/commentRoutes.js";
 import factRoutes from "./routes/factRoutes.js";
 
@@ -53,6 +55,7 @@ const loadRoutes = () => {
   app.use("/api/users", userRoutes);
   app.use("/api/comments", commentRoutes);
   app.use("/api/facts", factRoutes);
+  app.use("/api/subs", subscriptionRoutes);
 };
 
 //  connect to DB

@@ -60,8 +60,16 @@ const getPlant = async (req, res) => {
 // POST A NEW PLANT
 const createPlant = async (req, res) => {
   console.log("create plant", req.body);
-  const { genus, varigation, rooted, topcutting, price, imageUrls, user } =
-    req.body;
+  const {
+    genus,
+    varigation,
+    rooted,
+    topcutting,
+    price,
+    imageUrls,
+    publicIds,
+    user,
+  } = req.body;
   // add doc to db
   try {
     const plant = await plantModel.create({
@@ -70,6 +78,7 @@ const createPlant = async (req, res) => {
       rooted,
       topcutting,
       imageUrls,
+      publicIds,
       price,
       user,
     });
@@ -112,18 +121,27 @@ const createPlant = async (req, res) => {
 
 //! UPLOAD IMAGE V1
 const uploadImage = async (req, res) => {
+  let ids = [];
   try {
     const imgArrayOfPromises = req.files.map(async (file) => {
       const uploadResult = await cloudinary.uploader.upload(file.path, {
         folder: "plant-images",
       });
+      console.log("uploadResult.public_id", uploadResult.public_id);
+      ids.push(uploadResult.public_id);
+      // console.log("publicIds", publicIds);
+
+      // return uploadResult.url;
       return uploadResult.url;
     });
 
     let urls = await Promise.all(imgArrayOfPromises);
     console.log('"urls" :>> ', urls);
+    let publicIds = ids;
+    console.log('"publicIds" :>> ', publicIds);
     res.status(200).json({
       urls,
+      publicIds,
     });
   } catch (error) {
     console.error(error);
@@ -136,9 +154,25 @@ const uploadImage = async (req, res) => {
 
 // DELETE A PLANT
 const deletePlant = async (req, res) => {
-  const { plantid, userid } = req.body;
+  const { plantid, userid, imageids } = req.body;
   try {
     const deletePlant = await plantModel.findByIdAndDelete({ _id: plantid });
+
+    const imgDeleteArrayOfPromises = imageids.forEach(async (imageid) => {
+      const deletionResult = await cloudinary.uploader
+        .destroy(imageid)
+        .then((result) => console.log(result));
+    });
+
+    // const imgDeleteArrayOfPromises = imageids.map(async (imageid) => {
+    //   const deletionResult = await cloudinary.v2.uploader
+    //     .destroy(imageid)
+    //     .then((result) => console.log(result));
+    // });
+
+    // imageids.forEach((imageid) =>  const deleteImage = await cloudinary.v2.uploader
+    //   .destroy(imageid, options))
+
     const deletePlantFromUser = await userModel.findByIdAndUpdate(
       { _id: userid },
       { $pull: { plants: plantid } },
