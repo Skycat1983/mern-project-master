@@ -3,11 +3,13 @@ import mongoose, { Schema } from "mongoose";
 
 const subscriptionSchema = new Schema(
   {
-    plants: { type: Array, Schema.Types.ObjectId, ref: "User" },
+    // plants: { type: Array, Schema.Types.ObjectId, ref: "User" },
     // plants: { type: Array, required: false },
-    plants: [{
-    plant: { type: mongoose.Schema.Types.ObjectId, ref: 'Plant' },
-  }],
+    plants: [
+      {
+        plant: { type: mongoose.Schema.Types.ObjectId, ref: "Plant" },
+      },
+    ],
     sellerid: { type: Schema.Types.ObjectId, ref: "User" },
     subscriberid: { type: Schema.Types.ObjectId, ref: "User" },
   },
@@ -18,4 +20,4 @@ const subscriptionSchema = new Schema(
 //* "Plant" references my plants collection
 const subscriptionModel = mongoose.model("Subscription", subscriptionSchema);
 
-export default plantModel;
+export default subscriptionModel;

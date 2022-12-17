@@ -2,6 +2,7 @@ import plantModel from "../models/plantsModel.js";
 import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/usersModel.js";
 import factModel from "../models/factsModel.js";
+import subscriptionModel from "../models/subscriptionsModel.js";
 
 // GET ALL PLANTS
 const getAllPlants = async (req, res) => {
@@ -108,12 +109,31 @@ const createPlant = async (req, res) => {
     updateUserWithPlants.plants.push(plant._id);
     await updateUserWithPlants.save();
 
-    res.status(200).json({
-      msg: "plant succesfully added",
-      plant,
-      updatePlant,
-      // savedFact,
-    });
+    //! actually does not need to be like this. we can access our subscribers via the user without search
+    const subscribers = await subscriptionsModel.find({ sellerid: user });
+    if (!subscribers) {
+      res.status(200).json({
+        msg: "plant succesfully added",
+        plant,
+        updatePlant,
+        // savedFact,
+      });
+    } else {
+      const updateSubsWithPlants = await subscriptionsModel.updateMany(
+        {
+          subscribers,
+          // sellerid: user,
+        },
+        { $push: { plants: plant._id } }
+      );
+
+      res.status(200).json({
+        msg: "plant succesfully added",
+        plant,
+        updatePlant,
+        // savedFact,
+      });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

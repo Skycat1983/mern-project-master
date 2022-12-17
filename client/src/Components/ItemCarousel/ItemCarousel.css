@@ -1,0 +1,12 @@
+.myItemSwiper {
+  width: 70%;
+  height: 37vh;
+  position: relative;
+  top: 5vh;
+  right: 0vh;
+}
+
+.item-image {
+  height: 250px;
+  width: 250px;
+}

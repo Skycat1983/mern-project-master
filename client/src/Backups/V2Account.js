@@ -19,8 +19,6 @@ import TranslatedContent from "../TranslatedContent";
 import EuroIcon from "@mui/icons-material/Euro";
 import CurrencyPoundIcon from "@mui/icons-material/CurrencyPound";
 import IconButton from "@mui/material/IconButton";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -36,7 +34,7 @@ const initialValues = {
 
 function Account() {
   const [toggle, setToggle] = useState(true);
-  const [membership, setMembership] = React.useState();
+  const [membership, setMembership] = useState("");
   const [randomInt, setRandomInt] = useState(0);
   const [defaults, setDefaults] = useState();
   const [startingValues, setStartingValues] = useState({});
@@ -46,8 +44,6 @@ function Account() {
     language,
     toggleLanguage,
     toggleCurrency,
-    handleCurrency,
-    handleLanguage,
     convertCurrency,
     currency,
   } = useContext(LangContext);
@@ -95,15 +91,6 @@ function Account() {
     console.log(event.target);
   };
 
-  const handleMembership = (event, newMembership) => {
-    if (newMembership !== null) {
-      setMembership(newMembership);
-    }
-
-    // console.log(newMembership);
-    console.log(membership);
-  };
-
   return (
     <Paper className="review-box">
       <div>
@@ -119,90 +106,28 @@ function Account() {
               <TranslatedContent contentID="membership" />
             </Item>
           </Grid>
-          <Grid>
-            {/* <Item> */}
-            <ToggleButtonGroup
-              value={membership}
-              exclusive
-              onChange={handleMembership}
-              aria-label="membership"
-            >
-              <ToggleButton value="premium">
-                <WorkspacePremiumIcon
-                  className={
-                    membership == "premium" ? "selected" : "unselected"
-                  }
-                  aria-label="premium"
-                  // onClick={toggleMembership}
-                />
-              </ToggleButton>
-              <ToggleButton value="basic">
-                <SentimentDissatisfiedIcon
-                  className={
-                    membership !== "premium" ? "selected" : "unselected"
-                  }
-                  aria-label="basic"
-                />
-              </ToggleButton>
-            </ToggleButtonGroup>
-            {/* </Item> */}
-          </Grid>
-
-          <Grid xs={8}>
+          <Grid xs={2}>
             <Item>
-              <TranslatedContent contentID="defaultCurrency" />
+              <WorkspacePremiumIcon
+                className={membership == "premium" ? "selected" : "unselected"}
+                // className={
+                //   userLoggedIn.premium == true ? "selected" : "unselected"
+                // }
+                onClick={toggleMembership}
+                // onClick={handleUpdate}
+              ></WorkspacePremiumIcon>
             </Item>
           </Grid>
-          <Grid>
-            <ToggleButtonGroup
-              value={currency}
-              exclusive
-              onChange={handleCurrency}
-              aria-label="currency"
-            >
-              <ToggleButton value="pounds">
-                <CurrencyPoundIcon
-                  className={currency !== "euros" ? "selected" : "unselected"}
-                  aria-label="pounds"
-                />
-              </ToggleButton>
-              <ToggleButton value="euros">
-                <EuroIcon
-                  className={currency == "euros" ? "selected" : "unselected"}
-                  aria-label="euros"
-                />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
-          <Grid xs={8}>
+          <Grid xs={2}>
             <Item>
-              <TranslatedContent contentID="language" />
+              <SentimentDissatisfiedIcon
+                className={
+                  userLoggedIn.premium == true ? "unselected" : "selected"
+                }
+                onClick={handleUpdate}
+              ></SentimentDissatisfiedIcon>
             </Item>
           </Grid>
-          <Grid>
-            <ToggleButtonGroup
-              value={language}
-              exclusive
-              onChange={handleLanguage}
-              aria-label="language"
-            >
-              <ToggleButton value="english">
-                <img
-                  src={`https://img.icons8.com/color/512/england.png`}
-                  className="fact-icons"
-                  aria-label="english"
-                />
-              </ToggleButton>
-              <ToggleButton value="german">
-                <img
-                  src={`https://img.icons8.com/color/512/germany.png`}
-                  className="fact-icons"
-                  aria-label="german"
-                />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
-
           {/* <Grid xs={8}>
           <Item>Add/remove listing: </Item>
         </Grid> */}

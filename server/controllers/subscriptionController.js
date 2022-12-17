@@ -1,22 +1,31 @@
 import usersModel from "../models/usersModel.js";
 import subscriptionsModel from "../models/usersModel.js";
 
+// pageloads. fave icon is filled or unfilled depending on whether we are subscribed. unfilled = unsubscribed.
 const createSubscription = async (req, res) => {
   const { subscriberid, sellerid } = req.body;
+
+  // const existingSubscription = await subscriptionsModel.findById({ _id: subscriberid });
   try {
+    const sub = await subscriptionsModel.create({
+      sellerid,
+      subscriberid,
+      plants,
+    });
+
     const findingSubscriber = await usersModel.findById({ _id: subscriberid });
     if (findingSubscriber.subscriptions.length === 0) {
       const findingSubs = await usersModel.findByIdAndUpdate(
         { _id: subscriberid },
-        { $push: { subscriptions: providerid } },
+        { $push: { subscriptions: sellerid } },
         {
           returnOriginal: false,
         }
       );
-      const findingProvider = await usersModel.findById({ _id: providerid });
+      const findingProvider = await usersModel.findById({ _id: sellerid });
       if (findingProvider.subscribers.length === 0) {
         const findingSubs = await usersModel.findByIdAndUpdate(
-          { _id: providerid },
+          { _id: sellerid },
           { $push: { subscribers: subscriberid } },
           {
             returnOriginal: false,
@@ -34,18 +43,21 @@ const createSubscription = async (req, res) => {
         try {
           const removeSubscription = await usersModel.findByIdAndUpdate(
             { _id: subscriberid },
-            { $pull: { subscriptions: providerid } },
+            { $pull: { subscriptions: sellerid } },
             {
               returnOriginal: false,
             }
           );
           const removeSubscriber = await usersModel.findByIdAndUpdate(
-            { _id: providerid },
+            { _id: sellerid },
             { $pull: { subscribiers: subscriberid } },
             {
               returnOriginal: false,
             }
           );
+          // const deleteSub = await subscribersModel.findByIdAndDelete({
+          //   _id: plantid,
+          // });
           res.status(201).json({
             msg: "removed from favourites",
             // user: {

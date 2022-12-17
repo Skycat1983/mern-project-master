@@ -4,6 +4,9 @@ import NavBar from "../Components/Navbar/NavBar";
 import useFetch from "../Hooks/useFetch";
 import { LangContext } from "../Contexts/LangContext.js";
 import TranslatedContent from "../Components/TranslatedContent";
+import ItemCarousel from "../Components/ItemCarousel/ItemCarousel.js";
+
+// import Carousel from "../Components/Carousel/Carousel.js";
 
 function Listing() {
   const location = useLocation();
@@ -31,7 +34,7 @@ function Listing() {
     <>
       <NavBar />
       <h2>PADDING</h2>
-
+      {data && <ItemCarousel data={data?.plant}></ItemCarousel>}
       <h2>
         <TranslatedContent contentID="genus" />: {data?.plant.genus}
       </h2>

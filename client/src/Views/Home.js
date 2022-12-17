@@ -212,6 +212,8 @@ export default Home;
 
 //! questions
 
+//! If i navigate to my account via the settings icon, that it should load the profile page with the settings tab active step 3. is this location state?
+
 // protected route confusion. when i try to turn it on it causes problems
 
 // delete image if nav away before submit  (useModal)

@@ -29,12 +29,26 @@ export const LangContextProvider = (props) => {
     return Math.round(convertedMoney * 100) / 100;
   }
 
+  const handleCurrency = (event, newCurrency) => {
+    if (newCurrency !== null) {
+      setCurrency(newCurrency);
+    }
+  };
+
+  const handleLanguage = (event, newLanguage) => {
+    if (newLanguage !== null) {
+      setLanguage(newLanguage);
+    }
+  };
+
   return (
     <LangContext.Provider
       value={{
         toggleLanguage,
         language,
         toggleCurrency,
+        handleCurrency,
+        handleLanguage,
         convertCurrency,
         currency,
       }}
