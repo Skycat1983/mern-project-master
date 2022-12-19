@@ -57,27 +57,77 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Profile() {
   const [value, setValue] = React.useState(0);
   const [summonModal, setSummonModal] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState();
   const { id } = useParams();
   const location = useLocation();
   // console.log("location :>> ", location.state.user);
   const [url, setUrl] = useState(`http://localhost:5001/api/users/one/${id}`);
   const { data, isLoading, error } = useFetch(url);
-  const { getProfile, userLoggedIn, isUser } = useContext(AuthContext);
+  const { getProfile, userLoggedIn, isUser, isUserSubscribed } =
+    useContext(AuthContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue);
   };
-  console.warn(location.state);
-  console.warn(location);
 
-  const toggleFave = () => {
-    console.log("fave");
+  // console.warn("data", data);
+
+  const toggleSub = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("sellerusername", `{ _id }`);
+    urlencoded.append("subscriberid", `${userLoggedIn.id}`);
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5001/api/subs/create", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
 
   useEffect(() => {
     getProfile();
   }, []);
+
+  useEffect(() => {
+    if (userLoggedIn.id) {
+      console.log("id of page owner", data?.user._id);
+      isUserSubscribed(data?.user._id);
+    }
+    let pageId = data?.user._id;
+    for (let i = 0; i < userLoggedIn?.subscriptions?.length; i++) {
+      if (userLoggedIn.subscriptions[i] == pageId) {
+        setIsSubscribed(true);
+        console.log("is subscribed");
+      } else {
+        setIsSubscribed(false);
+        console.log("is NOT subscribed");
+      }
+    }
+  }, [data]);
+
+  // when i getProfile
+
+  // getProfile = user = userLoggedIn.subscriptions //! we have only sub._id
+
+  //? problem:
+  // getUser = profile page = data.user. //! we have sub_id, seller_id and subscriber_id
+
+  // todo: ideally when we fetch the profile page info, we will only send back the subscription info of the user, rather than all subscriptions  of the profile. so, we should:
+  // - attach user_id in the request. but the request is done via my usefetch custom hook and trying to make this work confuses me
+
+  //! OR:
+
+  // - make it so that getProfile also returns a populated link of the subscriptions
 
   return (
     <>
@@ -86,7 +136,7 @@ export default function Profile() {
         <Tooltip title="premium user">
           <WorkspacePremiumIcon
             className="premium-badge"
-            onClick={toggleFave}
+            // onClick={toggleFave}
           />
         </Tooltip>
       )}
@@ -176,6 +226,17 @@ export default function Profile() {
       </Grid>
       {/* <Button onClick={() => setSummonModal(!summonModal)}>summonModal</Button> */}
       <SummonModal></SummonModal>
+      {userLoggedIn?.username !== location.state.user && (
+        <Button
+          size="small"
+          color="success"
+          variant="outlined"
+          className="sub-button"
+          onClick={toggleSub}
+        >
+          subscribe
+        </Button>
+      )}
 
       {value === 0 && (
         <AboutUs data={data} aboutus={data?.user?.aboutus}></AboutUs>
@@ -186,9 +247,9 @@ export default function Profile() {
         <Account></Account>
       )}
 
-      <IconButton>
+      {/* <IconButton>
         <FavoriteBorderIcon className="favourite-badge" onClick={toggleFave} />
-      </IconButton>
+      </IconButton> */}
     </>
   );
 }

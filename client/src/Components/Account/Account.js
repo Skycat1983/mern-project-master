@@ -49,8 +49,10 @@ function Account() {
     handleCurrency,
     handleLanguage,
     convertCurrency,
+    patchAccount,
     currency,
   } = useContext(LangContext);
+  const { _id } = userLoggedIn.id;
 
   const handleUpdate = () => {
     setToggle(!toggle);
@@ -60,20 +62,41 @@ function Account() {
     // }
   };
 
+  console.log("userLoggedIn", userLoggedIn);
+
   useEffect(() => {
-    setDefaults();
+    let membershipDefault = "";
+    let currencyDefault = "";
+    let languageDefault = "";
+
     if (userLoggedIn.premium == true) {
       setMembership("premium");
     } else {
       setMembership("basic");
     }
+    if (userLoggedIn.premium == true) {
+      membershipDefault = "premium";
+    } else {
+      membershipDefault = "basic";
+    }
+    if (userLoggedIn.currency == "euros") {
+      currencyDefault = "euros";
+    } else {
+      currencyDefault = "euros";
+    }
+    if (userLoggedIn.language == "german") {
+      languageDefault = "german";
+    } else {
+      languageDefault = "english";
+    }
     console.log("membership", membership);
+    setDefaults({
+      premium: membershipDefault,
+      currency: currencyDefault,
+      language: languageDefault,
+    });
+    console.log("DEFAULTS", defaults);
   }, []);
-
-  // const LanguageButton = () => {};
-  // const translateContent = (update) => {
-  //   <TranslatedContent contentID="hello" />;
-  // }
 
   const handleRandom = () => {
     getRnd(0, 10);
@@ -85,23 +108,15 @@ function Account() {
     // return Math.floor(Math.random() * (max - min)) + min;
   };
 
-  function toggleMembership() {
-    setMembership((membership) =>
-      membership === "basic" ? "premium" : "basic"
-    );
-  }
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(event.target);
-  };
-
   const handleMembership = (event, newMembership) => {
     if (newMembership !== null) {
       setMembership(newMembership);
     }
+  };
 
-    // console.log(newMembership);
-    console.log(membership);
+  const handleUpdateAccount = () => {
+    // console.log(`${userLoggedIn.id}`);
+    patchAccount(membership, currency, language, `${userLoggedIn.id}`);
   };
 
   return (
@@ -133,7 +148,6 @@ function Account() {
                     membership == "premium" ? "selected" : "unselected"
                   }
                   aria-label="premium"
-                  // onClick={toggleMembership}
                 />
               </ToggleButton>
               <ToggleButton value="basic">
@@ -145,7 +159,6 @@ function Account() {
                 />
               </ToggleButton>
             </ToggleButtonGroup>
-            {/* </Item> */}
           </Grid>
 
           <Grid xs={8}>
@@ -203,24 +216,6 @@ function Account() {
             </ToggleButtonGroup>
           </Grid>
 
-          {/* <Grid xs={8}>
-          <Item>Add/remove listing: </Item>
-        </Grid> */}
-          {/* <Grid xs={2}>
-          <Item>
-            <Link to={"/addplant"}>
-              <AddCircleOutlineIcon className="unselected"></AddCircleOutlineIcon>
-            </Link>
-            ;
-          </Item>
-        </Grid>
-        <Grid xs={2}>
-          <Item>
-            <RemoveCircleOutlineIcon
-              className={user.plants == false ? "not-possible" : "unselected"}
-            ></RemoveCircleOutlineIcon>
-          </Item>
-        </Grid> */}
           <Grid xs={8}>
             <Item>
               <TranslatedContent contentID="changeCoverAvatar" />
@@ -237,24 +232,26 @@ function Account() {
             </Item>
           </Grid>
         </Grid>
-        <Button color="success" variant="outlined" className="update-changes">
+        <Button
+          color="success"
+          variant="outlined"
+          className="update-changes"
+          onClick={handleUpdateAccount}
+        >
           <TranslatedContent contentID="update" />
         </Button>
-        <p>
-          <TranslatedContent contentID="hello" />
-        </p>
-        <Button color="success" variant="outlined" onClick={toggleLanguage}>
+
+        {/* <Button color="success" variant="outlined" onClick={toggleLanguage}>
           {language}
-        </Button>
-        <Button color="secondary" variant="outlined" onClick={toggleCurrency}>
+        </Button> */}
+        {/* <Button color="secondary" variant="outlined" onClick={toggleCurrency}>
           {currency}
-        </Button>
-        <Button color="error" variant="outlined" onClick={handleRandom}>
+        </Button> */}
+        {/* <Button color="error" variant="outlined" onClick={handleRandom}>
           getRandomNumber
-        </Button>
-        <h2>{currency}</h2>
-        <h2>{convertCurrency(110)}</h2>
-        <h2>random number: {randomInt}</h2>
+        </Button> */}
+        {/* <h2>{convertCurrency(110)}</h2> */}
+        {/* <h2>random number: {randomInt}</h2> */}
       </div>
     </Paper>
   );

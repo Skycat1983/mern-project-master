@@ -8,6 +8,7 @@ import {
   getUser,
   loginUser,
   updateUser,
+  updateAccount,
   addRemoveSubscription,
 } from "../controllers/userController.js";
 import jwtAuth from "../middlewares/jwtAuth.js";
@@ -37,6 +38,9 @@ router.delete("/delete/:id", deleteUser);
 
 // UPDATE PROFILE (about us)
 router.patch("/update/aboutus/:username", updateUser);
+
+// UPDATE SETTINGS //! does this need an id suffix?
+router.patch("/update/account/:id", updateAccount);
 
 // UPDATE PROFILE (subscriptions/subscribers)
 router.patch("/update/subs/:id", addRemoveSubscription);

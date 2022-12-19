@@ -128,6 +128,13 @@ export default function Carousel(data, isLoading) {
                   // state={{ data: props.myFunction }}
                   style={{ textDecoration: "none" }}
                 >
+                  {/* <Link
+                  to={`/profile/${item.username}`}
+                  key={item.username}
+                  state={{ user: item.username }}
+                  // state={{ data: props.myFunction }}
+                  style={{ textDecoration: "none" }}
+                > */}
                   <Card sx={{ maxWidth: 345 }}>
                     <CardActionArea>
                       <CardMedia

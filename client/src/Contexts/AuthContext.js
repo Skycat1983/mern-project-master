@@ -14,6 +14,8 @@ export const AuthContextProvider = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userLoggedIn, setUserLoggedIn] = useState({});
   const [backEndError, setBackEndError] = useState({});
+  const [isSubscribed, setIsSubscribed] = useState();
+
   const [urls, setUrls] = useState([]);
   const [publicIds, setPublicIds] = useState([]);
   const [modalText, setModalText] = useState("");
@@ -146,10 +148,13 @@ export const AuthContextProvider = (props) => {
     }
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
+    // const urlencoded = new URLSearchParams();
+    // urlencoded.append("id", id);
 
     const requestOptions = {
       method: "GET",
       headers: myHeaders,
+      // body: urlencoded,
       redirect: "follow",
     };
     try {
@@ -164,6 +169,29 @@ export const AuthContextProvider = (props) => {
     } catch (error) {
       console.log("error getting profile", error);
     }
+  };
+
+  const isUserSubscribed = (props) => {
+    console.log("props in get my subs", props);
+    console.log("user id to send for subs check", userLoggedIn.id);
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("profileid", props);
+    urlencoded.append("userid", userLoggedIn.id);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5001/api/subs/get", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
 
   const handleUpload = (e) => {
@@ -370,6 +398,7 @@ export const AuthContextProvider = (props) => {
         setModalText,
         modalText,
         getProfile,
+        isUserSubscribed,
         handleUpload,
         uploadImages,
         setUrls,

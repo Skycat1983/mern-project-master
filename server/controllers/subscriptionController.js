@@ -1,102 +1,150 @@
 import usersModel from "../models/usersModel.js";
-import subscriptionsModel from "../models/usersModel.js";
+import subscriptionModel from "../models/subscriptionsModel.js";
 
-// pageloads. fave icon is filled or unfilled depending on whether we are subscribed. unfilled = unsubscribed.
-const createSubscription = async (req, res) => {
-  const { subscriberid, sellerid } = req.body;
+// pageloads. subscribe button is 'subscribe' or 'unsubscribe'.
+// user has clicked on button marked 'subscribe'
 
-  // const existingSubscription = await subscriptionsModel.findById({ _id: subscriberid });
+const getSubscription = async (req, res) => {
+  const { profileid, userid } = req.body;
+
   try {
-    const sub = await subscriptionsModel.create({
-      sellerid,
-      subscriberid,
-      plants,
+    const findSub = await subscriptionModel.findOne({
+      sellerid: profileid,
+      subscriberid: userid,
     });
-
-    const findingSubscriber = await usersModel.findById({ _id: subscriberid });
-    if (findingSubscriber.subscriptions.length === 0) {
-      const findingSubs = await usersModel.findByIdAndUpdate(
-        { _id: subscriberid },
-        { $push: { subscriptions: sellerid } },
-        {
-          returnOriginal: false,
-        }
-      );
-      const findingProvider = await usersModel.findById({ _id: sellerid });
-      if (findingProvider.subscribers.length === 0) {
-        const findingSubs = await usersModel.findByIdAndUpdate(
-          { _id: sellerid },
-          { $push: { subscribers: subscriberid } },
-          {
-            returnOriginal: false,
-          }
-        );
-        res.status(201).json({
-          msg: "added to favorites",
-          // user: {
-          // },
-        });
-      }
-    }
-    if (findingSubscriber.subscriptions.length > 0) {
-      if (findingSubscriber.subscriptions.includes(providerid)) {
-        try {
-          const removeSubscription = await usersModel.findByIdAndUpdate(
-            { _id: subscriberid },
-            { $pull: { subscriptions: sellerid } },
-            {
-              returnOriginal: false,
-            }
-          );
-          const removeSubscriber = await usersModel.findByIdAndUpdate(
-            { _id: sellerid },
-            { $pull: { subscribiers: subscriberid } },
-            {
-              returnOriginal: false,
-            }
-          );
-          // const deleteSub = await subscribersModel.findByIdAndDelete({
-          //   _id: plantid,
-          // });
-          res.status(201).json({
-            msg: "removed from favourites",
-            // user: {
-            // },
-          });
-        } catch {
-          res.status(500).json({ msg: "error removing favorite" });
-        }
-      }
-    } else {
-      try {
-        const addSubscription = await usersModel.findByIdAndUpdate(
-          { _id: subscriberid },
-          { $push: { subscriptions: providerid } },
-          {
-            returnOriginal: false,
-          }
-        );
-        const addSubscriber = await usersModel.findByIdAndUpdate(
-          { _id: providerid },
-          { $push: { subscriptions: subscriberid } },
-          {
-            returnOriginal: false,
-          }
-        );
-        res.status(201).json({
-          msg: "added to favorites",
-          // user: {
-          // },
-        });
-        console.log("findingFavourites >>>", findingFavourites);
-      } catch (error) {
-        res.status(500).json({ msg: "error adding subs" });
-      }
-    }
+    console.log("in find sub");
+    res.status(201).json({
+      msg: "subscribed",
+      findSub,
+    });
   } catch (error) {
-    console.log("error", error);
-    res.status(500).json({ msg: "user clicking in favourites not found" });
+    res.status(400).json({ msg: "user is not subscribed" });
   }
+};
+
+const createSubscription = async (req, res) => {
+  const { subscriberid, sellerusername } = req.body;
+
+  try {
+    const findIdOfSeller = await usersModel.findOne({
+      username: sellerusername,
+    });
+    console.log("findIdOfSeller", findIdOfSeller);
+    const { _id } = findIdOfSeller._id;
+    console.log("_id", _id);
+    const subscriptionM = new subscriptionModel({
+      sellerid: _id,
+      subscriberid,
+      // plants,
+    });
+    const subscription = await subscriptionM.save();
+
+    console.log("subscription>>>", subscription);
+
+    //! subscription is link to subscription._id, not to user. is this correct?
+    const updateSubscriptions = await usersModel.findOneAndUpdate(
+      { _id: subscriberid },
+      { $push: { subscriptions: subscription._id } },
+      {
+        returnOriginal: false,
+      }
+    );
+    console.log("updateSubscription", updateSubscriptions);
+    // .populate({
+    //   path: "subscriptions",
+    // });
+
+    //! = page we are on
+    // const findingProvider = await usersModel.findById({ _id: sellerid });
+    //! subscriber is link to subscription._id, not to user. is this correct?
+    const updateSubscribers = await usersModel.findOneAndUpdate(
+      { username: sellerusername },
+      { $push: { subscribers: subscription._id } },
+      {
+        returnOriginal: false,
+      }
+    );
+    res.status(201).json({
+      msg: "subscribed",
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+
+  //   if (findingSubscriber.subscriptions.length > 0) {
+  //     if (findingSubscriber.subscriptions.includes(providerid)) {
+  //       try {
+  //         const removeSubscription = await usersModel.findByIdAndUpdate(
+  //           { _id: subscriberid },
+  //           { $pull: { subscriptions: sellerid } },
+  //           {
+  //             returnOriginal: false,
+  //           }
+  //         );
+  //         const removeSubscriber = await usersModel.findByIdAndUpdate(
+  //           { _id: sellerid },
+  //           { $pull: { subscribiers: subscriberid } },
+  //           {
+  //             returnOriginal: false,
+  //           }
+  //         );
+  //         res.status(201).json({
+  //           msg: "removed from favourites",
+  //         });
+  //       } catch {
+  //         res.status(500).json({ msg: "error removing favorite" });
+  //       }
+  //     }
+  //   } else {
+  //     try {
+  //       const addSubscription = await usersModel.findByIdAndUpdate(
+  //         { _id: subscriberid },
+  //         { $push: { subscriptions: providerid } },
+  //         {
+  //           returnOriginal: false,
+  //         }
+  //       );
+  //       const addSubscriber = await usersModel.findByIdAndUpdate(
+  //         { _id: providerid },
+  //         { $push: { subscriptions: subscriberid } },
+  //         {
+  //           returnOriginal: false,
+  //         }
+  //       );
+  //       res.status(201).json({
+  //         msg: "added to favorites",
+
+  //       });
+  //       console.log("findingFavourites >>>", findingFavourites);
+  //     } catch (error) {
+  //       res.status(500).json({ msg: "error adding subs" });
+  //     }
+  //   }
+  // } catch (error) {
+  //   console.log("error", error);
+  //   res.status(500).json({ msg: "user clicking in favourites not found" });
+  // }
+};
+
+const deleteSubscription = async (req, res) => {
+  const { subscriberid, sellerid, subscriptionid } = req.body;
+
+  try {
+    const deleteSubscription = await subscriptionModel.findByIdAndDelete({
+      _id: subscriptionid,
+    });
+    //!user.subscriptions is linked to object_id of subscription from subscritpion collectiion
+    const deleteSubscriptionFromUser = await usersModel.findByIdAndUpdate(
+      { _id: subscriberid },
+      { $pull: { subscriptions: subscriptionid } },
+      { returnOriginal: false }
+    );
+    const deleteSubscriberFromSeller = await usersModel.findByIdAndUpdate(
+      { _id: sellerid },
+      { $pull: { subscriptions: subscriptionid } },
+      { returnOriginal: false }
+    );
+  } catch (error) {}
 };
 
 // CREATE USER
@@ -146,4 +194,4 @@ const createSubscription = async (req, res) => {
 //   }
 // };
 
-export { createSubscription };
+export { createSubscription, deleteSubscription, getSubscription };

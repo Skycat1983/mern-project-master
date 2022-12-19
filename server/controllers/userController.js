@@ -3,6 +3,7 @@ import encryptPassword from "../utils/encryptPassword.js";
 import isPasswordCorrect from "../utils/isPasswordCorrect.js";
 import issueToken from "../utils/issueToken.js";
 import commentsModel from "../models/commentsModel.js";
+import subscriptionssModel from "../models/commentsModel.js";
 
 // GET ALL USERS
 const getAllUsers = async (req, res) => {
@@ -32,7 +33,9 @@ const getUser = async (req, res) => {
       .findOne({ username: username })
       .populate({ path: "plants" })
       .populate({ path: "commentsby" })
-      .populate({ path: "commentsfor" });
+      .populate({ path: "commentsfor" })
+      .populate({ path: "subscriptions" })
+      .populate({ path: "subscribers" });
 
     // .populate({ path: "plants", path: "commentby" });
 
@@ -143,7 +146,13 @@ const loginUser = async (req, res) => {
 // VERIFY TOKEN/WRITSTBAND
 const getProfile = async (req, res) => {
   console.log("req.user", req.user);
-  const { email, username, _id, premium, aboutus, createdAt } = req.user;
+  const { email, username, _id, premium, aboutus, createdAt, subscriptions } =
+    req.user;
+  // const { id } = req.body;
+  // console.log("req.body", req.body);
+  // console.log("id", id);
+
+  // const allSubscriptions = await subscriptionsModel.find({ sellerid: "id" });
   res.status(200).json({
     // user: req.user,
     username: username,
@@ -152,6 +161,7 @@ const getProfile = async (req, res) => {
     premium: premium,
     aboutus: aboutus,
     createdAt: createdAt,
+    subscriptions: subscriptions,
   });
 };
 
@@ -196,6 +206,48 @@ const updateUser = async (req, res) => {
       user,
       modal: "about us succesfully updated",
     });
+  } catch (error) {
+    console.log("error :>> ", error);
+    res.status(500).json({
+      error,
+      modal: "there was a problem in the server",
+    });
+  }
+};
+
+// UPDATE ACCOUNT
+const updateAccount = async (req, res) => {
+  const { premium, currency, language, id } = req.body;
+  let toUpdate = {
+    premium: premium,
+    currency: currency,
+    language: language,
+  };
+  console.log("toUpdate", toUpdate);
+  //! membership does not overwrite!
+  try {
+    const findUser = await usersModel.findByIdAndUpdate(id, toUpdate, {
+      upsert: true,
+      new: true,
+    });
+
+    console.log("update user account", findUser);
+    res.status(200).json({
+      findUser,
+      modal: "account settings succesfully updated",
+    });
+
+    // const findUser = await usersModel.findById({ _id: _id });
+    //! problem if pushing 'false'?
+    // if (findUser.membership !== membership) {
+    //   toUpdate.push(membership);
+    // }
+    // if (findUser.currency !== currency) {
+    //   toUpdate.push(currency);
+    // }
+    // if (findUser.language !== language) {
+    //   toUpdate.push(language);
+    // }
   } catch (error) {
     console.log("error :>> ", error);
     res.status(500).json({
@@ -298,6 +350,7 @@ export {
   deleteUser,
   getUser,
   updateUser,
+  updateAccount,
   loginUser,
   addRemoveSubscription,
 };

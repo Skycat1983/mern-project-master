@@ -41,6 +41,8 @@ export const LangContextProvider = (props) => {
     }
   };
 
+  const patchAccount = (membership, currency, language, id) => {};
+
   return (
     <LangContext.Provider
       value={{
@@ -50,6 +52,7 @@ export const LangContextProvider = (props) => {
         handleCurrency,
         handleLanguage,
         convertCurrency,
+        patchAccount,
         currency,
       }}
     >

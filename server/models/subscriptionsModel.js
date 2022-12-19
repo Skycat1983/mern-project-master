@@ -3,6 +3,10 @@ import mongoose, { Schema } from "mongoose";
 
 const subscriptionSchema = new Schema(
   {
+    // sellerid: { type: String, required: true },
+    // subscriberid: { type: String, required: true },
+    sellerid: { type: Schema.Types.ObjectId, ref: "User" },
+    subscriberid: { type: Schema.Types.ObjectId, ref: "User" },
     // plants: { type: Array, Schema.Types.ObjectId, ref: "User" },
     // plants: { type: Array, required: false },
     plants: [
@@ -10,8 +14,6 @@ const subscriptionSchema = new Schema(
         plant: { type: mongoose.Schema.Types.ObjectId, ref: "Plant" },
       },
     ],
-    sellerid: { type: Schema.Types.ObjectId, ref: "User" },
-    subscriberid: { type: Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );

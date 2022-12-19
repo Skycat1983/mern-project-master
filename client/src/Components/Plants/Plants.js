@@ -1,4 +1,11 @@
-import { ButtonBase, CardMedia, Grid, Paper, Typography } from "@mui/material";
+import {
+  Button,
+  ButtonBase,
+  CardMedia,
+  Grid,
+  Paper,
+  Typography,
+} from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -27,13 +34,8 @@ function Plants(data) {
   return (
     <>
       <Grid>
-        {userLoggedIn?.username == location.state.user && (
-          <Link to={"/addplant"}>
-            <AddCircleOutlineIcon className="unselected"></AddCircleOutlineIcon>
-          </Link>
-        )}
-        <h4>
-          {data?.username}USERNAME has {data?.plants?.length} plants for sale
+        <h4 className="plant-count-heading">
+          this user has {data?.plants?.length} plants for sale
         </h4>
         {data &&
           data.plants?.map((item) => {
@@ -114,6 +116,19 @@ function Plants(data) {
             );
           })}
       </Grid>
+      {userLoggedIn?.username == location.state.user && (
+        <Link textDecoration="none" to={"/addplant"}>
+          <Button
+            className="add-plant-button"
+            textDecoration="none"
+            variant="outlined"
+            color="success"
+          >
+            Add plant
+          </Button>
+          {/* <AddCircleOutlineIcon className="unselected"></AddCircleOutlineIcon> */}
+        </Link>
+      )}
     </>
   );
 }

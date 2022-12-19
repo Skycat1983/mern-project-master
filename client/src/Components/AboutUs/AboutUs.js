@@ -61,9 +61,9 @@ function AboutUs(props) {
     getProfile();
   }, []);
 
-  const dateChange = new Date(`${userLoggedIn.createdAt}`).toLocaleDateString(
-    "en-GB"
-  );
+  const dateChange = new Date(
+    `${props?.data?.user.createdAt}`
+  ).toLocaleDateString("en-GB");
 
   const handleUpdate = () => {
     setToggle(!toggle);
@@ -74,13 +74,21 @@ function AboutUs(props) {
     }
   };
 
-  console.log(values.aboutUs);
+  // console.log("props", props);
+
+  // console.log(values.aboutUs);
 
   return (
     <>
       {isModal && <MyModal></MyModal>}
       <Typography className="about-us" variant="body1" gutterBottom>
         <TranslatedContent contentID="memberSince" />: {dateChange}
+      </Typography>
+      <Typography className="about-us" variant="body1" gutterBottom>
+        {props?.data?.user.subscribers.length}{" "}
+        {props?.data?.user.subscribers.length > 1
+          ? "subscribers"
+          : "subscriber"}
       </Typography>
       {toggle && props?.aboutus ? (
         <Typography className="about-us" variant="body1" gutterBottom>

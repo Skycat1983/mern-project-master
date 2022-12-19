@@ -210,6 +210,12 @@ export default Home;
 //* delete image if i navigate away from addplant
 //*
 
+// get profile should save user subs in token. does the user id of user match location params.
+
+//css issue with being able to pull page right from profile view. can't i somehow lock to view?
+
+// onclick vs onchange
+
 //! questions
 
 //! If i navigate to my account via the settings icon, that it should load the profile page with the settings tab active step 3. is this location state?
