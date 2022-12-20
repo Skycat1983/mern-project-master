@@ -51,9 +51,9 @@ function App() {
               <Route
                 path="addplant"
                 element={
-                  <ProtectedRoute>
-                    <AddPlant />
-                  </ProtectedRoute>
+                  // <ProtectedRoute>
+                  <AddPlant />
+                  // </ProtectedRoute>
                 }
               />
             </Routes>

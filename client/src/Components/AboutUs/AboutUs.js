@@ -69,72 +69,71 @@ function AboutUs(props) {
     setToggle(!toggle);
     console.log(toggle);
     if (!toggle && values.aboutUs !== "") {
-      // console.warn("this would be an update", values.aboutUs, userLoggedIn);
       patchUser(values, userLoggedIn.username);
     }
   };
 
-  // console.log("props", props);
-
-  // console.log(values.aboutUs);
-
   return (
     <>
       {isModal && <MyModal></MyModal>}
-      <Typography className="about-us" variant="body1" gutterBottom>
-        <TranslatedContent contentID="memberSince" />: {dateChange}
-      </Typography>
-      <Typography className="about-us" variant="body1" gutterBottom>
-        {props?.data?.user.subscribers.length}{" "}
-        {props?.data?.user.subscribers.length > 1
-          ? "subscribers"
-          : "subscriber"}
-      </Typography>
-      {toggle && props?.aboutus ? (
+      <Paper>
         <Typography className="about-us" variant="body1" gutterBottom>
-          {props?.aboutus}
+          <TranslatedContent contentID="memberSince" />: {dateChange}
         </Typography>
-      ) : toggle ? (
         <Typography className="about-us" variant="body1" gutterBottom>
-          {userLoggedIn.username == location.state.user
-            ? "You haven't added any information here yet"
-            : "This user hasn't added any information here yet"}
+          {props?.data?.user.subscribers.length}{" "}
+          {props?.data?.user.subscribers.length == 1
+            ? "subscriber"
+            : "subscribers"}
         </Typography>
-      ) : (
-        <XLForm>
-          <MyControls.MyTextbox
-            id="outlined-multiline-flexible"
-            label="about us"
-            name="aboutUs"
-            value={values.aboutUs}
-            multiline
-            maxRows={4}
-            // values={values.aboutUs}
-            onChange={handleInputChange}
-          />
-        </XLForm>
-      )}
+        {toggle && props?.aboutus ? (
+          <Typography className="about-us" variant="body1" gutterBottom>
+            {props?.aboutus}
+          </Typography>
+        ) : toggle ? (
+          <Typography className="about-us" variant="body1" gutterBottom>
+            {userLoggedIn.username == location.state.user
+              ? "You haven't added any information here yet"
+              : "This user hasn't added any information here yet"}
+          </Typography>
+        ) : (
+          <XLForm>
+            <MyControls.MyTextbox
+              id="outlined-multiline-flexible"
+              // placeholder=""
+              label={props?.aboutus}
+              // label="about us"
+              name="aboutUs"
+              value={values.aboutUs}
+              multiline={true}
+              maxRows={4}
+              // values={values.aboutUs}
+              onChange={handleInputChange}
+            />
+          </XLForm>
+        )}
 
-      {userLoggedIn.username == location.state.user && (
-        <Button
-          onClick={handleUpdate}
-          // onClick={() => {
-          //   !toggle && values.aboutus ? handleUpdate() : setToggle(!toggle);
-          // }}
-          className="edit-button"
-          variant="contained"
-          color="success"
-        >
-          {toggle ? "edit" : "update"} <EditIcon />
-        </Button>
-      )}
-      {/* <Button
+        {userLoggedIn.username == location.state.user && (
+          <Button
+            onClick={handleUpdate}
+            // onClick={() => {
+            //   !toggle && values.aboutus ? handleUpdate() : setToggle(!toggle);
+            // }}
+            className="edit-button"
+            variant="contained"
+            color="success"
+          >
+            {toggle ? "edit" : "update"} <EditIcon />
+          </Button>
+        )}
+        {/* <Button
           className="update-button"
           variant="contained"
           color="success"
         >
           update
         </Button> */}
+      </Paper>
     </>
   );
 }

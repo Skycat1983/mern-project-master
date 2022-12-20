@@ -34,9 +34,15 @@ function Plants(data) {
   return (
     <>
       <Grid>
-        <h4 className="plant-count-heading">
-          this user has {data?.plants?.length} plants for sale
-        </h4>
+        {userLoggedIn.username == location.state.user ? (
+          <h4 className="plant-count-heading">
+            You have {data?.plants?.length} plants for sale
+          </h4>
+        ) : (
+          <h4 className="plant-count-heading">
+            This user has {data?.plants?.length} plants for sale
+          </h4>
+        )}
         {data &&
           data.plants?.map((item) => {
             const dateChange = new Date(`${item.createdAt}`).toLocaleDateString(

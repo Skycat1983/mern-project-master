@@ -182,7 +182,7 @@ export const AuthContextProvider = (props) => {
     urlencoded.append("userid", userLoggedIn.id);
 
     const requestOptions = {
-      method: "GET",
+      method: "POST",
       headers: myHeaders,
       body: urlencoded,
       redirect: "follow",
@@ -190,7 +190,7 @@ export const AuthContextProvider = (props) => {
 
     fetch("http://localhost:5001/api/subs/get", requestOptions)
       .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((result) => setIsSubscribed(result))
       .catch((error) => console.log("error", error));
   };
 
@@ -369,6 +369,8 @@ export const AuthContextProvider = (props) => {
     )
       .then((response) => response.text())
       .then((result) => setModalText(`${result.modal}`, console.log(result)))
+      .then((result) => window.location.reload())
+
       // .then(setModalText(`${result.modal}`), setIsModal(true), navigate("/"))
       .catch((error) => console.log("error", error));
   };
@@ -399,6 +401,7 @@ export const AuthContextProvider = (props) => {
         modalText,
         getProfile,
         isUserSubscribed,
+        isSubscribed,
         handleUpload,
         uploadImages,
         setUrls,

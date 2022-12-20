@@ -11,8 +11,17 @@
 .sub-button {
   position: absolute;
   z-index: 100;
-  right: -150px;
+  right: -155px;
   top: -90px;
+  background-color: white;
+}
+
+.unsub-button {
+  position: absolute;
+  z-index: 100;
+  right: -135px;
+  top: -90px;
+  background-color: white;
 }
 
 .background-image3 {

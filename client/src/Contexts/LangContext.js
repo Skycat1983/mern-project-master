@@ -9,22 +9,22 @@ export const LangContext = createContext(translations.english);
 
 export const LangContextProvider = (props) => {
   const [language, setLanguage] = useState("english");
-  const [currency, setCurrency] = useState("£");
+  const [currency, setCurrency] = useState("");
   const [euroToPoundRate, setEuroToPoundRate] = useState(0.86);
   const [poundToEuroRate, setPoundToEuroRate] = useState(1.16);
 
   function toggleLanguage() {
     setLanguage((language) => (language === "english" ? "german" : "english"));
   }
-  function toggleCurrency() {
-    setCurrency((currency) => (currency === "£" ? "€" : "£"));
-  }
+  // function toggleCurrency() {
+  //   setCurrency((currency) => (currency === "£" ? "€" : "£"));
+  // }
   function convertCurrency(money) {
     let convertedMoney = "";
-    if (currency == "£") {
-      convertedMoney = money * euroToPoundRate;
-    } else {
+    if (currency == "euros") {
       convertedMoney = money * poundToEuroRate;
+    } else {
+      convertedMoney = money * euroToPoundRate;
     }
     return Math.round(convertedMoney * 100) / 100;
   }
@@ -41,14 +41,48 @@ export const LangContextProvider = (props) => {
     }
   };
 
-  const patchAccount = (membership, currency, language, id) => {};
+  const patchAccount = (membership, currency, language, id) => {
+    let premium = [];
+    if (membership == "premium") {
+      premium = true;
+    } else {
+      premium = false;
+    }
+    console.log(
+      "premium, currency, language, id",
+      premium,
+      currency,
+      language,
+      id
+    );
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("premium", premium);
+    urlencoded.append("currency", currency);
+    urlencoded.append("language", language);
+    urlencoded.append("id", id);
+
+    const requestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5001/api/users/update/account", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  };
 
   return (
     <LangContext.Provider
       value={{
         toggleLanguage,
         language,
-        toggleCurrency,
+        // toggleCurrency,
         handleCurrency,
         handleLanguage,
         convertCurrency,

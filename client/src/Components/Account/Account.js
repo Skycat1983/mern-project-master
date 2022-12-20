@@ -45,7 +45,6 @@ function Account() {
   const {
     language,
     toggleLanguage,
-    toggleCurrency,
     handleCurrency,
     handleLanguage,
     convertCurrency,
@@ -120,139 +119,135 @@ function Account() {
   };
 
   return (
-    <Paper className="review-box">
-      <div>
-        <Grid
-          className="account-grid"
-          alignItems="center"
-          rowSpacing={3}
-          container
-          spacing={2}
-        >
-          <Grid xs={8}>
-            <Item>
-              <TranslatedContent contentID="membership" />
-            </Item>
-          </Grid>
-          <Grid>
-            {/* <Item> */}
-            <ToggleButtonGroup
-              value={membership}
-              exclusive
-              onChange={handleMembership}
-              aria-label="membership"
-            >
-              <ToggleButton value="premium">
-                <WorkspacePremiumIcon
-                  className={
-                    membership == "premium" ? "selected" : "unselected"
-                  }
-                  aria-label="premium"
-                />
-              </ToggleButton>
-              <ToggleButton value="basic">
-                <SentimentDissatisfiedIcon
-                  className={
-                    membership !== "premium" ? "selected" : "unselected"
-                  }
-                  aria-label="basic"
-                />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
-
-          <Grid xs={8}>
-            <Item>
-              <TranslatedContent contentID="defaultCurrency" />
-            </Item>
-          </Grid>
-          <Grid>
-            <ToggleButtonGroup
-              value={currency}
-              exclusive
-              onChange={handleCurrency}
-              aria-label="currency"
-            >
-              <ToggleButton value="pounds">
-                <CurrencyPoundIcon
-                  className={currency !== "euros" ? "selected" : "unselected"}
-                  aria-label="pounds"
-                />
-              </ToggleButton>
-              <ToggleButton value="euros">
-                <EuroIcon
-                  className={currency == "euros" ? "selected" : "unselected"}
-                  aria-label="euros"
-                />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
-          <Grid xs={8}>
-            <Item>
-              <TranslatedContent contentID="language" />
-            </Item>
-          </Grid>
-          <Grid>
-            <ToggleButtonGroup
-              value={language}
-              exclusive
-              onChange={handleLanguage}
-              aria-label="language"
-            >
-              <ToggleButton value="english">
-                <img
-                  src={`https://img.icons8.com/color/512/england.png`}
-                  className="fact-icons"
-                  aria-label="english"
-                />
-              </ToggleButton>
-              <ToggleButton value="german">
-                <img
-                  src={`https://img.icons8.com/color/512/germany.png`}
-                  className="fact-icons"
-                  aria-label="german"
-                />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
-
-          <Grid xs={8}>
-            <Item>
-              <TranslatedContent contentID="changeCoverAvatar" />
-            </Item>
-          </Grid>
-          <Grid xs={2}>
-            <Item>
-              <WallpaperIcon></WallpaperIcon>
-            </Item>
-          </Grid>
-          <Grid xs={2}>
-            <Item>
-              <AccountCircleIcon></AccountCircleIcon>
-            </Item>
-          </Grid>
+    <Paper className="account-box">
+      {/* <div> */}
+      <Grid
+        className="account-grid"
+        alignItems="center"
+        rowSpacing={3}
+        container
+        spacing={2}
+      >
+        <Grid xs={8}>
+          <Item>
+            <TranslatedContent contentID="membership" />
+          </Item>
         </Grid>
-        <Button
-          color="success"
-          variant="outlined"
-          className="update-changes"
-          onClick={handleUpdateAccount}
-        >
-          <TranslatedContent contentID="update" />
-        </Button>
+        <Grid>
+          {/* <Item> */}
+          <ToggleButtonGroup
+            value={membership}
+            exclusive
+            onChange={handleMembership}
+            aria-label="membership"
+          >
+            <ToggleButton value="premium">
+              <WorkspacePremiumIcon
+                className={membership == "premium" ? "selected" : "unselected"}
+                aria-label="premium"
+              />
+            </ToggleButton>
+            <ToggleButton value="basic">
+              <SentimentDissatisfiedIcon
+                className={membership !== "premium" ? "selected" : "unselected"}
+                aria-label="basic"
+              />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Grid>
 
-        {/* <Button color="success" variant="outlined" onClick={toggleLanguage}>
+        <Grid xs={8}>
+          <Item>
+            <TranslatedContent contentID="defaultCurrency" />
+          </Item>
+        </Grid>
+        <Grid>
+          <ToggleButtonGroup
+            value={currency}
+            exclusive
+            onChange={handleCurrency}
+            aria-label="currency"
+          >
+            <ToggleButton value="pounds">
+              <CurrencyPoundIcon
+                className={currency !== "euros" ? "selected" : "unselected"}
+                aria-label="pounds"
+              />
+            </ToggleButton>
+            <ToggleButton value="euros">
+              <EuroIcon
+                className={currency == "euros" ? "selected" : "unselected"}
+                aria-label="euros"
+              />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Grid>
+        <Grid xs={8}>
+          <Item>
+            <TranslatedContent contentID="language" />
+          </Item>
+        </Grid>
+        <Grid>
+          <ToggleButtonGroup
+            value={language}
+            exclusive
+            onChange={handleLanguage}
+            aria-label="language"
+          >
+            <ToggleButton value="english">
+              <img
+                src={`https://img.icons8.com/color/512/england.png`}
+                className="fact-icons"
+                aria-label="english"
+              />
+            </ToggleButton>
+            <ToggleButton value="german">
+              <img
+                src={`https://img.icons8.com/color/512/germany.png`}
+                className="fact-icons"
+                aria-label="german"
+              />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Grid>
+
+        <Grid xs={8}>
+          <Item>
+            <TranslatedContent contentID="changeCoverAvatar" />
+          </Item>
+        </Grid>
+        <Grid xs={2}>
+          <Item>
+            <WallpaperIcon></WallpaperIcon>
+          </Item>
+        </Grid>
+        <Grid xs={2}>
+          <Item>
+            <AccountCircleIcon></AccountCircleIcon>
+          </Item>
+        </Grid>
+      </Grid>
+      <Button
+        color="success"
+        variant="outlined"
+        className="update-changes"
+        onClick={handleUpdateAccount}
+      >
+        <TranslatedContent contentID="update" />
+      </Button>
+
+      {/* <Button color="success" variant="outlined" onClick={toggleLanguage}>
           {language}
         </Button> */}
-        {/* <Button color="secondary" variant="outlined" onClick={toggleCurrency}>
+      {/* <Button color="secondary" variant="outlined" onClick={toggleCurrency}>
           {currency}
         </Button> */}
-        {/* <Button color="error" variant="outlined" onClick={handleRandom}>
+      {/* <Button color="error" variant="outlined" onClick={handleRandom}>
           getRandomNumber
         </Button> */}
-        {/* <h2>{convertCurrency(110)}</h2> */}
-        {/* <h2>random number: {randomInt}</h2> */}
-      </div>
+      {/* <h2>{convertCurrency(110)}</h2> */}
+      {/* <h2>random number: {randomInt}</h2> */}
+      {/* </div> */}
     </Paper>
   );
 }

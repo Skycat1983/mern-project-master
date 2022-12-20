@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import NavBar from "../Components/Navbar/NavBar";
 import useFetch from "../Hooks/useFetch";
@@ -22,6 +22,8 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function Listing() {
+  const { convertCurrency, currency } = useContext(LangContext);
+
   const location = useLocation();
   //! this is saying i must come from previous page
   console.log("location :>> ", location.state.plant);
@@ -134,7 +136,9 @@ function Listing() {
           </Link>
         </Item>
         <Item xs={6} sx={{ boxShadow: 0 }}>
-          <TranslatedContent contentID="price" />: {data?.plant.price}
+          <TranslatedContent contentID="price" />:{currency == "pounds" && "£"}
+          {convertCurrency(`${data?.plant.price}`)}
+          {currency == "euros" && "€"}
         </Item>
         {/* <Item xs={6} sx={{ boxShadow: 0 }}>
           <TranslatedContent contentID="rooted" />:{" "}

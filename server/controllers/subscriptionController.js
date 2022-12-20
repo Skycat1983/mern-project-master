@@ -1,9 +1,6 @@
 import usersModel from "../models/usersModel.js";
 import subscriptionModel from "../models/subscriptionsModel.js";
 
-// pageloads. subscribe button is 'subscribe' or 'unsubscribe'.
-// user has clicked on button marked 'subscribe'
-
 const getSubscription = async (req, res) => {
   const { profileid, userid } = req.body;
 
@@ -12,13 +9,18 @@ const getSubscription = async (req, res) => {
       sellerid: profileid,
       subscriberid: userid,
     });
-    console.log("in find sub");
-    res.status(201).json({
-      msg: "subscribed",
-      findSub,
-    });
+    if (!findSub) {
+      res.status(201).json({ msg: "not subscribed" });
+    } else {
+      console.log("findSub", findSub);
+      // console.log("in find sub");
+      res.status(201).json({
+        msg: "subscribed",
+        // findSub,
+      });
+    }
   } catch (error) {
-    res.status(400).json({ msg: "user is not subscribed" });
+    res.status(400).json({ error });
   }
 };
 
@@ -37,6 +39,7 @@ const createSubscription = async (req, res) => {
       subscriberid,
       // plants,
     });
+    // .populate("plants");
     const subscription = await subscriptionM.save();
 
     console.log("subscription>>>", subscription);
@@ -127,25 +130,37 @@ const createSubscription = async (req, res) => {
 };
 
 const deleteSubscription = async (req, res) => {
-  const { subscriberid, sellerid, subscriptionid } = req.body;
+  const { profileid, userid } = req.body;
+  console.log("in delete sub");
+  console.log("profileid, userid", profileid, userid);
 
   try {
-    const deleteSubscription = await subscriptionModel.findByIdAndDelete({
-      _id: subscriptionid,
+    // const idOfSub = await subscriptionModel.findOne({})
+    const deleteSub = await subscriptionModel.findOneAndDelete({
+      sellerid: profileid,
+      subscriberid: userid,
     });
+    console.log("deleteSub", deleteSub);
     //!user.subscriptions is linked to object_id of subscription from subscritpion collectiion
     const deleteSubscriptionFromUser = await usersModel.findByIdAndUpdate(
-      { _id: subscriberid },
-      { $pull: { subscriptions: subscriptionid } },
+      { _id: userid },
+      { $pull: { subscriptions: deleteSub._id } },
       { returnOriginal: false }
     );
     const deleteSubscriberFromSeller = await usersModel.findByIdAndUpdate(
-      { _id: sellerid },
-      { $pull: { subscriptions: subscriptionid } },
+      { _id: profileid },
+      { $pull: { subscribers: deleteSub._id } },
       { returnOriginal: false }
     );
-  } catch (error) {}
+    res.status(201).json({
+      msg: "sub deleted",
+    });
+  } catch (error) {
+    msg: "error in sub deletion";
+  }
 };
+
+export { createSubscription, deleteSubscription, getSubscription };
 
 // CREATE USER
 // const createSubscription = async (req, res) => {
@@ -193,5 +208,3 @@ const deleteSubscription = async (req, res) => {
 //     });
 //   }
 // };
-
-export { createSubscription, deleteSubscription, getSubscription };

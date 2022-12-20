@@ -40,7 +40,7 @@ router.delete("/delete/:id", deleteUser);
 router.patch("/update/aboutus/:username", updateUser);
 
 // UPDATE SETTINGS //! does this need an id suffix?
-router.patch("/update/account/:id", updateAccount);
+router.patch("/update/account", updateAccount);
 
 // UPDATE PROFILE (subscriptions/subscribers)
 router.patch("/update/subs/:id", addRemoveSubscription);

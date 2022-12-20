@@ -2,7 +2,7 @@ import plantModel from "../models/plantsModel.js";
 import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/usersModel.js";
 import factModel from "../models/factsModel.js";
-import subscriptionModel from "../models/subscriptionsModel.js";
+import subscriptionsModel from "../models/subscriptionsModel.js";
 
 // GET ALL PLANTS
 const getAllPlants = async (req, res) => {
@@ -111,6 +111,7 @@ const createPlant = async (req, res) => {
 
     //! actually does not need to be like this. we can access our subscribers via the user without search
     const subscribers = await subscriptionsModel.find({ sellerid: user });
+    console.log("subscribers>>>", subscribers);
     if (!subscribers) {
       res.status(200).json({
         msg: "plant succesfully added",

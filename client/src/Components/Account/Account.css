@@ -20,6 +20,18 @@
 }
 
 .update-changes {
-  left: 20px;
   bottom: -10px;
+  /* border-top: 120px; */
+  width: 90%;
+  margin: 20px;
+  left: 5%;
+}
+
+.account-box {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  height: 310px;
+
+
+
 }

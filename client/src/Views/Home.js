@@ -207,8 +207,6 @@ export default Home;
 // TODO: usememo on wishlist search. location context for language and currency conversion.
 //* // refresh page after item added/deleted/updated
 //* useref for tab settings? are there other areas i don't want to reset?
-//* delete image if i navigate away from addplant
-//*
 
 // get profile should save user subs in token. does the user id of user match location params.
 
@@ -220,13 +218,9 @@ export default Home;
 
 //! If i navigate to my account via the settings icon, that it should load the profile page with the settings tab active step 3. is this location state?
 
-// protected route confusion. when i try to turn it on it causes problems
-
 // delete image if nav away before submit  (useModal)
 
 // bit unsure how often i should be using getprofile and when. it's just to see if session expired?
-
-// go over how should i be using isLoading. what is best practice? in authcontext it is set to false. when should i be turning it off then on? or it's better set to true as default?
 
 // see plants.js component. sometimes submit button does not load. cannot understand why
 

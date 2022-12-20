@@ -10,7 +10,6 @@ import {
   TextField,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import cover from "../assets/backgrounds/photos/leaf.png";
 import temp from "../assets/appIcons/glassmomnstera.png";
 import Tooltip from "@mui/material/Tooltip";
 import { useContext, useEffect, useState } from "react";
@@ -56,14 +55,12 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Profile() {
   const [value, setValue] = React.useState(0);
-  const [summonModal, setSummonModal] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState();
+  // const [summonModal, setSummonModal] = useState(false);
   const { id } = useParams();
   const location = useLocation();
-  // console.log("location :>> ", location.state.user);
   const [url, setUrl] = useState(`http://localhost:5001/api/users/one/${id}`);
   const { data, isLoading, error } = useFetch(url);
-  const { getProfile, userLoggedIn, isUser, isUserSubscribed } =
+  const { getProfile, userLoggedIn, isUser, isUserSubscribed, isSubscribed } =
     useContext(AuthContext);
 
   const handleChange = (event, newValue) => {
@@ -71,27 +68,51 @@ export default function Profile() {
     console.log(newValue);
   };
 
-  // console.warn("data", data);
-
   const toggleSub = () => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    console.log("trying to toggle sub");
+    if (isSubscribed == `{"msg":"subscribed"}`) {
+      console.log("unsubscribing");
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("sellerusername", `{ _id }`);
-    urlencoded.append("subscriberid", `${userLoggedIn.id}`);
+      const urlencoded = new URLSearchParams();
+      urlencoded.append("profileid", `${data?.user?._id}`);
+      urlencoded.append("userid", `${userLoggedIn?.id}`);
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
+      const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: "follow",
+      };
 
-    fetch("http://localhost:5001/api/subs/create", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+      fetch("http://localhost:5001/api/subs/delete", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .then((result) => window.location.reload())
+        .catch((error) => console.log("error", error));
+    } else {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+      const urlencoded = new URLSearchParams();
+      urlencoded.append("sellerusername", `${id}`);
+      urlencoded.append("subscriberid", `${userLoggedIn.id}`);
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: "follow",
+      };
+
+      fetch("http://localhost:5001/api/subs/create", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .then((result) => window.location.reload())
+        .catch((error) => console.log("error", error));
+    }
+    // const resetPage = () => useFetch(url);
   };
 
   useEffect(() => {
@@ -99,23 +120,18 @@ export default function Profile() {
   }, []);
 
   useEffect(() => {
+    console.log("isSubscribed", isSubscribed);
+    if (isSubscribed == `{"msg":"subscribed"}`) {
+      console.log("YES");
+    }
+  }, [isSubscribed]);
+
+  useEffect(() => {
     if (userLoggedIn.id) {
       console.log("id of page owner", data?.user._id);
       isUserSubscribed(data?.user._id);
     }
-    let pageId = data?.user._id;
-    for (let i = 0; i < userLoggedIn?.subscriptions?.length; i++) {
-      if (userLoggedIn.subscriptions[i] == pageId) {
-        setIsSubscribed(true);
-        console.log("is subscribed");
-      } else {
-        setIsSubscribed(false);
-        console.log("is NOT subscribed");
-      }
-    }
   }, [data]);
-
-  // when i getProfile
 
   // getProfile = user = userLoggedIn.subscriptions //! we have only sub._id
 
@@ -129,15 +145,18 @@ export default function Profile() {
 
   // - make it so that getProfile also returns a populated link of the subscriptions
 
+  // roadmap: if user is subscribed, button says unsubscribe. when we click on unsubscribe we delete the document from subs collection and update the arrays of subscriber and subscriptions
+
+  // seller adds a plant. if user subscriptions array.length > 0, we find({}) those subscriptions, and push plant Id to each.
+
+  // the users notifications tab will search for all subscriptions the user has where plants.length >0.
+
   return (
     <>
       <NavBar />
       {data?.user?.premium == true && (
         <Tooltip title="premium user">
-          <WorkspacePremiumIcon
-            className="premium-badge"
-            // onClick={toggleFave}
-          />
+          <WorkspacePremiumIcon className="premium-badge" />
         </Tooltip>
       )}
 
@@ -181,7 +200,6 @@ export default function Profile() {
           />
           <Tab
             className="my-tab"
-            // label="plants"
             label=<TranslatedContent contentID="plants" />
             name="plants"
             style={{ minWidth: "50%" }}
@@ -198,6 +216,15 @@ export default function Profile() {
               className="my-tab"
               label=<TranslatedContent contentID="account" />
               name="account"
+              style={{ minWidth: "50%" }}
+            />
+          )}
+          {userLoggedIn?.username == location.state.user && (
+            <Tab
+              onChange={handleChange}
+              className="my-tab"
+              label="notifications"
+              name="notifications"
               style={{ minWidth: "50%" }}
             />
           )}
@@ -224,17 +251,20 @@ export default function Profile() {
           </Item>
         </Grid>
       </Grid>
-      {/* <Button onClick={() => setSummonModal(!summonModal)}>summonModal</Button> */}
       <SummonModal></SummonModal>
       {userLoggedIn?.username !== location.state.user && (
         <Button
           size="small"
           color="success"
           variant="outlined"
-          className="sub-button"
+          className={
+            isSubscribed == `{"msg":"subscribed"}`
+              ? "unsub-button"
+              : "sub-button"
+          }
           onClick={toggleSub}
         >
-          subscribe
+          {isSubscribed == `{"msg":"subscribed"}` ? "unsubscribe" : "subscribe"}
         </Button>
       )}
 
@@ -246,7 +276,6 @@ export default function Profile() {
       {userLoggedIn?.username == location.state.user && value === 3 && (
         <Account></Account>
       )}
-
       {/* <IconButton>
         <FavoriteBorderIcon className="favourite-badge" onClick={toggleFave} />
       </IconButton> */}

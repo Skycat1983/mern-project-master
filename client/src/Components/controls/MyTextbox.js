@@ -12,9 +12,13 @@ export default function MyTextbox(props) {
       name={name}
       value={value}
       onChange={onChange}
-      multiline
-      maxRows={4}
-      sx={{ m: 4, width: "26ch" }}
+      multiline={true}
+      maxRows={8}
+      sx={{
+        m: 4,
+        width: "28ch",
+        // height: "26ch"
+      }}
       // value={value}
       // onChange={handleChange}
     />

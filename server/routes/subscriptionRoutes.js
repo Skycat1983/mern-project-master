@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 // GET A SUBSCRIPTION
-router.get("/get", getSubscription);
+router.post("/get", getSubscription);
 
 // CREATE A SUBSCRIPTION
 router.post("/create", createSubscription);

@@ -15,8 +15,10 @@ import user1 from "../../assets/backgrounds/woman1.png";
 import { Link, useParams } from "react-router-dom";
 import { LangContext } from "../../Contexts/LangContext.js";
 import TranslatedContent from "../TranslatedContent";
+import { useContext, useEffect, useState } from "react";
 
 export default function Carousel(data, isLoading) {
+  const { convertCurrency, currency } = useContext(LangContext);
   // const { id } = useParams();
 
   // console.warn("data.data in carousel", data.data);
@@ -67,7 +69,9 @@ export default function Carousel(data, isLoading) {
                             <b>
                               <TranslatedContent contentID="price" />
                             </b>
-                            {item.price}
+                            {currency == "pounds" && "£"}
+                            {convertCurrency(`${item.price}`)}
+                            {currency == "euros" && "€"}
                           </Typography>
                         </CardContent>
                       </CardActionArea>
@@ -106,7 +110,9 @@ export default function Carousel(data, isLoading) {
                             <b>
                               <TranslatedContent contentID="price" />
                             </b>
-                            {item.price}
+                            {currency == "pounds" && "£"}
+                            {convertCurrency(`${item.price}`)}
+                            {currency == "euros" && "€"}
                           </Typography>
                         </CardContent>
                       </CardActionArea>
