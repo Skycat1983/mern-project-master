@@ -56,7 +56,7 @@ const getUser = async (req, res) => {
 // CREATE USER
 const createUser = async (req, res) => {
   console.log("create user", req.body);
-  const { email, username, password, premium, avatar } = req.body;
+  const { email, username, password, premium, avatar, coverpicture } = req.body;
   // TODO: express email vaidation HERE
   if (!email) {
     res.send(546);
@@ -81,6 +81,7 @@ const createUser = async (req, res) => {
         password: hashedPassword,
         premium: premium,
         avatar: avatar,
+        coverpicture: coverpicture,
       });
       try {
         console.log("trying to save newUser");

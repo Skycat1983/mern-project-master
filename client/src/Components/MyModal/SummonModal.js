@@ -48,7 +48,7 @@ export default function MyModal() {
             variant="h6"
             component="h2"
           >
-            Text in a modal
+            Notification:
           </Typography>
           <Typography color="white" id="modal-modal-description" sx={{ mt: 2 }}>
             {modalText}

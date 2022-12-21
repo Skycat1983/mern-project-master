@@ -134,6 +134,8 @@ export default function Profile() {
     }
   }, [data]);
 
+  console.warn(data);
+
   return (
     <>
       <NavBar />
@@ -230,26 +232,29 @@ export default function Profile() {
         </Grid>
         <Grid item xs={4}>
           <Item>
-            <img src={temp} className="about-us-avatar" alt="" />
+            <img src={data?.user?.avatar} className="about-us-avatar" alt="" />
           </Item>
         </Grid>
       </Grid>
       <SummonModal></SummonModal>
-      {userLoggedIn?.username !== location.state.user && (
-        <Button
-          size="small"
-          color="success"
-          variant="outlined"
-          className={
-            isSubscribed == `{"msg":"subscribed"}`
-              ? "unsub-button"
-              : "sub-button"
-          }
-          onClick={toggleSub}
-        >
-          {isSubscribed == `{"msg":"subscribed"}` ? "unsubscribe" : "subscribe"}
-        </Button>
-      )}
+      {userLoggedIn?.username &&
+        userLoggedIn?.username !== location.state.user && (
+          <Button
+            size="small"
+            color="success"
+            variant="outlined"
+            className={
+              isSubscribed == `{"msg":"subscribed"}`
+                ? "unsub-button"
+                : "sub-button"
+            }
+            onClick={toggleSub}
+          >
+            {isSubscribed == `{"msg":"subscribed"}`
+              ? "unsubscribe"
+              : "subscribe"}
+          </Button>
+        )}
       {userLoggedIn?.username == location.state.user && value === 4 && (
         <Notifications></Notifications>
       )}

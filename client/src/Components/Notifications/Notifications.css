@@ -1,0 +1,26 @@
+.notification-paper {
+  position: relative;
+  left: 10px;
+  padding: 20px;
+  width: 83%
+}
+
+.divider {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  padding-top: -25px;
+
+}
+
+.img-tiny {
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.notification-text {
+  position: relative;
+  left: 40px;
+  top: -30px;
+}

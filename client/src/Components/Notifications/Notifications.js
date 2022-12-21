@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import Typography from "@mui/material/Typography";
+import { Divider, Link, Paper } from "@mui/material";
+import "./Notifications.css";
 
 function Notifications() {
   const [forFeed, setForfeed] = useState({});
@@ -46,30 +48,64 @@ function Notifications() {
   console.warn("forFeed", forFeed);
   return (
     <>
-      <Typography gutterBottom variant="h7" component="div">
-        you have {forFeed?.number} notifications
-      </Typography>
-      {forFeed &&
-        forFeed?.allMySubs?.map((sub, i) => {
-          {
-            /* {setSub(sub)} */
-          }
+      <Paper className="notification-paper">
+        <Typography gutterBottom variant="h7" component="div">
+          You have {forFeed?.number} subscription updates
+        </Typography>
+        <Divider className="divider"></Divider>
+        {forFeed &&
+          forFeed?.allMySubs?.map((sub, i) => {
+            {
+              /* {setSub(sub)} */
+            }
 
-          return (
-            <Typography key={i} gutterBottom variant="h7" component="div">
-              plant listed {dateChange(`${sub?.updatedAt}`)}
-            </Typography>
-          );
-        })}
+            return (
+              <>
+                {sub &&
+                  sub?.plants?.map((plant, index) => {
+                    return (
+                      <>
+                        <Link
+                          to={`/plant/${plant._id}`}
+                          key={index}
+                          state={{ plant: plant._id }}
+                        >
+                          <img
+                            className="img-tiny"
+                            src={plant.imageUrls[0]}
+                          ></img>
+                          <Typography
+                            key={index}
+                            gutterBottom
+                            variant="h7"
+                            component="div"
+                            className="notification-text"
+                          >
+                            {plant.genus}, uploaded:{" "}
+                            {dateChange(`${plant?.createdAt}`)}
+                          </Typography>
+                        </Link>
+                        <Divider className="divider"></Divider>
+                        {/* <Typography
+                          key={index}
+                          gutterBottom
+                          variant="h7"
+                          component="div"
+                        >
+                          uploaded on:
+                          {dateChange(`${plant?.createdAt}`)}
+                        </Typography> */}
+                      </>
+                    );
+                  })}
 
-      {/* {sub &&
-        sub?.plants?.map((plant, index) => {
-          return (
-            <Typography key={index} gutterBottom variant="h7" component="div">
-              genus
-            </Typography>
-          );
-        })} */}
+                {/* <Typography key={i} gutterBottom variant="h7" component="div">
+                plant listed {dateChange(`${sub?.updatedAt}`)}
+              </Typography> */}
+              </>
+            );
+          })}
+      </Paper>
     </>
   );
 }

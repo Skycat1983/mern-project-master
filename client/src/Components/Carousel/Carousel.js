@@ -10,8 +10,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import temp1 from "../../assets/temp/temp1.png";
-import user1 from "../../assets/backgrounds/woman1.png";
 import { Link, useParams } from "react-router-dom";
 import { LangContext } from "../../Contexts/LangContext.js";
 import TranslatedContent from "../TranslatedContent";

@@ -51,6 +51,10 @@ export const AuthContextProvider = (props) => {
       "avatar",
       "https://res.cloudinary.com/dzncmfirr/image/upload/v1669997773/app-images/DALL_E_2022-12-02_09.23.21_-_hyperrealistic_3D_render_of_a_monstera_leaf_encased_in_a_glass_marble_chn1wg.png"
     );
+    urlencoded.append(
+      "coverpicture",
+      "https://res.cloudinary.com/dzncmfirr/image/upload/v1671618309/app-images/maros-misove-HGNtPpNQBcI-unsplash_vrswmy.jpg"
+    );
 
     const requestOptions = {
       method: "POST",
