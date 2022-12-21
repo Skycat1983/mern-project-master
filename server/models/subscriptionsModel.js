@@ -9,11 +9,12 @@ const subscriptionSchema = new Schema(
     subscriberid: { type: Schema.Types.ObjectId, ref: "User" },
     // plants: { type: Array, Schema.Types.ObjectId, ref: "User" },
     // plants: { type: Array, required: false },
-    plants: [
-      {
-        plant: { type: mongoose.Schema.Types.ObjectId, ref: "Plant" },
-      },
-    ],
+    plants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Plant" }],
+    // plants: [
+    //   {
+    //     plant: { type: mongoose.Schema.Types.ObjectId, ref: "Plant" },
+    //   },
+    // ],
   },
   { timestamps: true }
 );

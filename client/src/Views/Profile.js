@@ -44,6 +44,7 @@ import { useLocation, useParams } from "react-router-dom";
 import useFetch from "../Hooks/useFetch";
 import Modal from "@mui/material/Modal";
 import SummonModal from "../Components/MyModal/SummonModal.js";
+import Notifications from "../Components/Notifications/Notifications.js";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -133,24 +134,6 @@ export default function Profile() {
     }
   }, [data]);
 
-  // getProfile = user = userLoggedIn.subscriptions //! we have only sub._id
-
-  //? problem:
-  // getUser = profile page = data.user. //! we have sub_id, seller_id and subscriber_id
-
-  // todo: ideally when we fetch the profile page info, we will only send back the subscription info of the user, rather than all subscriptions  of the profile. so, we should:
-  // - attach user_id in the request. but the request is done via my usefetch custom hook and trying to make this work confuses me
-
-  //! OR:
-
-  // - make it so that getProfile also returns a populated link of the subscriptions
-
-  // roadmap: if user is subscribed, button says unsubscribe. when we click on unsubscribe we delete the document from subs collection and update the arrays of subscriber and subscriptions
-
-  // seller adds a plant. if user subscriptions array.length > 0, we find({}) those subscriptions, and push plant Id to each.
-
-  // the users notifications tab will search for all subscriptions the user has where plants.length >0.
-
   return (
     <>
       <NavBar />
@@ -223,8 +206,8 @@ export default function Profile() {
             <Tab
               onChange={handleChange}
               className="my-tab"
-              label="notifications"
-              name="notifications"
+              label="feed"
+              name="feed"
               style={{ minWidth: "50%" }}
             />
           )}
@@ -267,7 +250,9 @@ export default function Profile() {
           {isSubscribed == `{"msg":"subscribed"}` ? "unsubscribe" : "subscribe"}
         </Button>
       )}
-
+      {userLoggedIn?.username == location.state.user && value === 4 && (
+        <Notifications></Notifications>
+      )}
       {value === 0 && (
         <AboutUs data={data} aboutus={data?.user?.aboutus}></AboutUs>
       )}

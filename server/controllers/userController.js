@@ -146,8 +146,16 @@ const loginUser = async (req, res) => {
 // VERIFY TOKEN/WRITSTBAND
 const getProfile = async (req, res) => {
   console.log("req.user", req.user);
-  const { email, username, _id, premium, aboutus, createdAt, subscriptions } =
-    req.user;
+  const {
+    email,
+    username,
+    _id,
+    premium,
+    aboutus,
+    createdAt,
+    subscriptions,
+    subscribers,
+  } = req.user;
   // const { id } = req.body;
   // console.log("req.body", req.body);
   // console.log("id", id);
@@ -162,6 +170,7 @@ const getProfile = async (req, res) => {
     aboutus: aboutus,
     createdAt: createdAt,
     subscriptions: subscriptions,
+    subscribers: subscribers,
   });
 };
 

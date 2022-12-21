@@ -24,6 +24,45 @@ const getSubscription = async (req, res) => {
   }
 };
 
+const getMySubscriptions = async (req, res) => {
+  try {
+    const { subscriptions, userid } = req.body;
+    const allMySubs = await subscriptionModel
+      .find({
+        subscriberid: userid,
+        plants: { $exists: true, $not: { $size: 0 } },
+      })
+      .populate({ path: "plants" });
+    if (!allMySubs) {
+      res.status(200).json({
+        msg: "you have no subs",
+      });
+    } else {
+      // let { plants } = allMySubs;
+      // console.log("PLANTS>>>", plants);
+      // let returnedPlants = [];
+
+      // for (let i = 0; i < allMySubs.length; i++) {
+      //  for (let index = 0; index < array.length; index++) {
+      //   const element = array[index];
+      //  }
+      // }
+      // const subscriberListings = {};
+      // allMySubs.plants.forEach((plant) =>
+      //   // subscriberListings.push(sub.plants);
+      //   console.log("this sub has this plant", sub.plants)
+      // );
+
+      res.status(200).json({
+        number: allMySubs.length,
+        allMySubs,
+        // returnedPlants,
+        // subscriberListings,
+      });
+    }
+  } catch (error) {}
+};
+
 const createSubscription = async (req, res) => {
   const { subscriberid, sellerusername } = req.body;
 
@@ -160,7 +199,12 @@ const deleteSubscription = async (req, res) => {
   }
 };
 
-export { createSubscription, deleteSubscription, getSubscription };
+export {
+  createSubscription,
+  deleteSubscription,
+  getSubscription,
+  getMySubscriptions,
+};
 
 // CREATE USER
 // const createSubscription = async (req, res) => {

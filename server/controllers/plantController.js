@@ -110,6 +110,7 @@ const createPlant = async (req, res) => {
     await updateUserWithPlants.save();
 
     //! actually does not need to be like this. we can access our subscribers via the user without search
+    console.log("does this USER property have access to subscribers?", user);
     const subscribers = await subscriptionsModel.find({ sellerid: user });
     console.log("subscribers>>>", subscribers);
     if (!subscribers) {
@@ -122,8 +123,8 @@ const createPlant = async (req, res) => {
     } else {
       const updateSubsWithPlants = await subscriptionsModel.updateMany(
         {
-          subscribers,
-          // sellerid: user,
+          // subscribers,
+          sellerid: user,
         },
         { $push: { plants: plant._id } }
       );

@@ -4,12 +4,16 @@ import {
   createSubscription,
   deleteSubscription,
   getSubscription,
+  getMySubscriptions,
 } from "../controllers/subscriptionController.js";
 
 const router = express.Router();
 
 // GET A SUBSCRIPTION
 router.post("/get", getSubscription);
+
+// GET ALL MY SUBSCRIPTIONS
+router.post("/all", getMySubscriptions);
 
 // CREATE A SUBSCRIPTION
 router.post("/create", createSubscription);
