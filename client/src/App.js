@@ -18,6 +18,7 @@ import getToken from "./utils/getToken.js";
 import ProtectedRoute from "./Components/ProtectedRoute.js";
 import Listing from "./Views/Listing.js";
 import { useState } from "react";
+import Game from "./Views/Game.js";
 
 function App() {
   const [language, setLanguage] = useState("english");
@@ -33,6 +34,8 @@ function App() {
               <Route exact path="/" element={<Home />} />
               <Route exact path="signup" element={<Signup />} />
               <Route exact path="login" element={<Login />} />
+              <Route exact path="game" element={<Game />} />
+
               <Route exact path="profile/:id" element={<Profile />} />
               <Route exact path="plant/:id" element={<Listing />} />
               {/* <Route exact path="addplant" element={<AddPlant />} /> */}

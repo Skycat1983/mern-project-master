@@ -1,6 +1,5 @@
 import factModel from "../models/factsModel.js";
 
-// GET ALL PLANTS
 const getAllFacts = async (req, res) => {
   try {
     const allPlants = await plantModel
@@ -20,7 +19,7 @@ const getAllFacts = async (req, res) => {
   }
 };
 
-// GET A SINGLE PLANT
+// GET A SINGLE fact
 //! problems with where to use/not use underscore with id here
 const getFact = async (req, res) => {
   // uncomment greens for plant retrieved, plant: null

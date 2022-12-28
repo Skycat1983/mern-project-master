@@ -20,7 +20,7 @@ export default function Carousel(data, isLoading) {
   // const { id } = useParams();
 
   // console.warn("data.data in carousel", data.data);
-  // console.warn("data in carousel", data);
+  console.warn("data in carousel", data);
 
   return (
     <>

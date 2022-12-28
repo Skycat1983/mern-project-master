@@ -1,3 +1,26 @@
+/* to delete */
+
+.better {
+  position: relative;
+  left: 190px;
+}
+
+.title {
+  position: relative;
+  left: 130px;
+}
+
+.game {
+  position: relative;
+  left: 80px;
+}
+
+.reference {
+  position: relative;
+  left: 130px;
+  margin-top: 30px;
+}
+
 /* HOME */
 .cover {
   height: 56vh;

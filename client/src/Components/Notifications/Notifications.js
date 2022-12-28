@@ -41,10 +41,6 @@ function Notifications() {
     return new Date().toLocaleDateString("en-GB");
   };
 
-  // {forFeed && forFeed?.allMySubs?.map((sub) =>
-  //   // subscriberListings.push(sub.plants);
-  //   console.log("this sub has this plant", sub.plants)
-  // );
   console.warn("forFeed", forFeed);
   return (
     <>
@@ -55,10 +51,6 @@ function Notifications() {
         <Divider className="divider"></Divider>
         {forFeed &&
           forFeed?.allMySubs?.map((sub, i) => {
-            {
-              /* {setSub(sub)} */
-            }
-
             return (
               <>
                 {sub &&

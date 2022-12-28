@@ -51,7 +51,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -81,16 +80,7 @@ function Home() {
     // console.log("isUser", isUser);
   }, []);
 
-  // useEffect(() => {
-  //   if (isUser) {
-  //     setModalText("user logged out successfully");
-  //   } else {
-  //     setModalText("user logged in successfully");
-  //   }
-  //   return () => {
-  //     setModalText(null);
-  //   };
-  // }, [isUser]);
+  console.warn("data", data);
 
   //? see 'console.log(newValue, value);': what's going on with this toggle effect? why doesn't it print the same number twice?
   const handleChange = (event, newValue) => {
