@@ -32,3 +32,21 @@ export function MyErrors(props) {
     />
   );
 }
+
+export function MySearch(props) {
+  const { name, label, value, onChange, helperText } = props;
+
+  return (
+    <TextField
+      // helperText={helperText}
+      variant="standard"
+      color="success"
+      // label={label}
+      name={name}
+      value={value}
+      onChange={onChange}
+      alignItems="center"
+      placeholder="Filter..."
+    />
+  );
+}

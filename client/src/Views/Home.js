@@ -100,7 +100,6 @@ function Home() {
           <img src={cover} className="background-image" alt="" />
         )}
       </div>
-      {/* <div className="below-nav"> */}
       <div className="gradient-div">
         {isUser && (
           <h5 className="welcome-back-header">
@@ -109,7 +108,6 @@ function Home() {
           </h5>
         )}
       </div>
-      {/* </div> */}
       <div className="gradient-div-invert">
         <h5></h5>
       </div>
@@ -125,7 +123,7 @@ function Home() {
         }}
       >
         <SearchIconWrapper>
-          <SearchIcon className="search-icon" />
+          <SearchIcon />
         </SearchIconWrapper>
         {value === 0 ? (
           <StyledInputBase

@@ -10,13 +10,66 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
+import { styled, alpha } from "@mui/material/styles";
 import { Link, useParams } from "react-router-dom";
 import { LangContext } from "../../Contexts/LangContext.js";
 import TranslatedContent from "../TranslatedContent";
 import { useContext, useEffect, useState } from "react";
 import useWindowSize from "../../Hooks/useWindowSize";
+import SearchIcon from "@mui/icons-material/Search";
+import InputBase from "@mui/material/InputBase";
+import MyControls from "../controls/MyControls";
+import { useForm, Search } from "../../Hooks/useForm";
+
+const Searching = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  //! CAN BE USED ON FROSTED FORMS
+  backgroundColor: alpha(theme.palette.common.white, 1),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 1),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: "10rem",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 0),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
+
+const initialValues = {
+  filterItem: "",
+};
 
 export default function Carousel(data, isLoading) {
+  const [value, setValue] = React.useState(0);
+  const { values, handleInputChange, handleSubmit, errors } =
+    useForm(initialValues);
+
   const { convertCurrency, currency } = useContext(LangContext);
   const { width } = useWindowSize();
 
@@ -24,6 +77,24 @@ export default function Carousel(data, isLoading) {
 
   return (
     <>
+      <Search
+        sx={{
+          boxShadow: 2,
+          maxWidth: "250px",
+        }}
+        className="filter-bar"
+      >
+        <MyControls.MySearch
+          className="filter-bar"
+          label="Filter..."
+          name="filterItem"
+          value={values.filterItem}
+          onChange={handleInputChange}
+        ></MyControls.MySearch>
+        <SearchIconWrapper>
+          <SearchIcon className="search-icon" />
+        </SearchIconWrapper>
+      </Search>
       <Swiper
         className="mySwiper"
         modules={[Navigation, EffectFade]}
@@ -55,14 +126,16 @@ export default function Carousel(data, isLoading) {
         {/* `${data?.data?.commentsfor.length} */}
         {data &&
           data.data?.allPlants?.map((item, index) => {
-            if (item.user.premium === true) {
+            if (
+              item.user.premium === true &&
+              item.genus.includes(values.filterItem)
+            ) {
               return (
                 <SwiperSlide key={index}>
                   <Link
                     to={`/plant/${item._id}`}
                     key={item._id}
                     state={{ plant: item._id }}
-                    // state={{ data: props.myFunction }}
                     style={{ textDecoration: "none" }}
                   >
                     <Card sx={{ maxWidth: 150, marginLeft: 1 }}>
@@ -96,7 +169,10 @@ export default function Carousel(data, isLoading) {
 
         {data &&
           data.data?.allPlants?.map((item, index) => {
-            if (item.user.premium === false) {
+            if (
+              item.user.premium === false &&
+              item.genus.includes(values.filterItem)
+            ) {
               return (
                 <SwiperSlide key={index}>
                   <Link
@@ -137,85 +213,86 @@ export default function Carousel(data, isLoading) {
 
         {data &&
           data.data?.allUsers?.map((item) => {
-            return (
-              <SwiperSlide key={item.email}>
-                <Link
-                  to={`/profile/${item.username}`}
-                  key={item.username}
-                  state={{ user: item.username }}
-                  // state={{ data: props.myFunction }}
-                  style={{ textDecoration: "none" }}
-                >
-                  {/* <Link
-                  to={`/profile/${item.username}`}
-                  key={item.username}
-                  state={{ user: item.username }}
-                  // state={{ data: props.myFunction }}
-                  style={{ textDecoration: "none" }}
-                > */}
-                  <Card sx={{ maxWidth: 150, marginLeft: 1 }}>
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={item.avatar}
-                        alt="user pic"
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h7" component="div">
-                          {item.username}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          <b>
-                            <TranslatedContent contentID="plants" />:
-                          </b>
-                          {item.plants.length}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Link>
-              </SwiperSlide>
-            );
+            if (
+              item.premium !== true &&
+              item.username.includes(values.filterItem)
+            ) {
+              return (
+                <SwiperSlide key={item.email}>
+                  <Link
+                    to={`/profile/${item.username}`}
+                    key={item.username}
+                    state={{ user: item.username }}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Card sx={{ maxWidth: 150, marginLeft: 1 }}>
+                      <CardActionArea>
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={item.avatar}
+                          alt="user pic"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h7" component="div">
+                            {item.username}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            <b>
+                              <TranslatedContent contentID="plants" />:
+                            </b>
+                            {item.plants.length}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Link>
+                </SwiperSlide>
+              );
+            }
+          })}
+
+        {data &&
+          data.data?.allUsers?.map((item) => {
+            if (
+              item.premium === true &&
+              item.username.includes(values.filterItem)
+            ) {
+              return (
+                <SwiperSlide key={item.email}>
+                  <Link
+                    to={`/profile/${item.username}`}
+                    key={item.username}
+                    state={{ user: item.username }}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Card sx={{ maxWidth: 150, marginLeft: 1 }}>
+                      <CardActionArea>
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={item.avatar}
+                          alt="user pic"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h7" component="div">
+                            {item.username}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            <b>
+                              <TranslatedContent contentID="plants" />:
+                            </b>
+                            {item.plants.length}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Link>
+                </SwiperSlide>
+              );
+            }
           })}
       </Swiper>
     </>
   );
 }
-
-// todo: directional inserts for grid of cards
-// todo: customer theme for primary/secondary etc
-// todo: uninstall swiper?
-
-//CAROUSEL TUTES
-//! https://www.youtube.com/watch?v=4aJPgKLwAGY&ab_channel=DigitalCEO
-//! https://www.youtube.com/watch?v=W0bEL93tt4k&ab_channel=developedbyed
-
-//MAPPING 15:46
-//! https://www.youtube.com/watch?v=4aJPgKLwAGY&t=321s&ab_channel=DigitalCEO
-// {plants.map((plant, i) => <SwiperSlide className={styles.swiperslide}>
-//   <img src={`/images/${photo.toString()}`}/>
-// </SwiperSlide>)}
-//! ^^^
-
-//SWIPER
-
-// <SwiperSlide className={styles.swiperSlide}>Slide 1</SwiperSlide>
-// <SwiperSlide className={styles.swiperSlide}>Slide 2</SwiperSlide>
-// <SwiperSlide className={styles.swiperSlide}>Slide 3</SwiperSlide>
-// <SwiperSlide className={styles.swiperSlide}>Slide 4</SwiperSlide>
-// <SwiperSlide className={styles.swiperSlide}>Slide 5</SwiperSlide>
-// <SwiperSlide className={styles.swiperSlide}>Slide 6</SwiperSlide>
-// <SwiperSlide className={styles.swiperSlide}>Slide 7</SwiperSlide>
-// <SwiperSlide className={styles.swiperSlide}>Slide 8</SwiperSlide>
-// <SwiperSlide className={styles.swiperSlide}>Slide 9</SwiperSlide>
-
-// <SwiperSlide className="mySlide">
-//   1 {/* <img src={temp1} /> */}
-// </SwiperSlide>
-// <SwiperSlide className="mySlide">
-//   2 {/* <img src={temp2} /> */}
-// </SwiperSlide>
-// <SwiperSlide className="mySlide">
-//   3 {/* <img src={temp3} /> */}
-// </SwiperSlide>

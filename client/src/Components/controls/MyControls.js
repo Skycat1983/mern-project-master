@@ -1,4 +1,4 @@
-import { MyInputs, MyErrors } from "./MyInputs";
+import { MyInputs, MyErrors, MySearch } from "./MyInputs";
 import MyRadioGroup from "./MyRadioGroup";
 import MyTextbox from "./MyTextbox";
 
@@ -7,6 +7,7 @@ const MyControls = {
   MyErrors,
   MyRadioGroup,
   MyTextbox,
+  MySearch,
 };
 
 export default MyControls;

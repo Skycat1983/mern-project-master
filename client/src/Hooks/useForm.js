@@ -160,32 +160,13 @@ export function XLForm(props) {
         marginTop: "5px",
         variant: "standard",
         width: "200px",
-
-        // width: "100vw",
-        // position: "fixed",
-        // top: "200px",
-        // left: "20px",
         alignItems: "center",
-        // paddingTop: "300px",
         borderRadius: "12px 12px 12px 12px",
         multiline: true,
-        // marginBottom: "10px",
         backgroundColor: "white",
         opacity: "80%",
         color: "black", //! only applies to basic/premium options
-        // padding: "30px",
-        // rowGap: "20px",
-        // margin: "dense",
-        // color: "success",
       }}
-      // sx={{
-      //   bgcolor: "background.paper",
-      //   width: "53%",
-      //   // width: "10vm",
-      //   // borderRadius: "12px 12px 0px 0px",
-      //   borderBottom: 1,
-      //   borderColor: "divider",
-      // }}
     >
       {props.children}
     </form>
@@ -230,6 +211,32 @@ export function ReviewForm(props) {
         opacity: "100%",
         color: "green", //! only applies to basic/premium options
         // padding: "25px",
+      }}
+    >
+      {props.children}
+    </form>
+  );
+}
+
+export function Search(props) {
+  return (
+    <form
+      style={{
+        position: "absolute",
+        width: "6rem",
+        height: "2.6rem",
+        marginTop: "0px",
+        marginLeft: "22vw",
+        borderRadius: "6px",
+        backgroundColor: "white",
+        opacity: "100%",
+        color: "green", //! only applies to basic/premium options
+        paddingLeft: "2.5rem",
+        paddingRight: "2rem",
+        alignItems: "center",
+        justifyContent: "center",
+        margin: "normal",
+        placeholder: "Plants...",
       }}
     >
       {props.children}
