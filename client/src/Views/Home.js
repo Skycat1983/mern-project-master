@@ -30,7 +30,7 @@ const Search = styled("div")(({ theme }) => ({
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "100%",
+  width: "10rem",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
     width: "auto",
@@ -74,15 +74,11 @@ function Home() {
   const { values, setValues, handleInputChange } = useForm(initialValues);
 
   useEffect(() => {
-    // console.warn("getting profile in Home");
     getProfile();
-    // console.log("userLogin", userLoggedIn);
-    // console.log("isUser", isUser);
   }, []);
 
   console.warn("data", data);
 
-  //? see 'console.log(newValue, value);': what's going on with this toggle effect? why doesn't it print the same number twice?
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue, value);
@@ -125,7 +121,7 @@ function Home() {
         onChange={handleInputChange}
         sx={{
           boxShadow: 2,
-          // maxWidth: "250px",
+          maxWidth: "250px",
         }}
       >
         <SearchIconWrapper>
@@ -133,9 +129,7 @@ function Home() {
         </SearchIconWrapper>
         {value === 0 ? (
           <StyledInputBase
-            placeholder="plants"
-            //! can't be translated?
-            // placeholder=<TranslatedContent contentID="plants" />
+            placeholder="Plants..."
             inputProps={{ "aria-label": "search" }}
             // label="search plants"
             // name="searchPlants"
@@ -160,7 +154,7 @@ function Home() {
         className="plant-seller-tab"
         sx={{
           bgcolor: "background.paper",
-          width: "53%",
+          width: "12rem",
           // width: "10vm",
           borderRadius: "12px 12px 0px 0px",
           borderBottom: 1,
@@ -171,9 +165,7 @@ function Home() {
           TabIndicatorProps={{ style: { backgroundColor: "green" } }}
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
-          // textColor="green[900]"
-          // indicatorColor="primary"
+          // aria-label="basic tabs example"
         >
           <Tab
             className="my-tab"

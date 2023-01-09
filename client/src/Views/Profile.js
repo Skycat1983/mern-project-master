@@ -31,9 +31,6 @@ import TranslatedContent from "../Components/TranslatedContent";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Plants from "../Components/Plants/Plants.js";
 import Reviews from "../Components/Reviews/Reviews.js";
-// import useModal from "../Hooks/useModal.js";
-// import temp from "../assets/temp/temp3.png";
-
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import CardMedia from "@mui/material/CardMedia";
@@ -45,6 +42,7 @@ import useFetch from "../Hooks/useFetch";
 import Modal from "@mui/material/Modal";
 import SummonModal from "../Components/MyModal/SummonModal.js";
 import Notifications from "../Components/Notifications/Notifications.js";
+import useWindowSize from "../Hooks/useWindowSize";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -60,15 +58,14 @@ export default function Profile() {
   const { id } = useParams();
   const location = useLocation();
   const [url, setUrl] = useState(`http://localhost:5001/api/users/one/${id}`);
+  const { width } = useWindowSize();
   const { data, isLoading, error } = useFetch(url);
   const { getProfile, userLoggedIn, isUser, isUserSubscribed, isSubscribed } =
     useContext(AuthContext);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue);
   };
-
   const toggleSub = () => {
     console.log("trying to toggle sub");
     if (isSubscribed == `{"msg":"subscribed"}`) {
@@ -162,9 +159,7 @@ export default function Profile() {
 
         {/* </div> */}
       </div>
-      <div className="gradient-div-invert">
-        <h5></h5>
-      </div>
+      <div className="gradient-div-invert">{/* <h5></h5> */}</div>
       <Box className="profile-tab" sx={{ maxWidth: { xs: 255, sm: 200 } }}>
         <Tabs
           TabIndicatorProps={{ style: { backgroundColor: "green" } }}
@@ -226,7 +221,12 @@ export default function Profile() {
         paddingRight={3}
       >
         <Grid className="profile-headings" item xs={8}>
-          <Typography sx={{ color: "#ffffff" }} variant="h6" gutterBottom>
+          <Typography
+            className="profile-owner"
+            sx={{ color: "#ffffff" }}
+            variant="h6"
+            gutterBottom
+          >
             {data?.user?.username}
           </Typography>
         </Grid>

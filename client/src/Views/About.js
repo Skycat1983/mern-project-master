@@ -5,6 +5,10 @@ function About() {
   return (
     <div>
       <Typography>MOBILE APP FEATURES:</Typography>
+      <Typography>
+        Custom hooks: useFetch, useForm, useModal & useWindowSize
+      </Typography>
+      <Typography>Contexts: AuthContext and LangContext</Typography>
     </div>
   );
 }

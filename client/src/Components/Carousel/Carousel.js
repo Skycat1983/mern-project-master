@@ -14,13 +14,13 @@ import { Link, useParams } from "react-router-dom";
 import { LangContext } from "../../Contexts/LangContext.js";
 import TranslatedContent from "../TranslatedContent";
 import { useContext, useEffect, useState } from "react";
+import useWindowSize from "../../Hooks/useWindowSize";
 
 export default function Carousel(data, isLoading) {
   const { convertCurrency, currency } = useContext(LangContext);
-  // const { id } = useParams();
+  const { width } = useWindowSize();
 
-  // console.warn("data.data in carousel", data.data);
-  console.warn("data in carousel", data);
+  console.log(width);
 
   return (
     <>
@@ -30,12 +30,26 @@ export default function Carousel(data, isLoading) {
         navigation
         // effect={"fade"}
         speed={500}
-        slidesPerView={3}
-        // slidesPerGroup={3}
+        slidesPerView={
+          width < 400
+            ? 3
+            : width < 500
+            ? 4
+            : width < 600
+            ? 5
+            : width < 700
+            ? 6
+            : width < 800
+            ? 7
+            : width < 900
+            ? 8
+            : width < 1000
+            ? 9
+            : width < 1100
+            ? 10
+            : 11
+        }
         loopFillGroupWithBlank={true}
-        // pagination={{
-        //   clickable: true,
-        // }}
         loop
       >
         {/* `${data?.data?.commentsfor.length} */}
@@ -51,7 +65,7 @@ export default function Carousel(data, isLoading) {
                     // state={{ data: props.myFunction }}
                     style={{ textDecoration: "none" }}
                   >
-                    <Card sx={{ maxWidth: 345 }}>
+                    <Card sx={{ maxWidth: 150, marginLeft: 1 }}>
                       <CardActionArea>
                         <CardMedia
                           component="img"
@@ -65,7 +79,7 @@ export default function Carousel(data, isLoading) {
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
                             <b>
-                              <TranslatedContent contentID="price" />
+                              <TranslatedContent contentID="price" />:{" "}
                             </b>
                             {currency == "pounds" && "£"}
                             {convertCurrency(`${item.price}`)}
@@ -92,7 +106,7 @@ export default function Carousel(data, isLoading) {
                     // state={{ data: props.myFunction }}
                     style={{ textDecoration: "none" }}
                   >
-                    <Card sx={{ maxWidth: 345 }}>
+                    <Card sx={{ maxWidth: 150, marginLeft: 1 }}>
                       <CardActionArea>
                         <CardMedia
                           component="img"
@@ -106,7 +120,7 @@ export default function Carousel(data, isLoading) {
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
                             <b>
-                              <TranslatedContent contentID="price" />
+                              <TranslatedContent contentID="price" />:{" "}
                             </b>
                             {currency == "pounds" && "£"}
                             {convertCurrency(`${item.price}`)}
@@ -139,7 +153,7 @@ export default function Carousel(data, isLoading) {
                   // state={{ data: props.myFunction }}
                   style={{ textDecoration: "none" }}
                 > */}
-                  <Card sx={{ maxWidth: 345 }}>
+                  <Card sx={{ maxWidth: 150, marginLeft: 1 }}>
                     <CardActionArea>
                       <CardMedia
                         component="img"

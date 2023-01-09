@@ -2,104 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import "./views.css";
 
-const array = [
-  "c",
-  "f",
-  "a",
-  "e",
-  "d",
-  "b",
-  "g",
-  "i",
-  "n",
-  "l",
-  "k",
-  "w",
-  "j",
-  "o",
-  "t",
-  "q",
-  "r",
-  "z",
-  "p",
-  "u",
-  "v",
-  "m",
-  "y",
-  "x",
-  "s",
-];
+// Your task is to make a function that can take any non-negative integer as an argument and return it with its digits in descending order. Essentially, rearrange the digits to create the highest possible number.
 
 function Game() {
-  const [nextSubject, setNextSubject] = useState([]);
-  const [nextReference, setNextReference] = useState([]);
+  const answer = (numbers) => {
+    console.log(numbers);
 
-  useEffect(() => {
-    console.log("next subject, nxt reference", nextSubject, nextReference);
-    // merge();
-    // return () => {
-    //   second
-    // }
-  }, [nextReference]);
-
-  function merge(left, right) {
-    console.log("merge left", left);
-    console.log("merge right", right);
-
-    let arr = [];
-    // Break out of loop if any one of the array gets empty
-    while (left.length && right.length) {
-      // Pick the smaller among the smallest element of left and right sub arrays
-      if (left[0] < right[0]) {
-        arr.push(left.shift());
-      } else {
-        arr.push(right.shift());
-      }
-    }
-    // Concatenating the leftover elements
-    // (in case we didn't go through the entire left or right array)
-    return [...arr, ...nextSubject, ...nextReference];
-  }
-
-  function mergeSort(array) {
-    const half = array.length / 2;
-
-    // Base case or terminating case
-    if (array.length < 2) {
-      return array;
+    function myArray(numbers) {
+      return numbers.toString().split("").sort().reverse().join("").number();
     }
 
-    const left = array.splice(0, half);
-    // setNextQuestion();
-    console.log("left", left);
-    console.log("array", array);
-    //? possibly want to set a useState here to pause the process?
-    // return merge(mergeSort(left), mergeSort(array));
-    return setNextSubject([left]), setNextReference([array]);
-  }
-
-  console.log(mergeSort(array));
-  // console.log(setNextQuestion(mergeSort(array)));
+    console.log(myArray(350461));
+    // console.log(numbers.split("").sort().join(""));
+  };
 
   return (
     <div>
-      <Typography className="title">GAME:</Typography>
-
-      <Button
-        onClick={(merge(nextReference), merge(nextSubject))}
-        className="worse"
-      >
-        worse
-      </Button>
-      <Button
-        onClick={(merge(nextSubject), merge(nextReference))}
-        className="better"
-      >
-        better
-      </Button>
-      <Typography className="game">
-        is {nextSubject} better or worse than {nextReference}
-      </Typography>
+      <Typography className="game">{answer(34251)}</Typography>
     </div>
   );
 }

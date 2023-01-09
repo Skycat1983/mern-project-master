@@ -12,10 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-// import houseplant3 from "../../assets/appIcons/complexgold.png";
-// import houseplant3 from "../../assets/appIcons/chrome.png";
 import houseplant3 from "../../assets/appIcons/houseplant3.png";
-
 import { Avatar } from "@mui/material";
 import "./NavBar.css";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -24,10 +21,13 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
+import useWindowSize from "../../Hooks/useWindowSize.js";
 
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
+  const { width } = useWindowSize();
+
   const { getProfile, userLoggedIn, logout, isUser } = useContext(AuthContext);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -42,6 +42,8 @@ export default function NavBar() {
       logout(e);
     }
   };
+
+  console.log(width);
 
   console.log("userLoggedIn.username", userLoggedIn.username);
 
