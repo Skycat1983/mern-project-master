@@ -12,7 +12,14 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import houseplant3 from "../../assets/appIcons/houseplant3.png";
+// import houseplant3 from "../../assets/appIcons/houseplant3.png";
+// import houseplant3 from "../../assets/appIcons/luxurylogo.png"; //!nice color
+// import houseplant3 from "../../assets/appIcons/circularpurple.png";
+import houseplant3 from "../../assets/appIcons/sphere3.png"; //! rotate transform  175deg
+// import houseplant3 from "../../assets/appIcons/glassmomnstera.png"; //! rotate transform  133deg
+
+import white from "../../assets/appIcons/white.png";
+
 import { Avatar } from "@mui/material";
 import "./NavBar.css";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -50,9 +57,12 @@ export default function NavBar() {
   return (
     <Box position="fixed" sx={{ flexGrow: 1 }} className="nav-box">
       <AppBar position="fixed">
-        <Toolbar sx={{ backgroundColor: "#002A2A" }}>
+        {/* <Toolbar sx={{ backgroundColor: "#002A2A" }}> */}
+        <Toolbar sx={{ backgroundColor: "#011c03" }}>
+          <img src={white} className="white-square"></img>
           <Link to={"/"}>
             <img src={houseplant3} className="plant-logo" alt="" />
+            {/* <img src={houseplant3} className="clip-me" alt="" /> */}
           </Link>
           <IconButton
             onClick={handleClick}

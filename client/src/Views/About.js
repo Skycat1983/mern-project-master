@@ -14,3 +14,8 @@ function About() {
 }
 
 export default About;
+
+// MERN stack
+// front and backend validation
+// express validator
+// settings: change language, currency,

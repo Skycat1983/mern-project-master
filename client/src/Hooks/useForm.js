@@ -224,9 +224,9 @@ export function Search(props) {
       style={{
         position: "absolute",
         width: "6rem",
-        height: "2.6rem",
-        marginTop: "0px",
-        marginLeft: "22vw",
+        height: "2.39rem",
+        top: "0.7rem",
+        marginLeft: "30%",
         borderRadius: "6px",
         backgroundColor: "white",
         opacity: "100%",

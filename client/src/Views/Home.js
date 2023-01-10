@@ -20,58 +20,12 @@ import { useEffect, useState, useContext } from "react";
 import MyControls from "../Components/controls/MyControls";
 import MyModal from "../Components/MyModal/SummonModal";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  //! CAN BE USED ON FROSTED FORMS
-  backgroundColor: alpha(theme.palette.common.white, 1),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 1),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "10rem",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-
 function Home() {
-  const initialValues = {
-    searchPlants: "",
-    searchUsers: "",
-  };
-
   const [value, setValue] = React.useState(0);
   const [url, setUrl] = useState("http://localhost:5001/api/plants/all");
   const { data, isLoading, error } = useFetch(url);
   const { getProfile, userLoggedIn, logout, isUser, isModal } =
     useContext(AuthContext);
-  const { values, setValues, handleInputChange } = useForm(initialValues);
 
   useEffect(() => {
     getProfile();
@@ -111,40 +65,7 @@ function Home() {
       <div className="gradient-div-invert">
         <h5></h5>
       </div>
-      <Search
-        className="search-bar"
-        label="search plants"
-        name="searchPlants"
-        value={values.searchPlants}
-        onChange={handleInputChange}
-        sx={{
-          boxShadow: 2,
-          maxWidth: "250px",
-        }}
-      >
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        {value === 0 ? (
-          <StyledInputBase
-            placeholder="Plants..."
-            inputProps={{ "aria-label": "search" }}
-            // label="search plants"
-            // name="searchPlants"
-            // value={values.searchPlants}
-            // onChange={handleInputChange}
-          />
-        ) : (
-          <StyledInputBase
-            placeholder="Users…"
-            inputProps={{ "aria-label": "search" }}
-            // label="search users"
-            // name="searchUsers"
-            // value={values.searchUsers}
-            // onChange={handleInputChange}
-          />
-        )}
-      </Search>
+
       {isLoading && <CircularProgress />}
       {error && <h1>Error for the user</h1>}
 
@@ -181,16 +102,14 @@ function Home() {
 }
 
 export default Home;
+//https://levelup.gitconnected.com/dynamic-element-scaling-in-css-7e35ed9a3914
+//https://css-tricks.com/clipping-clipping-and-more-clipping/ //! clipping zoom
 
 // QUESTIONS:
 
 // TODO: usememo on wishlist search. location context for language and currency conversion.
 //* // refresh page after item added/deleted/updated
 //* useref for tab settings? are there other areas i don't want to reset?
-
-// get profile should save user subs in token. does the user id of user match location params.
-
-//css issue with being able to pull page right from profile view. can't i somehow lock to view?
 
 // onclick vs onchange
 

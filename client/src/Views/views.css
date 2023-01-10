@@ -227,23 +227,15 @@
 }
 
 .search-bar {
-  /* display: block; */
   width: auto;
   height: auto;
   max-width: 50%;
   max-height: 10%;
   margin: 20px auto;
   position: relative;
-
   top: -10px;
-
-  /* for above tabs */
-  /* top: 297px; */
-
   left: 100px;
   margin-right: auto;
-  /* width: 100%; */
-  /* text-align: center; */
 }
 
 
@@ -251,7 +243,7 @@
   position: relative;
   /* bottom: ; */
   text-align: center;
-  top: 52vh;
+  top: 63vh;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%)

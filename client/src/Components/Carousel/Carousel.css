@@ -5,15 +5,16 @@
 
 
 .mySwiper {
-  width: 100%;
+  width: 98%;
   height: 30vh;
   position: relative;
-  top: 49vh;
+  top: 60vh;
+  right: 1%;
 }
 
 .mySlide {
-  width: 30%;
-  height: 100px;
+  /* width: 130%; */
+  /* height: 19vh; */
   object-fit: cover;
   position: fixed;
   top: 50vh;

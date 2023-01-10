@@ -40,6 +40,7 @@ export function MySearch(props) {
     <TextField
       // helperText={helperText}
       variant="standard"
+      border="none"
       color="success"
       // label={label}
       name={name}
