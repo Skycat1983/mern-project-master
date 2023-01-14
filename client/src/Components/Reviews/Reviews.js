@@ -7,10 +7,10 @@ import {
   FormLabel,
   FormControl,
   Paper,
-  TextField,
+  // TextField,
   RadioGroup,
-  inputAdornmentClasses,
-  useFormControl,
+  // inputAdornmentClasses,
+  // useFormControl,
   IconButton,
 } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -22,11 +22,11 @@ import { LangContext } from "../../Contexts/LangContext.js";
 import TranslatedContent from "../TranslatedContent";
 import { useForm, ReviewForm } from "../../Hooks/useForm";
 import MyControls from "../controls/MyControls";
-import MyRadioGroup from "../controls/MyRadioGroup";
+// import MyRadioGroup from "../controls/MyRadioGroup";
 import Radio from "@mui/material/Radio";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import { useLocation, useNavigate } from "react-router-dom";
-import { convertLength } from "@mui/material/styles/cssUtils";
+// import { convertLength } from "@mui/material/styles/cssUtils";
 import MyModal from "../../Components/MyModal/SummonModal.js";
 import ClearIcon from "@mui/icons-material/Clear";
 
@@ -64,31 +64,6 @@ const Comments = (data) => {
     deleteReview(comment);
   };
 
-  // function MyLabelText() {
-  //   const { focused } = useFormControl() || {};
-
-  //   const helperText = React.useMemo(() => {
-  //     if (focused) {
-  //       return "This field is being focused";
-  //     }
-
-  //     return "Helper text";
-  //   }, [focused]);
-
-  //   return <FormHelperText>{helperText}</FormHelperText>;
-  // }
-
-  // const labelText = React.useMemo(() => {
-  //   if (focused) {
-  //     return "but you're still trying...";
-  //   } else {
-  //     return;
-  //     ("no you can't leave a review of yourself");
-  //   }
-
-  //   return "Helper text";
-  // }, [focused]);
-
   const handleClick = () => {
     leaveReview(values, userLoggedIn, data, navigate, location);
   };
@@ -121,7 +96,6 @@ const Comments = (data) => {
           ) : data?.data?.commentsfor.length == 1 ? (
             <TranslatedContent contentID="oneReview" />
           ) : (
-            `${data?.data?.commentsfor.length}` +
             <TranslatedContent contentID="manyReviews" />
           )}
         </h4>

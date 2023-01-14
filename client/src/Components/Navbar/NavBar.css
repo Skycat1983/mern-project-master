@@ -94,8 +94,8 @@
   color: blue;
 }
 
-
-
-/* .nav-box {
-  position: sticky;
-} */
+.menu-icon {
+  position: absolute;
+  top: 2.3vh;
+  left: 85vw;
+}

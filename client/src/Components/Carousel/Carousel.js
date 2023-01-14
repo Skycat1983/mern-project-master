@@ -99,7 +99,6 @@ export default function Carousel(data, isLoading) {
         className="mySwiper"
         modules={[Navigation, EffectFade]}
         navigation
-        // effect={"fade"}
         speed={500}
         slidesPerView={
           width < 400
@@ -147,7 +146,15 @@ export default function Carousel(data, isLoading) {
                           alt="plant pic"
                         />
                         <CardContent>
-                          <Typography gutterBottom variant="h7" component="div">
+                          <Typography
+                            gutterBottom
+                            variant="h7"
+                            component="div"
+                            sx={{
+                              textTransform: "capitalize",
+                              fontWeight: "bold",
+                            }}
+                          >
                             {item.genus}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
@@ -179,7 +186,6 @@ export default function Carousel(data, isLoading) {
                     to={`/plant/${item._id}`}
                     key={item._id}
                     state={{ plant: item._id }}
-                    // state={{ data: props.myFunction }}
                     style={{ textDecoration: "none" }}
                   >
                     <Card sx={{ maxWidth: 150, marginLeft: 1 }}>
@@ -191,7 +197,15 @@ export default function Carousel(data, isLoading) {
                           alt="plant pic"
                         />
                         <CardContent>
-                          <Typography gutterBottom variant="h7" component="div">
+                          <Typography
+                            gutterBottom
+                            variant="h7"
+                            component="div"
+                            sx={{
+                              textTransform: "capitalize",
+                              fontWeight: "bold",
+                            }}
+                          >
                             {item.genus}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">

@@ -14,7 +14,7 @@ export const translations = {
     language: "Language",
     loginToPost: "login to post a review",
     logout: "logout",
-    manyReviews: " people left a review of this seller",
+    manyReviews: "these users left a review of this seller",
     membership: "Membership",
     memberSince: "Member since",
     notSignedIn: "not signed in",

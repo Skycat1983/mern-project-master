@@ -17,6 +17,7 @@ import { LangContext } from "../../Contexts/LangContext.js";
 import TranslatedContent from "../TranslatedContent";
 import { useLocation, useNavigate } from "react-router-dom";
 import MyModal from "../../Components/MyModal/SummonModal.js";
+import dateChange from "../../utils/getDate.js";
 
 const initialValues = {
   aboutUs: "",
@@ -44,26 +45,12 @@ function AboutUs(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const { values, setValues, handleInputChange } = useForm(initialValues);
-  const {
-    getProfile,
-    userLoggedIn,
-    logout,
-    setModalText,
-    isUser,
-    isModal,
-    setIsModal,
-    patchUser,
-  } = useContext(AuthContext);
-  // console.log("userLoggedIn.about us in aboutus?", props);
+  const { getProfile, userLoggedIn, isModal, patchUser } =
+    useContext(AuthContext);
 
   useEffect(() => {
-    // console.warn("getting profile in aboutus");
     getProfile();
   }, []);
-
-  const dateChange = new Date(
-    `${props?.data?.user.createdAt}`
-  ).toLocaleDateString("en-GB");
 
   const handleUpdate = () => {
     setToggle(!toggle);
@@ -78,7 +65,8 @@ function AboutUs(props) {
       {isModal && <MyModal></MyModal>}
       <Paper>
         <Typography className="about-us" variant="body1" gutterBottom>
-          <TranslatedContent contentID="memberSince" />: {dateChange}
+          <TranslatedContent contentID="memberSince" />:{" "}
+          {dateChange(props?.data?.user.createdAt)}
         </Typography>
         <Typography className="about-us" variant="body1" gutterBottom>
           {props?.data?.user.subscribers.length}{" "}
@@ -100,14 +88,11 @@ function AboutUs(props) {
           <XLForm>
             <MyControls.MyTextbox
               id="outlined-multiline-flexible"
-              // placeholder=""
               label={props?.aboutus}
-              // label="about us"
               name="aboutUs"
               value={values.aboutUs}
               multiline={true}
               maxRows={4}
-              // values={values.aboutUs}
               onChange={handleInputChange}
             />
           </XLForm>
@@ -116,9 +101,6 @@ function AboutUs(props) {
         {userLoggedIn.username == location.state.user && (
           <Button
             onClick={handleUpdate}
-            // onClick={() => {
-            //   !toggle && values.aboutus ? handleUpdate() : setToggle(!toggle);
-            // }}
             className="edit-button"
             variant="contained"
             color="success"
@@ -126,13 +108,6 @@ function AboutUs(props) {
             {toggle ? "edit" : "update"} <EditIcon />
           </Button>
         )}
-        {/* <Button
-          className="update-button"
-          variant="contained"
-          color="success"
-        >
-          update
-        </Button> */}
       </Paper>
     </>
   );
