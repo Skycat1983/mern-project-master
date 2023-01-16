@@ -271,15 +271,6 @@ export default function Profile() {
       {userLoggedIn?.username == location.state.user && value === 3 && (
         <Account></Account>
       )}
-      {/* <IconButton>
-        <FavoriteBorderIcon className="favourite-badge" onClick={toggleFave} />
-      </IconButton> */}
     </>
   );
 }
-
-// todo: calc distances with https://www.npmjs.com/package/geolib
-
-// {data &&
-//   data.user?.map((item) => {
-//     return (

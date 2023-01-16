@@ -15,7 +15,6 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body1,
   padding: theme.spacing(2),
   textAlign: "left",
-  // paperShadow: 0,
   color: theme.palette.text.secondary,
 }));
 
@@ -58,8 +57,6 @@ function Listing() {
         container
         spacing={4}
         item
-        // sx={{ boxShadow: 0 }}
-        // xs={2}
       >
         <Item sx={{ boxShadow: 0 }} className="left-item">
           <TranslatedContent contentID="genus" />: {data?.plant.genus}
@@ -168,46 +165,3 @@ function Listing() {
 }
 
 export default Listing;
-
-{
-  /* <h2>
-        <TranslatedContent contentID="rooted" />:{" "}
-        {data?.plant.rooted ? "yes" : "no"}
-      </h2> */
-}
-{
-  /* <h2>topcutting: {data?.plant.topcutting ? "yes" : "no"}</h2> */
-}
-{
-  /* <h2>
-        <TranslatedContent contentID="varigation" />:{" "}
-        {data?.plant.varigation ? "yes" : "no"}
-      </h2> */
-}
-{
-  /* <h2>
-        <TranslatedContent contentID="price" />: {data?.plant.price}
-      </h2> */
-}
-{
-  /* <h2>
-        <TranslatedContent contentID="difficulty" />:
-        {data?.plant.fact.difficulty}
-      </h2> */
-}
-{
-  /* <h2>directsunlight: {data?.plant.fact.directsunlight}</h2> */
-}
-{
-  /* <h2>
-        <TranslatedContent contentID="humidity" />: {data?.plant.fact.humidity}
-      </h2> */
-}
-{
-  /* <h2>
-        <TranslatedContent contentID="origin" />: {data?.plant.fact.origin}
-      </h2> */
-}
-{
-  /* <h2>toxicity: {data?.plant.fact.toxicity}</h2> */
-}

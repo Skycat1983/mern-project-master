@@ -1,6 +1,5 @@
 import { useForm, Form } from "../Hooks/useForm";
 import MyControls from "../Components/controls/MyControls";
-import useFetch from "../Hooks/useFetch";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -13,9 +12,7 @@ import "./views.css";
 import background from "../assets/backgrounds/photos/houseplants3.jpg";
 import { AuthContext } from "../Contexts/AuthContext";
 import HomeIcon from "@mui/icons-material/Home";
-import SummonModal from "../Components/MyModal/SummonModal";
 import MyModal from "../Components/MyModal/SummonModal.js";
-import { formatMuiErrorMessage } from "@mui/utils";
 
 // TODO: can this be imported once, instead of both at LOGIN and SIGNUP?
 const Item = styled(Paper)(({ theme }) => ({

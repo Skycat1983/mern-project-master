@@ -74,7 +74,6 @@ function Home() {
         sx={{
           bgcolor: "background.paper",
           width: "12rem",
-          // width: "10vm",
           borderRadius: "12px 12px 0px 0px",
           borderBottom: 1,
           borderColor: "divider",
@@ -84,7 +83,6 @@ function Home() {
           TabIndicatorProps={{ style: { backgroundColor: "green" } }}
           value={value}
           onChange={handleChange}
-          // aria-label="basic tabs example"
         >
           <Tab
             className="my-tab"
@@ -120,8 +118,6 @@ export default Home;
 // delete image if nav away before submit  (useModal)
 
 // bit unsure how often i should be using getprofile and when. it's just to see if session expired?
-
-// see plants.js component. sometimes submit button does not load. cannot understand why
 
 // filter by premium users first in carousel not working as hoped
 

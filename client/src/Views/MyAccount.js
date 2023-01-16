@@ -109,10 +109,6 @@ const MyAccount = () => {
           </Item>
         </Grid>
       </Grid>
-      {/* <AboutUs userLoggedIn={userLoggedIn}></AboutUs> */}
-      {/* <AboutUs aboutus={aboutus}></AboutUs> */}
-
-      {/* <Carousel></Carousel> */}
       <Account></Account>
     </>
   );

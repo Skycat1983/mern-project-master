@@ -54,17 +54,12 @@ const initialValues = {
   rooted: "",
   topCutting: "",
   varigation: "",
-  // rooted: null,
-  // topCutting: null,
-  // varigation: null,
 };
 
 const AddPlant = () => {
   const { values, setValues, handleInputChange } = useForm(initialValues);
   const {
-    isUser,
     getProfile,
-    userLoggedIn,
     handleUpload,
     uploadImages,
     isLoading,
@@ -108,10 +103,7 @@ const AddPlant = () => {
   useEffect(() => {
     console.warn("getting profile in AddPlants");
     getProfile();
-    // console.log("userLogin", userLoggedIn);
   }, []);
-
-  //! Is the problem that i am trying to insert objectid (user) onto plant, when this is done via populate?
 
   return (
     <>
@@ -157,7 +149,6 @@ const AddPlant = () => {
                 height: 90,
                 objectFit: "cover",
               }}
-              // alt={item.title}
               src={urls[0]}
             />
           )}
@@ -192,15 +183,6 @@ const AddPlant = () => {
               onChange={handleInputChange}
             />
           )}
-          {/* {activeStep == 1 && (
-            <MyControls.MyInputs
-              label="species"
-              name="species"
-              value={values.species}
-              onChange={handleInputChange}
-            />
-          )} */}
-
           {activeStep == 2 && (
             <FormControl>
               <FormLabel>Rooted</FormLabel>
@@ -323,7 +305,6 @@ const AddPlant = () => {
               </Button>
             }
           />
-
           {activeStep == 3 && (
             <Button
               disabled={!values.price}
