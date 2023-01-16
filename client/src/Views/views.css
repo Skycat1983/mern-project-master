@@ -35,7 +35,7 @@
   position: absolute;
   z-index: 100;
   right: -155px;
-  top: -90px;
+  top: -85px;
   background-color: white;
 }
 
@@ -43,7 +43,7 @@
   position: absolute;
   z-index: 100;
   right: -135px;
-  top: -90px;
+  top: -85px;
   background-color: white;
 }
 
@@ -333,5 +333,3 @@
   /* background-color: darkgreen !important; */
 
 }
-
-.my-tabs {}

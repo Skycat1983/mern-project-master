@@ -8,6 +8,7 @@ const commentsSchema = new Schema(
     target: { type: Schema.Types.ObjectId, ref: "User" },
     authorusername: { type: String, required: true },
     targetusername: { type: String, required: true },
+    // authoravatar: { type: String, required: false },
   },
   { timestamps: true }
 );

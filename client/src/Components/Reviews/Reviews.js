@@ -147,6 +147,11 @@ const Comments = (data) => {
                 >
                   {comment.authorusername}
                 </Typography>
+                <img
+                  className="img-tiny-author"
+                  src={comment.author.avatar}
+                ></img>
+
                 <Typography
                   sx={{ m: 5, width: "29ch", fontStyle: "italic" }}
                   variant="body1"
@@ -154,7 +159,6 @@ const Comments = (data) => {
                 >
                   {comment.text}
                 </Typography>
-
                 <div className="star-div-comments-for">
                   <StarIcon />
                   {comment.rating >= 2 ? <StarIcon /> : <StarBorderIcon />}

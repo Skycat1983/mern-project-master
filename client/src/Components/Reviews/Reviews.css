@@ -24,6 +24,16 @@
   left: 300px;
 }
 
+.img-tiny-author {
+  /* display: inline-block; */
+  position: absolute;
+  left: 50vw;
+  /* top: 80%; */
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
 /* went mad from this settings where previously was fine */
 /* .submit-review {
   position: absolute;

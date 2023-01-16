@@ -19,10 +19,6 @@ const createComment = async (req, res) => {
   console.log("target:>>>", target);
 
   try {
-    //? not sure if it's better to search the comments collection or the users array of reviews
-    // const existingComment = await commentsModel.find({ author: author });
-    // const existingTarget = await usersModel.findOne({
-
     const newComment = await commentsModel.create({
       text: text,
       rating: rating,
@@ -61,9 +57,6 @@ const createComment = async (req, res) => {
     res.status(500).json({ msg: "something went wrong with comment creation" });
   }
 };
-
-//! V1 const commentby = await userModel.findByIdAndUpdate(
-//! V2 const commentby = await userModel.findByIdAndDelete(
 
 const deleteComment = async (req, res) => {
   const { commentid, authorid, targetid } = req.body;

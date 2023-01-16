@@ -243,6 +243,11 @@ export default function Profile() {
             size="small"
             color="success"
             variant="outlined"
+            sx={{
+              color: "white",
+              // backgroundColor: "orange",
+              borderColor: "white",
+            }}
             className={
               isSubscribed == `{"msg":"subscribed"}`
                 ? "unsub-button"

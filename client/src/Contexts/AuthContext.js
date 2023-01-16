@@ -15,12 +15,10 @@ export const AuthContextProvider = (props) => {
   const [userLoggedIn, setUserLoggedIn] = useState({});
   const [backEndError, setBackEndError] = useState({});
   const [isSubscribed, setIsSubscribed] = useState();
-
   const [urls, setUrls] = useState([]);
   const [publicIds, setPublicIds] = useState([]);
   const [modalText, setModalText] = useState("");
   const [isModal, setIsModal] = React.useState(false);
-  // const { setFormErrors } = useForm();
 
   useEffect(() => {
     const token = getToken();
@@ -260,9 +258,9 @@ export const AuthContextProvider = (props) => {
   const leaveReview = async (
     values,
     userLoggedIn,
-    data,
-    navigate,
-    location
+    data
+    // navigate,
+    // location
   ) => {
     console.log(values.rating);
     if (values.rating == "0" || values.text == "") {
