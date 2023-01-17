@@ -41,9 +41,7 @@ export function useForm(initialValues) {
     } else {
       setErrors(formErrors);
     }
-    return () => {
-      // console.log();
-    };
+    return () => {};
   }, [formErrors]);
 
   useEffect(() => {

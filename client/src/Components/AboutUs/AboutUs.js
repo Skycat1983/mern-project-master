@@ -40,7 +40,7 @@ const Item2 = styled(Paper)(({ theme }) => ({
 }));
 
 function AboutUs(props) {
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
   const [toggle, setToggle] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();

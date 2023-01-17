@@ -9,7 +9,6 @@
 }
 
 .update-button {
-  /* padding-left: 15px; */
   position: fixed;
   bottom: -60px;
   left: 20px;
@@ -22,8 +21,3 @@
   left: 10%;
 
 }
-
-
-/* .profile-headings {
-  position: absolute;
-} */

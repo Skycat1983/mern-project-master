@@ -235,19 +235,6 @@ function Account() {
       >
         <TranslatedContent contentID="update" />
       </Button>
-
-      {/* <Button color="success" variant="outlined" onClick={toggleLanguage}>
-          {language}
-        </Button> */}
-      {/* <Button color="secondary" variant="outlined" onClick={toggleCurrency}>
-          {currency}
-        </Button> */}
-      {/* <Button color="error" variant="outlined" onClick={handleRandom}>
-          getRandomNumber
-        </Button> */}
-      {/* <h2>{convertCurrency(110)}</h2> */}
-      {/* <h2>random number: {randomInt}</h2> */}
-      {/* </div> */}
     </Paper>
   );
 }
