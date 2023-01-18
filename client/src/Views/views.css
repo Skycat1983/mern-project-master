@@ -26,9 +26,6 @@
   height: 59vh;
   object-fit: contain;
   display: block;
-  /* margin: 20px auto; */
-  /* top: 6vh; */
-
 }
 
 .sub-button {
@@ -60,10 +57,7 @@
 
 .background-image-div {
   display: block;
-  /* max-width: 1vw; */
-  /* height: auto; */
   height: 61vh;
-  /* margin: 20px auto; */
   position: relative;
   top: 6vh;
   z-index: -100;
@@ -77,10 +71,8 @@
 .background-image {
   display: block;
   width: auto;
-  /* height: auto; */
   height: 56vh;
   object-fit: cover;
-
   margin: 2.5vh auto;
   position: fixed;
   top: 6vh;
@@ -105,7 +97,6 @@
 
 /* MULTI */
 .below-nav {
-  /* background-color: aqua; */
   position: fixed;
   top: 57px;
 }
@@ -116,7 +107,6 @@
   position: absolute;
   top: 20px;
   left: 20px;
-
 }
 
 .premium-badge {
@@ -148,23 +138,11 @@
   top: 5vh;
 }
 
-.left-item {}
 
 .right-item {
   position: relative;
   left: 23px;
 }
-
-
-/* .file-picker {
-  background-color: #04AA6D;
-  border: none;
-  color: white;
-  padding: 1px 3px;
-  text-decoration: none;
-  margin: 2px 2px;
-  cursor: pointer;
-} */
 
 /* MyAccount */
 .gradient-div {
@@ -206,9 +184,6 @@
 
 }
 
-/* HOME */
-
-
 .background-image3 {
   display: block;
   max-width: 100%;
@@ -219,8 +194,6 @@
   top: 6vh;
   z-index: -100;
 }
-
-
 
 .welcome-user {
   color: white;
@@ -241,36 +214,18 @@
 
 .plant-seller-tab {
   position: relative;
-  /* bottom: ; */
   text-align: center;
   top: 63vh;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%)
-    /* display: block; */
-    /* margin-left: auto;
-  margin-right: auto; */
-    /* width: 8em; */
 }
 
-
-/* .profile-info-box {
-  padding-top: 100px;
-  border-top: 100px;
-} */
-
-/* .frosted-div {
-  background-image: ;
-} */
 .background-image2 {
   max-height: 640px;
   top: 0px;
   z-index: -1000;
   position: absolute;
-  /* width: 100px; */
-  /* object-position: left; */
-
-  /* object-fit: cover; */
 }
 
 .listing-icons {
@@ -282,24 +237,8 @@
 
 .carousel-paper {
   height: 350px;
-  /* width: 80%; */
-  /* padding-left: 20px;
-  padding-right: 20px; */
   margin: 10px;
-
-
-  /* justify-content: center; */
-  /* vertical-align: middle; */
 }
-
-/* body {
-  background: url(https://images.unsplash.com/photo-1544306094-e2dcf9479da3) no-repeat;
-  background-size: cover;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-} */
 
 .login-container {
   position: absolute;
@@ -313,11 +252,7 @@
   backdrop-filter: blur(5px);
 }
 
-/* PROFILE */
-
 .profile-tab {
-  /* position: -webkit-sticky; */
-  /* position: sticky; */
   top: 10vh;
 }
 
@@ -330,6 +265,5 @@
   color: black !important;
   position: relative;
   top: 10vh;
-  /* background-color: darkgreen !important; */
 
 }

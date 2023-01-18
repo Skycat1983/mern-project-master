@@ -13,8 +13,6 @@
 }
 
 .mySlide {
-  /* width: 130%; */
-  /* height: 19vh; */
   object-fit: cover;
   position: fixed;
   top: 50vh;
@@ -23,8 +21,6 @@
 .filter-bar {
   position: absolute;
   top: 100px;
-  /* height: 100px; */
-  /* left: 1px; */
 }
 
 .search-icon {

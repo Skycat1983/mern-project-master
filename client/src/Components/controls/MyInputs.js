@@ -34,15 +34,13 @@ export function MyErrors(props) {
 }
 
 export function MySearch(props) {
-  const { name, label, value, onChange, helperText } = props;
+  const { name, value, onChange } = props;
 
   return (
     <TextField
-      // helperText={helperText}
       variant="standard"
       border="none"
       color="success"
-      // label={label}
       name={name}
       value={value}
       onChange={onChange}

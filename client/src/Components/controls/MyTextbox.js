@@ -17,16 +17,7 @@ export default function MyTextbox(props) {
       sx={{
         m: 4,
         width: "28ch",
-        // height: "26ch"
       }}
-      // value={value}
-      // onChange={handleChange}
     />
   );
 }
-
-// multiline
-// maxRows={4}
-// sx={{ m: 4, width: "26ch" }}
-// value={value}
-// onChange={handleChange}

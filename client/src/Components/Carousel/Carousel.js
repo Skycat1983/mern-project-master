@@ -122,7 +122,6 @@ export default function Carousel(data, isLoading) {
         loopFillGroupWithBlank={true}
         loop
       >
-        {/* `${data?.data?.commentsfor.length} */}
         {data &&
           data.data?.allPlants?.map((item, index) => {
             if (
