@@ -22,7 +22,7 @@ import MyModal from "../Components/MyModal/SummonModal";
 
 function Home() {
   const [value, setValue] = React.useState(0);
-  const [url, setUrl] = useState(`${server}api/plants/all`);
+  const [url, setUrl] = useState(`${server}/api/plants/all`);
   const { data, isLoading, error } = useFetch(url);
   const { getProfile, userLoggedIn, logout, isUser, isModal } =
     useContext(AuthContext);
@@ -31,15 +31,13 @@ function Home() {
     getProfile();
   }, []);
 
-  // console.warn("data", data);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue, value);
     if (value === 1) {
-      setUrl(`${server}api/plants/all`);
+      setUrl(`${server}/api/plants/all`);
     } else {
-      setUrl(`${server}api/users/all`);
+      setUrl(`${server}/api/users/all`);
     }
   };
 
@@ -98,9 +96,6 @@ function Home() {
 }
 
 export default Home;
-//https://levelup.gitconnected.com/dynamic-element-scaling-in-css-7e35ed9a3914
-//https://css-tricks.com/clipping-clipping-and-more-clipping/ //! clipping zoom
-
 // QUESTIONS:
 
 // TODO: usememo on wishlist search. location context for language and currency conversion.

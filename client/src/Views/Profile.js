@@ -1,6 +1,4 @@
 import React from "react";
-import { useForm, Form, XLForm } from "../Hooks/useForm";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import {
   Button,
   FormControl,
@@ -10,39 +8,40 @@ import {
   TextField,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import temp from "../assets/appIcons/glassmomnstera.png";
 import Tooltip from "@mui/material/Tooltip";
 import { useContext, useEffect, useState } from "react";
 import "./views.css";
 import NavBar from "../Components/Navbar/NavBar.js";
-import EditIcon from "@mui/icons-material/Edit";
-import Typography from "@mui/material/Typography";
 import "./views.css";
 import Box from "@mui/material/Box";
 import AboutUs from "../Components/AboutUs/AboutUs.js";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import Carousel from "../Components/Carousel/Carousel.js";
 import Account from "../Components/Account/Account.js";
 import { AuthContext, server } from "../Contexts/AuthContext";
 import { LangContext } from "../Contexts/LangContext.js";
 import TranslatedContent from "../Components/TranslatedContent";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import Plants from "../Components/Plants/Plants.js";
 import Reviews from "../Components/Reviews/Reviews.js";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import CardMedia from "@mui/material/CardMedia";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ButtonBase from "@mui/material/ButtonBase";
-// import ProfileTab from "../Components/ProfileTab/ProfileTab";
 import { useLocation, useParams } from "react-router-dom";
 import useFetch from "../Hooks/useFetch";
-import Modal from "@mui/material/Modal";
 import SummonModal from "../Components/MyModal/SummonModal.js";
 import Notifications from "../Components/Notifications/Notifications.js";
 import useWindowSize from "../Hooks/useWindowSize";
+import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Carousel from "../Components/Carousel/Carousel.js";
+import EditIcon from "@mui/icons-material/Edit";
+import temp from "../assets/appIcons/glassmomnstera.png";
+import { useForm, Form, XLForm } from "../Hooks/useForm";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import CardMedia from "@mui/material/CardMedia";
+import Modal from "@mui/material/Modal";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ButtonBase from "@mui/material/ButtonBase";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -109,7 +108,6 @@ export default function Profile() {
         .then((result) => window.location.reload())
         .catch((error) => console.log("error", error));
     }
-    // const resetPage = () => useFetch(url);
   };
 
   useEffect(() => {
@@ -144,7 +142,6 @@ export default function Profile() {
       <div className="background-image-div">
         <img src={data?.user?.coverpicture} className="cover" alt="" />
       </div>
-      {/* <div className="below-nav"> */}
       <div className="gradient-div">
         {userLoggedIn?.username == location.state.user ? (
           <h5 className="welcome-back-header">
@@ -155,8 +152,6 @@ export default function Profile() {
             welcome to {data?.user?.username}'s profile
           </h5>
         )}
-
-        {/* </div> */}
       </div>
       <div className="gradient-div-invert">{/* <h5></h5> */}</div>
       <Box className="profile-tab" sx={{ maxWidth: { xs: 255, sm: 200 } }}>
@@ -169,8 +164,6 @@ export default function Profile() {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          {/* <TabScrollButton direction="left" /> */}
-
           <Tab
             className="my-tab"
             label=<TranslatedContent contentID="about" />
@@ -244,7 +237,6 @@ export default function Profile() {
             variant="outlined"
             sx={{
               color: "white",
-              // backgroundColor: "orange",
               borderColor: "white",
             }}
             className={

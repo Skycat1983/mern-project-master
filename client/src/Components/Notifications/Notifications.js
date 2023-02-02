@@ -103,24 +103,3 @@ function Notifications() {
 }
 
 export default Notifications;
-
-// {sub.plants.map((plant, index) => {
-//     return (
-//       <Typography
-//         key={index}
-//         gutterBottom
-//         variant="h7"
-//         component="div"
-//       >
-//         genus
-//       </Typography>)})}
-
-{
-  /* sub[i].plants?.map((plant, index) => {
-            return (
-              <Typography gutterBottom variant="h7" component="div">
-                {plant.genus} hello
-              </Typography>
-            );
-          }); */
-}

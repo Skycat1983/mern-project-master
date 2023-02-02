@@ -412,6 +412,7 @@ export const AuthContextProvider = (props) => {
         setUrls,
         setPublicIds,
         urls,
+        server,
         submitListing,
         leaveReview,
         deleteReview,

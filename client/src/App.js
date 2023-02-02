@@ -13,13 +13,11 @@ import {
 } from "react-router-dom";
 import { AuthContextProvider } from "./Contexts/AuthContext.js";
 import { LangContextProvider } from "./Contexts/LangContext.js";
-
 import getToken from "./utils/getToken.js";
 import ProtectedRoute from "./Components/ProtectedRoute.js";
 import Listing from "./Views/Listing.js";
 import { useState } from "react";
 import Game from "./Views/Game.js";
-// import Calc from "./Views/Calc.tsx";
 
 function App() {
   const [language, setLanguage] = useState("english");
@@ -36,13 +34,11 @@ function App() {
               <Route exact path="signup" element={<Signup />} />
               <Route exact path="login" element={<Login />} />
               <Route exact path="game" element={<Game />} />
-              {/* <Route exact path="calc" element={<Calc />} /> */}
 
               <Route exact path="profile/:id" element={<Profile />} />
               <Route exact path="plant/:id" element={<Listing />} />
               {/* <Route exact path="addplant" element={<AddPlant />} /> */}
               <Route path="/redirect" element={<Navigate to="/" />} />
-              {/* <ProtectedRoute></ProtectedRoute> */}
               {/* <Route path="*" element={<GoHome />} /> */}
               <Route
                 path="myaccount"
