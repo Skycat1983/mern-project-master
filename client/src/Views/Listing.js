@@ -9,6 +9,7 @@ import { Grid, Tooltip, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import "./views.css";
+import { AuthContext } from "../Contexts/AuthContext";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -19,13 +20,14 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function Listing() {
+  const { server } = useContext(AuthContext);
   const { convertCurrency, currency } = useContext(LangContext);
 
   const location = useLocation();
   //! this is saying i must come from previous page
   console.log("location :>> ", location.state.plant);
   const { id } = useParams();
-  const [url, setUrl] = useState(`http://localhost:5001/api/plants/id/${id}`);
+  const [url, setUrl] = useState(`${server}/api/plants/id/${id}`);
   const { data, isLoading, error } = useFetch(url);
   const { directsunlight } = `${data?.plant.fact?.directsunlight}`;
   console.log(data);
