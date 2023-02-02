@@ -6,8 +6,7 @@ import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import { useEffect, useState, useContext } from "react";
-
-import temp from "../../assets/appIcons/glassmomnstera.png";
+// import temp from "../../assets/appIcons/glassmomnstera.png";
 import "./AboutUs.css";
 import { FormControl, FormLabel, RadioGroup, TextField } from "@mui/material";
 import MyControls from "../controls/MyControls";

@@ -17,9 +17,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 // import houseplant3 from "../../assets/appIcons/circularpurple.png";
 import houseplant3 from "../../assets/appIcons/sphere3.png"; //! rotate transform  175deg
 // import houseplant3 from "../../assets/appIcons/glassmomnstera.png"; //! rotate transform  133deg
-
 import white from "../../assets/appIcons/white.png";
-
 import { Avatar } from "@mui/material";
 import "./NavBar.css";
 import ListItemIcon from "@mui/material/ListItemIcon";
