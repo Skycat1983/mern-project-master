@@ -2,7 +2,7 @@ import React, { Children } from "react";
 import NavBar from "../Components/Navbar/NavBar";
 import useFetch from "../Hooks/useFetch";
 import CircularProgress from "@mui/material/CircularProgress";
-import { AuthContext } from "../Contexts/AuthContext";
+import { AuthContext, server } from "../Contexts/AuthContext";
 import { LangContext } from "../Contexts/LangContext.js";
 import TranslatedContent from "../Components/TranslatedContent";
 import { useForm, Form } from "../Hooks/useForm";
@@ -22,7 +22,7 @@ import MyModal from "../Components/MyModal/SummonModal";
 
 function Home() {
   const [value, setValue] = React.useState(0);
-  const [url, setUrl] = useState("http://localhost:5001/api/plants/all");
+  const [url, setUrl] = useState(`${server}api/plants/all`);
   const { data, isLoading, error } = useFetch(url);
   const { getProfile, userLoggedIn, logout, isUser, isModal } =
     useContext(AuthContext);
@@ -36,10 +36,10 @@ function Home() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue, value);
-    if (value == 1) {
-      setUrl("http://localhost:5001/api/plants/all");
+    if (value === 1) {
+      setUrl(`${server}api/plants/all`);
     } else {
-      setUrl("http://localhost:5001/api/users/all");
+      setUrl(`${server}api/users/all`);
     }
   };
 
@@ -48,7 +48,7 @@ function Home() {
       {isModal && <MyModal></MyModal>}
       <NavBar />
       <div>
-        {value == 1 ? (
+        {value === 1 ? (
           <img src={cover2} className="background-shop" alt="" />
         ) : (
           <img src={cover} className="background-image" alt="" />

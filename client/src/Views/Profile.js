@@ -25,7 +25,7 @@ import Tab from "@mui/material/Tab";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import Carousel from "../Components/Carousel/Carousel.js";
 import Account from "../Components/Account/Account.js";
-import { AuthContext } from "../Contexts/AuthContext";
+import { AuthContext, server } from "../Contexts/AuthContext";
 import { LangContext } from "../Contexts/LangContext.js";
 import TranslatedContent from "../Components/TranslatedContent";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -56,11 +56,9 @@ export default function Profile() {
   const [value, setValue] = React.useState(0);
   const { id } = useParams();
   const location = useLocation();
-  const [url, setUrl] = useState(`http://localhost:5001/api/users/one/${id}`);
+  const [url, setUrl] = useState(`${server}api/users/one/${id}`);
   const { width } = useWindowSize();
-  const { data, isLoading, error } = useFetch(
-    `http://localhost:5001/api/users/one/${id}`
-  );
+  const { data, isLoading, error } = useFetch(`${server}/api/users/one/${id}`);
   const { getProfile, userLoggedIn, isUser, isUserSubscribed, isSubscribed } =
     useContext(AuthContext);
   const handleChange = (event, newValue) => {
@@ -85,7 +83,7 @@ export default function Profile() {
         redirect: "follow",
       };
 
-      fetch("http://localhost:5001/api/subs/delete", requestOptions)
+      fetch(`${server}/api/subs/delete`, requestOptions)
         .then((response) => response.text())
         .then((result) => console.log(result))
         .then((result) => window.location.reload())
@@ -105,7 +103,7 @@ export default function Profile() {
         redirect: "follow",
       };
 
-      fetch("http://localhost:5001/api/subs/create", requestOptions)
+      fetch(`${server}/api/subs/create`, requestOptions)
         .then((response) => response.text())
         .then((result) => console.log(result))
         .then((result) => window.location.reload())

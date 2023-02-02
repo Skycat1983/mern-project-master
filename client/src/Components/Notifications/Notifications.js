@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../../Contexts/AuthContext";
+import { AuthContext, server } from "../../Contexts/AuthContext";
 import Typography from "@mui/material/Typography";
 import { Divider, Link, Paper } from "@mui/material";
 import "./Notifications.css";
@@ -26,8 +26,8 @@ function Notifications() {
         body: urlencoded,
         redirect: "follow",
       };
-
-      fetch("http://localhost:5001/api/subs/all", requestOptions)
+      fetch(`${server}/api/subs/all`, requestOptions)
+        // fetch("http://localhost:5001/api/subs/all", requestOptions)
         .then((response) => response.json())
         .then((result) => setForfeed(result))
         .catch((error) => console.log("error", error));

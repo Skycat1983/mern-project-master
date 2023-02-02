@@ -19,6 +19,8 @@ export const AuthContextProvider = (props) => {
   const [publicIds, setPublicIds] = useState([]);
   const [modalText, setModalText] = useState("");
   const [isModal, setIsModal] = React.useState(false);
+  const server = "http://mern-project-master-server.vercel.app";
+  // const server = 'http://localhost:5001'
 
   useEffect(() => {
     const token = getToken();
@@ -63,7 +65,7 @@ export const AuthContextProvider = (props) => {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/users/create",
+        `${server}/api/users/create`,
         requestOptions
       );
       const result = await response.json();
@@ -96,10 +98,7 @@ export const AuthContextProvider = (props) => {
       redirect: "follow",
     };
     try {
-      const response = await fetch(
-        "http://localhost:5001/api/users/login",
-        requestOptions
-      );
+      const response = await fetch(`${server}/api/users/login`, requestOptions);
       const result = await response.json();
       console.log("result :>> ", result);
       if (result.errorMessage == "email address not found") {
@@ -161,7 +160,8 @@ export const AuthContextProvider = (props) => {
     };
     try {
       const response = await fetch(
-        "http://localhost:5001/api/users/profile",
+        `${server}/api/users/profile`,
+        // "http://localhost:5001/api/users/profile",
         requestOptions
       );
       const result = await response.json();
@@ -189,8 +189,8 @@ export const AuthContextProvider = (props) => {
       body: urlencoded,
       redirect: "follow",
     };
-
-    fetch("http://localhost:5001/api/subs/get", requestOptions)
+    fetch(`${server}/api/subs/get`, requestOptions)
+      // fetch("http://localhost:5001/api/subs/get", requestOptions)
       .then((response) => response.text())
       .then((result) => setIsSubscribed(result))
       .catch((error) => console.log("error", error));
@@ -215,7 +215,8 @@ export const AuthContextProvider = (props) => {
       redirect: "follow",
     };
     const response = await fetch(
-      "http://localhost:5001/api/plants/uploadimage",
+      `${server}/api/plants/uploadimage`,
+      // "http://localhost:5001/api/plants/uploadimage",
       requestOptions
     );
     const result = await response.json();
@@ -243,8 +244,7 @@ export const AuthContextProvider = (props) => {
       body: urlencoded,
       redirect: "follow",
     };
-
-    fetch("http://localhost:5001/api/plants/create", requestOptions)
+    fetch(`${server}/api/plants/create`, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .then(
@@ -284,8 +284,7 @@ export const AuthContextProvider = (props) => {
         body: urlencoded,
         redirect: "follow",
       };
-
-      fetch("http://localhost:5001/api/comments/create/", requestOptions)
+      fetch(`${server}/api/comments/create`, requestOptions)
         .then((response) => response.text())
         .then((result) => console.log(result))
         .then(
@@ -316,7 +315,9 @@ export const AuthContextProvider = (props) => {
     };
 
     fetch(
-      "http://localhost:5001/api/comments/delete/?commentid=63927468f69b23134cca4682&authorid=63925855d8151d521b9fc92a&targetid=63925895d8151d521b9fc936",
+      //!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY
+      `${server}api/comments/delete/?commentid=63927468f69b23134cca4682&authorid=63925855d8151d521b9fc92a&targetid=63925895d8151d521b9fc936`,
+      // "http://localhost:5001/api/comments/delete/?commentid=63927468f69b23134cca4682&authorid=63925855d8151d521b9fc92a&targetid=63925895d8151d521b9fc936",
       requestOptions
     )
       .then((response) => response.text())
@@ -341,8 +342,9 @@ export const AuthContextProvider = (props) => {
       body: urlencoded,
       redirect: "follow",
     };
-
-    fetch("http://localhost:5001/api/plants/delete/12345", requestOptions)
+    //!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY
+    fetch(`${server}api/plants/delete/12345`, requestOptions)
+      // fetch("http://localhost:5001/api/plants/delete/12345", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .then(setModalText("Plant deleted"), setIsModal(true))
@@ -366,7 +368,8 @@ export const AuthContextProvider = (props) => {
     };
 
     fetch(
-      "http://localhost:5001/api/users/update/aboutus/theplantseller",
+      //!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY
+      `${server}/api/users/update/aboutus/theplantseller`,
       requestOptions
     )
       .then((response) => response.text())

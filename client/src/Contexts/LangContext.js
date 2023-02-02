@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "../Hooks/useForm.js";
 import { translations } from "../utils/translations";
 import getToken from "../utils/getToken.js";
+import { server } from "./AuthContext.js";
 import * as React from "react";
 
 export const LangContext = createContext(translations.english);
@@ -70,8 +71,8 @@ export const LangContextProvider = (props) => {
       body: urlencoded,
       redirect: "follow",
     };
-
-    fetch("http://localhost:5001/api/users/update/account", requestOptions)
+    fetch(`${server}api/users/update/account`, requestOptions)
+      // fetch("http://localhost:5001/api/users/update/account", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
