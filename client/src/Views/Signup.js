@@ -45,7 +45,7 @@ const Signup = () => {
   });
   const { getProfile, userLoggedIn, isModal, register } =
     useContext(AuthContext);
-  const { values, handleInputChange, handleSubmit, errors } =
+  const { values, handleInputChange, validate, errors } =
     useForm(initialValues);
   const navigate = useNavigate();
   const location = useLocation();
@@ -62,44 +62,12 @@ const Signup = () => {
     console.log("userLogin", userLoggedIn);
   }, []);
 
+  //! instead of returning function, return true or false.
   // console.log(coverPictures[1]);
 
   const signup = () => {
-    handleSubmit();
-    // register(values, navigate, location);
+    validate();
   };
-
-  // Math.floor(Math.random() * 11)
-
-  // const generateRandomIntegerInRange = (min, max) => {
-  //   return Math.floor(Math.random() * (max - min + 1)) + min;
-  // };
-
-  // const register = () => {
-  //   const myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  //   const urlencoded = new URLSearchParams();
-  //   urlencoded.append("email", values.emailAddress);
-  //   urlencoded.append("username", values.displayName);
-  //   urlencoded.append("password", values.password);
-  //   urlencoded.append("premium", false);
-  //   urlencoded.append(
-  //     "avatar",
-  //     "https://res.cloudinary.com/dzncmfirr/image/upload/v1669997773/app-images/DALL_E_2022-12-02_09.23.21_-_hyperrealistic_3D_render_of_a_monstera_leaf_encased_in_a_glass_marble_chn1wg.png"
-  //   );
-
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: urlencoded,
-  //     redirect: "follow",
-  //   };
-
-  //   fetch("http://localhost:5001/api/users/create", requestOptions)
-  //     .then((response) => response.text())
-  //     .then((result) => console.log(result))
-  //     .catch((error) => console.log("error", error));
-  // };
 
   console.log(values);
   return (

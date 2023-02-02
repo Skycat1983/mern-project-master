@@ -80,7 +80,7 @@ function AboutUs(props) {
           </Typography>
         ) : toggle ? (
           <Typography className="about-us" variant="body1" gutterBottom>
-            {userLoggedIn.username == location.state.user
+            {userLoggedIn.username === location.state.user
               ? "You haven't added any information here yet"
               : "This user hasn't added any information here yet"}
           </Typography>
@@ -98,7 +98,7 @@ function AboutUs(props) {
           </XLForm>
         )}
 
-        {userLoggedIn.username == location.state.user && (
+        {userLoggedIn.username === location.state.user && (
           <Button
             onClick={handleUpdate}
             className="edit-button"

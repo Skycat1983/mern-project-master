@@ -31,7 +31,7 @@ function Home() {
     getProfile();
   }, []);
 
-  console.warn("data", data);
+  // console.warn("data", data);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -62,9 +62,7 @@ function Home() {
           </h5>
         )}
       </div>
-      <div className="gradient-div-invert">
-        <h5></h5>
-      </div>
+      <div className="gradient-div-invert"></div>
 
       {isLoading && <CircularProgress />}
       {error && <h1>Error for the user</h1>}
@@ -94,7 +92,7 @@ function Home() {
           />
         </Tabs>
       </Box>
-      {isLoading == false && <Carousel data={data} isLoading={isLoading} />}
+      {isLoading === false && <Carousel data={data} isLoading={isLoading} />}
     </>
   );
 }

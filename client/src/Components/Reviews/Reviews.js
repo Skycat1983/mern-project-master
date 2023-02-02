@@ -7,10 +7,7 @@ import {
   FormLabel,
   FormControl,
   Paper,
-  // TextField,
   RadioGroup,
-  // inputAdornmentClasses,
-  // useFormControl,
   IconButton,
 } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -22,11 +19,8 @@ import { LangContext } from "../../Contexts/LangContext.js";
 import TranslatedContent from "../TranslatedContent";
 import { useForm, ReviewForm } from "../../Hooks/useForm";
 import MyControls from "../controls/MyControls";
-// import MyRadioGroup from "../controls/MyRadioGroup";
 import Radio from "@mui/material/Radio";
-// import DeleteIcon from "@mui/icons-material/Delete";
 import { useLocation, useNavigate } from "react-router-dom";
-// import { convertLength } from "@mui/material/styles/cssUtils";
 import MyModal from "../../Components/MyModal/SummonModal.js";
 import ClearIcon from "@mui/icons-material/Clear";
 
@@ -40,7 +34,6 @@ const Comments = (data) => {
   const location = useLocation();
   const navigate = useNavigate();
   const toAverage = [];
-  // const { focused } = useFormControl() || {};
   const {
     getProfile,
     userLoggedIn,
@@ -67,13 +60,6 @@ const Comments = (data) => {
   const handleClick = () => {
     leaveReview(values, userLoggedIn, data, navigate, location);
   };
-
-  // const getAverage = () => {
-  //   for (let i = 0; i < data?.data?.commentsfor.length; i++) {
-  //     if (data?.data?.commentsfor[i] !== 0) toAverage.push(5);
-  //     console.log(a[i]);
-  //   }
-  // };
 
   const handleStarClick = () => {
     console.log("star click");
@@ -132,13 +118,12 @@ const Comments = (data) => {
 
             return (
               <Paper key={index}>
-                {userLoggedIn?.id == comment?.author && (
+                {userLoggedIn?.id === comment?.author._id && (
                   <ClearIcon
                     className="delete-icon"
                     onClick={() => `${handleDelete(comment)}`}
                   ></ClearIcon>
                 )}
-
                 {/* {getAverageScore(comment.rating)} */}
                 <Typography
                   sx={{ m: 5, width: "29ch", fontWeight: "bold" }}

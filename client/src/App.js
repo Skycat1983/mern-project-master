@@ -19,7 +19,7 @@ import ProtectedRoute from "./Components/ProtectedRoute.js";
 import Listing from "./Views/Listing.js";
 import { useState } from "react";
 import Game from "./Views/Game.js";
-import Calc from "./Views/Calc.tsx";
+// import Calc from "./Views/Calc.tsx";
 
 function App() {
   const [language, setLanguage] = useState("english");
@@ -36,7 +36,7 @@ function App() {
               <Route exact path="signup" element={<Signup />} />
               <Route exact path="login" element={<Login />} />
               <Route exact path="game" element={<Game />} />
-              <Route exact path="calc" element={<Calc />} />
+              {/* <Route exact path="calc" element={<Calc />} /> */}
 
               <Route exact path="profile/:id" element={<Profile />} />
               <Route exact path="plant/:id" element={<Listing />} />
@@ -56,9 +56,9 @@ function App() {
               <Route
                 path="addplant"
                 element={
-                  // <ProtectedRoute>
-                  <AddPlant />
-                  // </ProtectedRoute>
+                  <ProtectedRoute>
+                    <AddPlant />
+                  </ProtectedRoute>
                 }
               />
             </Routes>
@@ -70,3 +70,9 @@ function App() {
 }
 
 export default App;
+
+// protected route and isLoading config
+// path routing
+// media queries or useWindowSize?
+// side scroll issue from profile page
+// profile pic changes size when hamburger clicked

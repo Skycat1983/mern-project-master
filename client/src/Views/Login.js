@@ -36,7 +36,7 @@ const Login = () => {
   const location = useLocation();
   const { isLoading, getProfile, userLoggedIn, isModal } =
     useContext(AuthContext);
-  const { values, handleInputChange, handleSubmit, errors } =
+  const { values, handleInputChange, validate, errors } =
     useForm(initialValues);
 
   const handleNav = () => {
@@ -53,7 +53,7 @@ const Login = () => {
   }, []);
 
   const login = () => {
-    handleSubmit();
+    validate();
   };
 
   return (

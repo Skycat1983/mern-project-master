@@ -54,12 +54,13 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Profile() {
   const [value, setValue] = React.useState(0);
-  // const [summonModal, setSummonModal] = useState(false);
   const { id } = useParams();
   const location = useLocation();
   const [url, setUrl] = useState(`http://localhost:5001/api/users/one/${id}`);
   const { width } = useWindowSize();
-  const { data, isLoading, error } = useFetch(url);
+  const { data, isLoading, error } = useFetch(
+    `http://localhost:5001/api/users/one/${id}`
+  );
   const { getProfile, userLoggedIn, isUser, isUserSubscribed, isSubscribed } =
     useContext(AuthContext);
   const handleChange = (event, newValue) => {
@@ -119,7 +120,7 @@ export default function Profile() {
 
   useEffect(() => {
     console.log("isSubscribed", isSubscribed);
-    if (isSubscribed == `{"msg":"subscribed"}`) {
+    if (isSubscribed === `{"msg":"subscribed"}`) {
       console.log("YES");
     }
   }, [isSubscribed]);
@@ -136,7 +137,7 @@ export default function Profile() {
   return (
     <>
       <NavBar />
-      {data?.user?.premium == true && (
+      {data?.user?.premium === true && (
         <Tooltip title="premium user">
           <WorkspacePremiumIcon className="premium-badge" />
         </Tooltip>
@@ -190,7 +191,7 @@ export default function Profile() {
             name="reviews"
             style={{ minWidth: "50%" }}
           />
-          {userLoggedIn?.username == location.state.user && (
+          {userLoggedIn?.username === location.state.user && (
             <Tab
               onChange={handleChange}
               className="my-tab"
@@ -199,7 +200,7 @@ export default function Profile() {
               style={{ minWidth: "50%" }}
             />
           )}
-          {userLoggedIn?.username == location.state.user && (
+          {userLoggedIn?.username === location.state.user && (
             <Tab
               onChange={handleChange}
               className="my-tab"

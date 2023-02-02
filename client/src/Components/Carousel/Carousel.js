@@ -73,7 +73,7 @@ export default function Carousel(data, isLoading) {
   const { convertCurrency, currency } = useContext(LangContext);
   const { width } = useWindowSize();
 
-  console.log(width);
+  // console.log(width);
 
   return (
     <>

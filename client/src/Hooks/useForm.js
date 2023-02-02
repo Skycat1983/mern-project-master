@@ -26,7 +26,7 @@ export function useForm(initialValues) {
     });
   };
 
-  const handleSubmit = () => {
+  const validate = () => {
     setFormErrors(validateFrontEnd(values));
   };
 
@@ -93,7 +93,7 @@ export function useForm(initialValues) {
     values,
     setValues,
     handleInputChange,
-    handleSubmit,
+    validate,
     formErrors,
     errors,
     setFormErrors,
