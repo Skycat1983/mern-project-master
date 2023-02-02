@@ -32,7 +32,7 @@ const addMiddleWares = () => {
     })
   );
   const corsOptions = {
-    origin: "http://mern-project-master-server.vercel.app",
+    origin: "https://mern-project-master.vercel.app",
     // origin: "http://localhost:3000",
     credentials: true,
   };

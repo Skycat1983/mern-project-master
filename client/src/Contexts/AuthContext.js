@@ -19,7 +19,7 @@ export const AuthContextProvider = (props) => {
   const [publicIds, setPublicIds] = useState([]);
   const [modalText, setModalText] = useState("");
   const [isModal, setIsModal] = React.useState(false);
-  const server = "http://mern-project-master-server.vercel.app";
+  const server = "https://mern-project-master-server.vercel.app";
   // const server = "http://localhost:5001";
 
   useEffect(() => {
