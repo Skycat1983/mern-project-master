@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "../Hooks/useForm.js";
 import getToken from "../utils/getToken.js";
 import * as React from "react";
-import { LangContext } from "./LangContext.js";
+// import { LangContext } from "./LangContext.js";
 import TranslatedContent from "../Components/TranslatedContent";
 
 export const AuthContext = createContext();
@@ -20,7 +20,7 @@ export const AuthContextProvider = (props) => {
   const [modalText, setModalText] = useState("");
   const [isModal, setIsModal] = React.useState(false);
   const server = "http://mern-project-master-server.vercel.app";
-  // const server = 'http://localhost:5001'
+  // const server = "http://localhost:5001";
 
   useEffect(() => {
     const token = getToken();

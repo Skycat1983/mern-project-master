@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
-import { AuthContext, server } from "../../Contexts/AuthContext";
+import { AuthContext } from "../../Contexts/AuthContext";
 import Typography from "@mui/material/Typography";
 import { Divider, Link, Paper } from "@mui/material";
 import "./Notifications.css";
@@ -8,7 +8,7 @@ import "./Notifications.css";
 function Notifications() {
   const [forFeed, setForfeed] = useState({});
   const [sub, setSub] = useState({});
-  const { getProfile, userLoggedIn, logout, isUser, isModal } =
+  const { getProfile, userLoggedIn, server, logout, isUser, isModal } =
     useContext(AuthContext);
   useEffect(() => {
     getProfile();

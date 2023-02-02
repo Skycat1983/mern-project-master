@@ -1,9 +1,9 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "../Hooks/useForm.js";
 import { translations } from "../utils/translations";
 import getToken from "../utils/getToken.js";
-import { server } from "./AuthContext.js";
+import { AuthContext } from "./AuthContext.js";
 import * as React from "react";
 
 export const LangContext = createContext(translations.english);
@@ -13,7 +13,7 @@ export const LangContextProvider = (props) => {
   const [currency, setCurrency] = useState("");
   const [euroToPoundRate, setEuroToPoundRate] = useState(0.86);
   const [poundToEuroRate, setPoundToEuroRate] = useState(1.16);
-
+  const { server } = useContext(AuthContext);
   function toggleLanguage() {
     setLanguage((language) => (language === "english" ? "german" : "english"));
   }
@@ -71,7 +71,7 @@ export const LangContextProvider = (props) => {
       body: urlencoded,
       redirect: "follow",
     };
-    fetch(`${server}api/users/update/account`, requestOptions)
+    fetch(`${server}/api/users/update/account`, requestOptions)
       // fetch("http://localhost:5001/api/users/update/account", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))

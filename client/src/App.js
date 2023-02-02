@@ -26,8 +26,8 @@ function App() {
   }
   return (
     <>
-      <LangContextProvider value={{ language, toggleLanguage }}>
-        <AuthContextProvider>
+      <AuthContextProvider>
+        <LangContextProvider value={{ language, toggleLanguage }}>
           <Router>
             <Routes>
               <Route exact path="/" element={<Home />} />
@@ -59,8 +59,8 @@ function App() {
               />
             </Routes>
           </Router>
-        </AuthContextProvider>
-      </LangContextProvider>
+        </LangContextProvider>
+      </AuthContextProvider>
     </>
   );
 }

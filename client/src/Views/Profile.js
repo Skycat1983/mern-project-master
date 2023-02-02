@@ -19,7 +19,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import Account from "../Components/Account/Account.js";
-import { AuthContext, server } from "../Contexts/AuthContext";
+import { AuthContext } from "../Contexts/AuthContext";
 import { LangContext } from "../Contexts/LangContext.js";
 import TranslatedContent from "../Components/TranslatedContent";
 import Plants from "../Components/Plants/Plants.js";
@@ -58,8 +58,14 @@ export default function Profile() {
   const [url, setUrl] = useState(`${server}/api/users/one/${id}`);
   const { width } = useWindowSize();
   const { data, isLoading, error } = useFetch(`${server}/api/users/one/${id}`);
-  const { getProfile, userLoggedIn, isUser, isUserSubscribed, isSubscribed } =
-    useContext(AuthContext);
+  const {
+    getProfile,
+    userLoggedIn,
+    server,
+    isUser,
+    isUserSubscribed,
+    isSubscribed,
+  } = useContext(AuthContext);
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue);
@@ -108,6 +114,7 @@ export default function Profile() {
         .then((result) => window.location.reload())
         .catch((error) => console.log("error", error));
     }
+    // const resetPage = () => useFetch(url);
   };
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import React, { Children } from "react";
 import NavBar from "../Components/Navbar/NavBar";
 import useFetch from "../Hooks/useFetch";
 import CircularProgress from "@mui/material/CircularProgress";
-import { AuthContext, server } from "../Contexts/AuthContext";
+import { AuthContext } from "../Contexts/AuthContext";
 import { LangContext } from "../Contexts/LangContext.js";
 import TranslatedContent from "../Components/TranslatedContent";
 import { useForm, Form } from "../Hooks/useForm";
@@ -22,10 +22,11 @@ import MyModal from "../Components/MyModal/SummonModal";
 
 function Home() {
   const [value, setValue] = React.useState(0);
+
+  const { getProfile, userLoggedIn, logout, server, isUser, isModal } =
+    useContext(AuthContext);
   const [url, setUrl] = useState(`${server}/api/plants/all`);
   const { data, isLoading, error } = useFetch(url);
-  const { getProfile, userLoggedIn, logout, isUser, isModal } =
-    useContext(AuthContext);
 
   useEffect(() => {
     getProfile();
