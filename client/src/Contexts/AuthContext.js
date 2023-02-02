@@ -316,7 +316,7 @@ export const AuthContextProvider = (props) => {
 
     fetch(
       //!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY
-      `${server}api/comments/delete/?commentid=63927468f69b23134cca4682&authorid=63925855d8151d521b9fc92a&targetid=63925895d8151d521b9fc936`,
+      `${server}/api/comments/delete/?commentid=63927468f69b23134cca4682&authorid=63925855d8151d521b9fc92a&targetid=63925895d8151d521b9fc936`,
       // "http://localhost:5001/api/comments/delete/?commentid=63927468f69b23134cca4682&authorid=63925855d8151d521b9fc92a&targetid=63925895d8151d521b9fc936",
       requestOptions
     )
@@ -343,7 +343,7 @@ export const AuthContextProvider = (props) => {
       redirect: "follow",
     };
     //!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY!!!!!!!!!! PRIORITY
-    fetch(`${server}api/plants/delete/12345`, requestOptions)
+    fetch(`${server}/api/plants/delete/12345`, requestOptions)
       // fetch("http://localhost:5001/api/plants/delete/12345", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))

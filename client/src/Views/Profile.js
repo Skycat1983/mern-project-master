@@ -56,7 +56,7 @@ export default function Profile() {
   const [value, setValue] = React.useState(0);
   const { id } = useParams();
   const location = useLocation();
-  const [url, setUrl] = useState(`${server}api/users/one/${id}`);
+  const [url, setUrl] = useState(`${server}/api/users/one/${id}`);
   const { width } = useWindowSize();
   const { data, isLoading, error } = useFetch(`${server}/api/users/one/${id}`);
   const { getProfile, userLoggedIn, isUser, isUserSubscribed, isSubscribed } =
