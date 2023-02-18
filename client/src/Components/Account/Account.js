@@ -6,10 +6,8 @@ import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import { Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import "./Account.css";
-import { Link, Navigate } from "react-router-dom";
 import WallpaperIcon from "@mui/icons-material/Wallpaper";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
@@ -18,7 +16,6 @@ import { LangContext } from "../../Contexts/LangContext.js";
 import TranslatedContent from "../TranslatedContent";
 import EuroIcon from "@mui/icons-material/Euro";
 import CurrencyPoundIcon from "@mui/icons-material/CurrencyPound";
-import IconButton from "@mui/material/IconButton";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 

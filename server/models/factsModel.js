@@ -9,8 +9,6 @@ const factSchema = new Schema({
   origin: { type: String, required: true },
   directsunlight: { type: String, required: true },
   about: { type: String, required: true },
-  // user: { type: Schema.Types.ObjectId, ref: "User" },
-  // fact: { type: Schema.Types.ObjectId, ref: "Fact" },
 });
 
 //! model is based on the schema. the schema decsribes the structure. the model applies it to interact withclear a collection of that name

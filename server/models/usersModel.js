@@ -13,12 +13,10 @@ const usersSchema = new Schema(
     coverpicture: { type: String, required: false },
     subscriptions: [{ type: Schema.Types.ObjectId, ref: "Subscription" }],
     subscribers: [{ type: Schema.Types.ObjectId, ref: "Subscription" }],
-    // subscriptions: { type: Array, required: false },
-    // subscribers: { type: Array, required: false },
+
     commentsfor: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     commentsby: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     plants: [{ type: Schema.Types.ObjectId, ref: "Plant" }], //! ref: "plant" = the collection name in mongodb. must be singular
-    // wishlist: { type: Object, required: false },
   },
   { timestamps: true }
 );
