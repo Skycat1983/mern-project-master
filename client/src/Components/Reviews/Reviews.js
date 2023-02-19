@@ -95,27 +95,6 @@ const Comments = (data) => {
 
         {data &&
           data?.data?.commentsfor?.map((comment, index) => {
-            {
-              {
-                /* let i = [0];
-              toAverage.push(comment.rating); */
-              }
-
-              {
-                /* if (data.data.commentsfor[i] == data.data.commentsfor.length - 1) {
-              const sum = toAverage.reduce(
-                (accumulator, value) => accumulator + value,
-                0
-              );
-              const userAverage = sum / toAverage.length || 0;
-              setAverage(userAverage);
-              {
-                setAverage(`${sum / toAverage.length || 0}`);
-              }
-            } */
-              }
-            }
-
             return (
               <Paper key={index}>
                 {userLoggedIn?.id === comment?.author._id && (
@@ -156,7 +135,6 @@ const Comments = (data) => {
           })}
         <ReviewForm>
           <Paper className="review-box">
-            {/* <h6 position="absolute">signed in as:</h6> */}
             <MyControls.MyTextbox
               id="outlined-multiline-flexible"
               label={
@@ -176,31 +154,6 @@ const Comments = (data) => {
             />
 
             <div className="star-div">
-              {/* {rating >= 1 ? (
-            <StarIcon onClick={handleClick(1)} />
-          ) : (
-            <StarBorderIcon onClick={handleClick(1)} />
-          )}
-          {rating >= 2 ? (
-            <StarIcon onClick={handleClick(2)} />
-          ) : (
-            <StarBorderIcon onClick={handleClick(2)} />
-          )}
-          {rating >= 3 ? (
-            <StarIcon onClick={handleClick(3)} />
-          ) : (
-            <StarBorderIcon onClick={handleClick(3)} />
-          )}
-          {rating >= 4 ? (
-            <StarIcon onClick={handleClick(4)} />
-          ) : (
-            <StarBorderIcon onClick={handleClick(4)} />
-          )}
-          {rating >= 5 ? (
-            <StarIcon onClick={handleClick(5)} />
-          ) : (
-            <StarBorderIcon onClick={handleClick(5)} />
-          )} */}
               <FormControl>
                 <FormLabel>Rating</FormLabel>
                 <RadioGroup
@@ -242,37 +195,13 @@ const Comments = (data) => {
                   />
                 </RadioGroup>
               </FormControl>
-              {/* <FormControl> */}
-              {/* <FormLabel>Rating</FormLabel>
-                <RadioGroup
-                  row={true}
-                  // label="rating"
-                  name="rating"
-                  value={values.rating}
-                  onChange={handleInputChange}
-                >
-                  <FormControlLabel
-                    name="rating"
-                    value="1"
-                    control={<Radio />}
-                    label="1"
-                  > */}
+
               <IconButton>
-                <StarBorderIcon>
-                  {/* <FormControlLabel
-                          name="rating"
-                          value="1"
-                          control={<Radio />}
-                          label="1"
-                        /> */}
-                </StarBorderIcon>
+                <StarBorderIcon></StarBorderIcon>
               </IconButton>
-              <IconButton
-              // onClick={handleStarClick}
-              >
+              <IconButton>
                 <StarBorderIcon onClick={handleStarClick} />
               </IconButton>
-              {/* </FormControlLabel> */}
               <IconButton>
                 <StarBorderIcon />
               </IconButton>
@@ -285,8 +214,6 @@ const Comments = (data) => {
               <IconButton>
                 <StarBorderIcon />
               </IconButton>
-              {/* </RadioGroup> */}
-              {/* </FormControl> */}
             </div>
             {userLoggedIn?.username == location.state.user || !isUser ? (
               <Button
