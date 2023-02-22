@@ -38,21 +38,6 @@ const getMySubscriptions = async (req, res) => {
         msg: "you have no subs",
       });
     } else {
-      // let { plants } = allMySubs;
-      // console.log("PLANTS>>>", plants);
-      // let returnedPlants = [];
-
-      // for (let i = 0; i < allMySubs.length; i++) {
-      //  for (let index = 0; index < array.length; index++) {
-      //   const element = array[index];
-      //  }
-      // }
-      // const subscriberListings = {};
-      // allMySubs.plants.forEach((plant) =>
-      //   // subscriberListings.push(sub.plants);
-      //   console.log("this sub has this plant", sub.plants)
-      // );
-
       res.status(200).json({
         number: allMySubs.length,
         allMySubs,

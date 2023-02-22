@@ -20,7 +20,4 @@ router.post("/create", createSubscription);
 
 // DELETE A SUBSCRIPTION
 router.delete("/delete", deleteSubscription);
-
-// UPDATE A NEW PLANT
-// router.patch("/update/:id", updatePlant);
 export default router;
