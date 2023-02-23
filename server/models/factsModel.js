@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-// import { stringify } from "querystring";
 
 const factSchema = new Schema({
   genus: { type: String, required: true },

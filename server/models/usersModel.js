@@ -24,11 +24,3 @@ const usersSchema = new Schema(
 const usersModel = mongoose.model("User", usersSchema);
 
 export default usersModel;
-
-// 51.557040137852745, -0.02915755416881117;
-
-// populate({ path: "plants" });
-
-// latitude: { type: Number, required: false },
-// longtitude: { type: Number, required: false },
-// comments: { type: Object, required: false },

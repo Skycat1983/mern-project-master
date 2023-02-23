@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-// import { stringify } from "querystring";
 
 const subscriptionSchema = new Schema(
   {
@@ -10,8 +9,6 @@ const subscriptionSchema = new Schema(
   { timestamps: true }
 );
 
-//! model is based on the schema. the schema decsribes the structure. the model applies it to interact withclear a collection of that name
-//* "Plant" references my plants collection
 const subscriptionModel = mongoose.model("Subscription", subscriptionSchema);
 
 export default subscriptionModel;

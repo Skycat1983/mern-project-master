@@ -28,7 +28,6 @@ const getUser = async (req, res) => {
   console.log("req>>>>>", req.params.id);
   const { username } = req.params;
   try {
-    //! V1 findOne (works but parameter is fixed)
     const user = await usersModel
       .findOne({ username: username })
       .populate({ path: "plants" })
@@ -40,8 +39,6 @@ const getUser = async (req, res) => {
       .populate({ path: "subscriptions" })
       .populate({ path: "subscribers" });
 
-    // const comments = await commentsModel .find
-    // user.commentsfor.populate({ path: "author" });
     res.status(200).json({
       msg: "user retrieved",
       user,
@@ -159,11 +156,7 @@ const getProfile = async (req, res) => {
     subscriptions,
     subscribers,
   } = req.user;
-  // const { id } = req.body;
-  // console.log("req.body", req.body);
-  // console.log("id", id);
 
-  // const allSubscriptions = await subscriptionsModel.find({ sellerid: "id" });
   res.status(200).json({
     // user: req.user,
     username: username,

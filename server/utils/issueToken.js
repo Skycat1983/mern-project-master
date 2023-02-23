@@ -21,8 +21,6 @@ const issueToken = (userId) => {
     options
   );
 
-  // const token = jsonWebToken.sign(payload, process.env.WEB_TOKEN_KEY, options);
-
   return token;
 };
 

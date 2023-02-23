@@ -20,7 +20,6 @@ const getAllFacts = async (req, res) => {
 };
 
 // GET A SINGLE fact
-//! problems with where to use/not use underscore with id here
 const getFact = async (req, res) => {
   // uncomment greens for plant retrieved, plant: null
   //* const { _id } = req.params;
